@@ -93,20 +93,10 @@ class Manhua5Source extends ComicSource {
         title: "漫画分类",
         parts: [
             {
-                name: "类型",
-                type: "fixed",
-                categories: [
-                    { label: "全部", target: { page: "category", attributes: { category: "全部", param: "" } } },
-                    { label: "少年漫画", target: { page: "category", attributes: { category: "少年漫画", param: "list/1" } } },
-                    { label: "少女漫画", target: { page: "category", attributes: { category: "少女漫画", param: "list/2" } } },
-                    { label: "青年漫画", target: { page: "category", attributes: { category: "青年漫画", param: "list/3" } } },
-                    { label: "少儿漫画", target: { page: "category", attributes: { category: "少儿漫画", param: "list/4" } } },
-                ]
-            },
-            {
                 name: "标签",
                 type: "fixed",
                 categories: [
+                    { label: "全部", target: { page: "category", attributes: { category: "全部", param: "" } } },
                     { label: "热血", target: { page: "category", attributes: { category: "热血", param: "tags/6" } } },
                     { label: "冒险", target: { page: "category", attributes: { category: "冒险", param: "tags/7" } } },
                     { label: "科幻", target: { page: "category", attributes: { category: "科幻", param: "tags/8" } } },
@@ -121,7 +111,29 @@ class Manhua5Source extends ComicSource {
                     { label: "恋爱", target: { page: "category", attributes: { category: "恋爱", param: "tags/17" } } },
                     { label: "悬疑", target: { page: "category", attributes: { category: "悬疑", param: "tags/18" } } },
                     { label: "恐怖", target: { page: "category", attributes: { category: "恐怖", param: "tags/19" } } },
+                    { label: "战争", target: { page: "category", attributes: { category: "战争", param: "tags/20" } } },
+                    { label: "动作", target: { page: "category", attributes: { category: "动作", param: "tags/21" } } },
+                    { label: "同人", target: { page: "category", attributes: { category: "同人", param: "tags/22" } } },
+                    { label: "竞技", target: { page: "category", attributes: { category: "竞技", param: "tags/23" } } },
+                    { label: "励志", target: { page: "category", attributes: { category: "励志", param: "tags/24" } } },
+                    { label: "架空", target: { page: "category", attributes: { category: "架空", param: "tags/25" } } },
+                    { label: "灵异", target: { page: "category", attributes: { category: "灵异", param: "tags/26" } } },
+                    { label: "百合", target: { page: "category", attributes: { category: "百合", param: "tags/27" } } },
+                    { label: "古风", target: { page: "category", attributes: { category: "古风", param: "tags/28" } } },
+                    { label: "生活", target: { page: "category", attributes: { category: "生活", param: "tags/29" } } },
+                    { label: "真人", target: { page: "category", attributes: { category: "真人", param: "tags/30" } } },
                     { label: "都市", target: { page: "category", attributes: { category: "都市", param: "tags/31" } } },
+                    { label: "日常", target: { page: "category", attributes: { category: "日常", param: "tags/49" } } },
+                    { label: "纯爱", target: { page: "category", attributes: { category: "纯爱", param: "tags/51" } } },
+                    { label: "推理", target: { page: "category", attributes: { category: "推理", param: "tags/52" } } },
+                    { label: "奇幻", target: { page: "category", attributes: { category: "奇幻", param: "tags/53" } } },
+                    { label: "格斗", target: { page: "category", attributes: { category: "格斗", param: "tags/54" } } },
+                    { label: "大女主", target: { page: "category", attributes: { category: "大女主", param: "tags/55" } } },
+                    { label: "剧情", target: { page: "category", attributes: { category: "剧情", param: "tags/56" } } },
+                    { label: "总裁", target: { page: "category", attributes: { category: "总裁", param: "tags/57" } } },
+                    { label: "武侠", target: { page: "category", attributes: { category: "武侠", param: "tags/58" } } },
+                    { label: "异能", target: { page: "category", attributes: { category: "异能", param: "tags/59" } } },
+                    { label: "韩漫", target: { page: "category", attributes: { category: "韩漫", param: "tags/61" } } },
                 ]
             }
         ],
@@ -209,5 +221,69 @@ class Manhua5Source extends ComicSource {
                 ],
             }
         ]
+    }
+
+    search = {
+        load: async (keyword, options, page) => {
+            // 构造搜索URL
+            let url = `https://www.mhua5.com/index.php/search?key=${encodeURIComponent(keyword)}`
+            if (page > 1) {
+                url = url + `&page=${page}`
+            }
+
+            let res = await Network.get(url)
+            if (res.status !== 200) {
+                throw `Invalid status code: ${res.status}`
+            }
+
+            let soup = new Document(res.body)
+            let items = soup.querySelectorAll('div.common-comic-item')
+
+            let comics = []
+            for (let item of items) {
+                let img = item.querySelector('img.lazy')
+                let titleLink = item.querySelector('p.comic__title a')
+
+                let id = null
+                if (titleLink) {
+                    let href = titleLink.getAttribute('href') || ''
+                    let parts = href.split('/comic/')
+                    if (parts.length > 1) {
+                        id = parts[parts.length - 1]
+                    }
+                }
+
+                let title = titleLink ? titleLink.textContent.trim() : ''
+                let cover = img ? (img.getAttribute('data-original') || img.getAttribute('src')) : ''
+
+                if (id && title) {
+                    comics.push(new Comic({
+                        id: id,
+                        title: title,
+                        cover: cover,
+                    }))
+                }
+            }
+
+            // 获取最大页数
+            let maxPage = 1
+            let allLinks = soup.querySelectorAll('a')
+            for (let link of allLinks) {
+                let href = link.getAttribute('href') || ''
+                let text = link.textContent.trim()
+                if (href.includes('/search') && text.isdigit()) {
+                    let num = parseInt(text)
+                    if (num > maxPage) {
+                        maxPage = num
+                    }
+                }
+            }
+
+            return {
+                comics: comics,
+                maxPage: maxPage
+            }
+        },
+        enableTagsSuggestions: false,
     }
 }
