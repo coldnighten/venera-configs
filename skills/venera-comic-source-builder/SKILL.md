@@ -17,20 +17,21 @@ description: "快速生成Venera漫画阅读器的漫画源配置文件，支持
 - ✅ **全自动化流程** - 通过命令行参数驱动，无需人工干预
 - ✅ **失败自动重试** - 每个步骤最多重试3次，无需手动重启
 - ✅ **依赖检查** - 自动检测并提示安装必要的Python依赖
+- ✅ **纯 Python 实现** - 无需 Node.js 环境
 
 ## 使用方法
 
 ```bash
 # 基本用法
-node main.js --url https://example.com/comic
+python3 main.py --url https://example.com/comic
 
 # 完整参数
-node main.js \
+python3 main.py \
   --url https://example.com/comic \
   --name "漫画网站" \
   --key "my_comic" \
   --version "1.0.0" \
-  --need-login false \
+  --need-login \
   --backup-domains "backup1.com,backup2.com"
 ```
 
@@ -42,7 +43,7 @@ node main.js \
 | --name | string | 否 | 从URL提取 | 网站名称 |
 | --key | string | 否 | 小写网站名 | 源Key |
 | --version | string | 否 | 1.0.0 | 版本号 |
-| --need-login | boolean | 否 | false | 是否需要登录 |
+| --need-login | flag | 否 | false | 是否需要登录 |
 | --backup-domains | string | 否 | - | 备用域名，逗号分隔 |
 
 ## 工作流程
@@ -54,7 +55,6 @@ node main.js \
 
 ## 依赖要求
 
-- Node.js 14+
 - Python 3.8+
 - 安装 Python 依赖：
   ```bash
@@ -71,14 +71,12 @@ node main.js \
 ```
 venera-comic-source-builder/
 ├── SKILL.md                    # 技能描述文档
-├── main.js                     # 主入口（命令行参数处理）
-├── package.json                # Node.js依赖配置
+├── main.py                     # 主入口（命令行参数处理）
+├── builder.py                  # 构建器核心逻辑
+├── retry.py                    # 重试机制模块
 ├── scripts/                    # Python脚本目录
 │   ├── comic_source_tester.py  # 漫画源测试脚本
 │   └── dependency_checker.py   # 依赖检查脚本
-├── references/                 # 模板目录
-│   └── template.js             # 漫画源模板
-└── lib/                        # 核心模块目录
-    ├── builder.js              # 构建器核心逻辑
-    └── retry.js                # 重试机制模块
+└── references/                 # 模板目录
+    └── template.js             # 漫画源模板
 ```
