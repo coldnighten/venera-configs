@@ -1,0 +1,24 @@
+{
+  "name": "venera-comic-source-builder",
+  "version": "1.0.0",
+  "description": "快速生成Venera漫画阅读器的漫画源配置文件",
+  "main": "main.js",
+  "bin": {
+    "venera-builder": "./main.js"
+  },
+  "dependencies": {
+    "yargs": "^17.7.2"
+  },
+  "scripts": {
+    "start": "node main.js",
+    "build": "node main.js"
+  },
+  "keywords": [
+    "venera",
+    "comic",
+    "source",
+    "builder"
+  ],
+  "author": "",
+  "license": "MIT"
+}
