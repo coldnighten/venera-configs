@@ -87,7 +87,7 @@ class Manhua5Source extends ComicSource {
     ]
 
     category = {
-        title: "漫画屋分类",
+        title: "漫画分类",
         parts: [
             {
                 name: "标签",
