@@ -387,38 +387,19 @@ class Manhua5Source extends ComicSource {
                 throw `Invalid status code: ${res.status}`
             }
 
-            let soup = new Document(res.body)
-
-            // 查找图片列表
-            // 图片可能在 script 标签中或特定的容器中
+            let html = res.body
             let images = []
 
-            // 尝试从页面中提取图片URL
-            // 查找所有图片元素
-            let imgElements = soup.querySelectorAll('img')
-            for (let img of imgElements) {
-                let src = img.getAttribute('src') || img.getAttribute('data-original') || img.getAttribute('data-src')
-                if (src && (src.includes('mkzcdn') || src.includes('baozimh') || src.includes('comic'))) {
-                    images.push(src)
-                }
-            }
+            // 从HTML中提取所有图片URL
+            let pattern = /https?:\/\/[^\s"'<>]+\.jpg[^\s"'<>]*/g
+            let matches = html.match(pattern)
 
-            // 如果没找到，尝试从 script 中解析
-            if (images.length === 0) {
-                let scripts = soup.querySelectorAll('script')
-                for (let script of scripts) {
-                    let content = script.textContent || ''
-                    // 查找图片数组
-                    if (content.includes('images') || content.includes('imgList') || content.includes('chapterImages')) {
-                        // 尝试匹配图片URL
-                        let matches = content.match(/https?:\/\/[^\s"'`]+(?:mkzcdn|baozimh)[^\s"'`]+/g)
-                        if (matches) {
-                            for (let m of matches) {
-                                if (!images.includes(m)) {
-                                    images.push(m)
-                                }
-                            }
-                        }
+            if (matches) {
+                for (let m of matches) {
+                    if ((m.includes('baozimh.com') || m.includes('mkzcdn.com')) &&
+                        !m.includes('/cover') &&
+                        images.indexOf(m) === -1) {
+                        images.push(m)
                     }
                 }
             }
