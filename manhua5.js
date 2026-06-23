@@ -312,7 +312,7 @@ class Manhua5Source extends ComicSource {
                 }
             }
 
-            let eps = []
+            let eps = new Map()
             let chapterList = soup.querySelector('ul.chapter__list-box')
             if (chapterList) {
                 let items = chapterList.querySelectorAll('li.chapter__item')
@@ -326,10 +326,7 @@ class Manhua5Source extends ComicSource {
                         }
                         let chTitle = link.text.trim()
                         if (chId && chTitle) {
-                            eps.push({
-                                id: chId,
-                                title: chTitle
-                            })
+                            eps.set(chId, chTitle)
                         }
                     }
                 }
@@ -340,16 +337,15 @@ class Manhua5Source extends ComicSource {
 
             soup.dispose()
             return new ComicDetails({
-                id: id,
                 title: title,
                 cover: cover,
-                author: author,
                 description: description,
-                tags: tags,
-                status: updateTime,
-                updateTime: updateTime,
+                tags: {
+                    作者: author ? [author] : [],
+                    标签: tags,
+                },
                 chapters: eps,
-                isMultiEp: eps.length > 0
+                updateTime: updateTime,
             })
         },
 
