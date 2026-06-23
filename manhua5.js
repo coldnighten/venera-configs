@@ -1,7 +1,7 @@
 /** @type {import('./_venera_.js')} */
 
 class Manhua5Source extends ComicSource {
-    name = "漫画屋"
+    name = "ManHuaWu"
     key = "manhua5"
     version = "1.0.0"
     minAppVersion = "1.6.0"
@@ -9,7 +9,7 @@ class Manhua5Source extends ComicSource {
 
     explore = [
         {
-            title: "漫画屋",
+            title: "ManHuaWu",
             type: "multiPartPage",
             load: async (page) => {
                 let res = await Network.get(this.url)
@@ -55,7 +55,7 @@ class Manhua5Source extends ComicSource {
                         title = firstElem.text.trim()
                     }
                     if (!title || title.length < 2) {
-                        title = '精品推荐'
+                        title = 'Featured'
                     }
 
                     let comics = []
@@ -87,50 +87,50 @@ class Manhua5Source extends ComicSource {
     ]
 
     category = {
-        title: "漫画分类",
+        title: "Categories",
         parts: [
             {
-                name: "标签",
+                name: "Tags",
                 type: "fixed",
                 categories: [
-                    { label: "全部", target: { page: "category", attributes: { category: "全部", param: "" } } },
-                    { label: "热血", target: { page: "category", attributes: { category: "热血", param: "tags/6" } } },
-                    { label: "冒险", target: { page: "category", attributes: { category: "冒险", param: "tags/7" } } },
-                    { label: "科幻", target: { page: "category", attributes: { category: "科幻", param: "tags/8" } } },
-                    { label: "霸总", target: { page: "category", attributes: { category: "霸总", param: "tags/9" } } },
-                    { label: "玄幻", target: { page: "category", attributes: { category: "玄幻", param: "tags/10" } } },
-                    { label: "校园", target: { page: "category", attributes: { category: "校园", param: "tags/11" } } },
-                    { label: "修真", target: { page: "category", attributes: { category: "修真", param: "tags/12" } } },
-                    { label: "搞笑", target: { page: "category", attributes: { category: "搞笑", param: "tags/13" } } },
-                    { label: "穿越", target: { page: "category", attributes: { category: "穿越", param: "tags/14" } } },
-                    { label: "后宫", target: { page: "category", attributes: { category: "后宫", param: "tags/15" } } },
-                    { label: "耽美", target: { page: "category", attributes: { category: "耽美", param: "tags/16" } } },
-                    { label: "恋爱", target: { page: "category", attributes: { category: "恋爱", param: "tags/17" } } },
-                    { label: "悬疑", target: { page: "category", attributes: { category: "悬疑", param: "tags/18" } } },
-                    { label: "恐怖", target: { page: "category", attributes: { category: "恐怖", param: "tags/19" } } },
-                    { label: "战争", target: { page: "category", attributes: { category: "战争", param: "tags/20" } } },
-                    { label: "动作", target: { page: "category", attributes: { category: "动作", param: "tags/21" } } },
-                    { label: "同人", target: { page: "category", attributes: { category: "同人", param: "tags/22" } } },
-                    { label: "竞技", target: { page: "category", attributes: { category: "竞技", param: "tags/23" } } },
-                    { label: "励志", target: { page: "category", attributes: { category: "励志", param: "tags/24" } } },
-                    { label: "架空", target: { page: "category", attributes: { category: "架空", param: "tags/25" } } },
-                    { label: "灵异", target: { page: "category", attributes: { category: "灵异", param: "tags/26" } } },
-                    { label: "百合", target: { page: "category", attributes: { category: "百合", param: "tags/27" } } },
-                    { label: "古风", target: { page: "category", attributes: { category: "古风", param: "tags/28" } } },
-                    { label: "生活", target: { page: "category", attributes: { category: "生活", param: "tags/29" } } },
-                    { label: "真人", target: { page: "category", attributes: { category: "真人", param: "tags/30" } } },
-                    { label: "都市", target: { page: "category", attributes: { category: "都市", param: "tags/31" } } },
-                    { label: "日常", target: { page: "category", attributes: { category: "日常", param: "tags/49" } } },
-                    { label: "纯爱", target: { page: "category", attributes: { category: "纯爱", param: "tags/51" } } },
-                    { label: "推理", target: { page: "category", attributes: { category: "推理", param: "tags/52" } } },
-                    { label: "奇幻", target: { page: "category", attributes: { category: "奇幻", param: "tags/53" } } },
-                    { label: "格斗", target: { page: "category", attributes: { category: "格斗", param: "tags/54" } } },
-                    { label: "大女主", target: { page: "category", attributes: { category: "大女主", param: "tags/55" } } },
-                    { label: "剧情", target: { page: "category", attributes: { category: "剧情", param: "tags/56" } } },
-                    { label: "总裁", target: { page: "category", attributes: { category: "总裁", param: "tags/57" } } },
-                    { label: "武侠", target: { page: "category", attributes: { category: "武侠", param: "tags/58" } } },
-                    { label: "异能", target: { page: "category", attributes: { category: "异能", param: "tags/59" } } },
-                    { label: "韩漫", target: { page: "category", attributes: { category: "韩漫", param: "tags/61" } } },
+                    { label: "All", target: { page: "category", attributes: { category: "All", param: "" } } },
+                    { label: "Hot Blood", target: { page: "category", attributes: { category: "Hot Blood", param: "tags/6" } } },
+                    { label: "Adventure", target: { page: "category", attributes: { category: "Adventure", param: "tags/7" } } },
+                    { label: "Sci-Fi", target: { page: "category", attributes: { category: "Sci-Fi", param: "tags/8" } } },
+                    { label: "CEO", target: { page: "category", attributes: { category: "CEO", param: "tags/9" } } },
+                    { label: "Fantasy", target: { page: "category", attributes: { category: "Fantasy", param: "tags/10" } } },
+                    { label: "School", target: { page: "category", attributes: { category: "School", param: "tags/11" } } },
+                    { label: "Cultivation", target: { page: "category", attributes: { category: "Cultivation", param: "tags/12" } } },
+                    { label: "Comedy", target: { page: "category", attributes: { category: "Comedy", param: "tags/13" } } },
+                    { label: "Time Travel", target: { page: "category", attributes: { category: "Time Travel", param: "tags/14" } } },
+                    { label: "Harem", target: { page: "category", attributes: { category: "Harem", param: "tags/15" } } },
+                    { label: "BL", target: { page: "category", attributes: { category: "BL", param: "tags/16" } } },
+                    { label: "Romance", target: { page: "category", attributes: { category: "Romance", param: "tags/17" } } },
+                    { label: "Mystery", target: { page: "category", attributes: { category: "Mystery", param: "tags/18" } } },
+                    { label: "Horror", target: { page: "category", attributes: { category: "Horror", param: "tags/19" } } },
+                    { label: "War", target: { page: "category", attributes: { category: "War", param: "tags/20" } } },
+                    { label: "Action", target: { page: "category", attributes: { category: "Action", param: "tags/21" } } },
+                    { label: "Fan Fiction", target: { page: "category", attributes: { category: "Fan Fiction", param: "tags/22" } } },
+                    { label: "Sports", target: { page: "category", attributes: { category: "Sports", param: "tags/23" } } },
+                    { label: "Inspirational", target: { page: "category", attributes: { category: "Inspirational", param: "tags/24" } } },
+                    { label: "Alternate History", target: { page: "category", attributes: { category: "Alternate History", param: "tags/25" } } },
+                    { label: "Supernatural", target: { page: "category", attributes: { category: "Supernatural", param: "tags/26" } } },
+                    { label: "GL", target: { page: "category", attributes: { category: "GL", param: "tags/27" } } },
+                    { label: "Ancient", target: { page: "category", attributes: { category: "Ancient", param: "tags/28" } } },
+                    { label: "Life", target: { page: "category", attributes: { category: "Life", param: "tags/29" } } },
+                    { label: "Real Life", target: { page: "category", attributes: { category: "Real Life", param: "tags/30" } } },
+                    { label: "City", target: { page: "category", attributes: { category: "City", param: "tags/31" } } },
+                    { label: "Daily", target: { page: "category", attributes: { category: "Daily", param: "tags/49" } } },
+                    { label: "Pure Love", target: { page: "category", attributes: { category: "Pure Love", param: "tags/51" } } },
+                    { label: "Detective", target: { page: "category", attributes: { category: "Detective", param: "tags/52" } } },
+                    { label: "Magic", target: { page: "category", attributes: { category: "Magic", param: "tags/53" } } },
+                    { label: "Fighting", target: { page: "category", attributes: { category: "Fighting", param: "tags/54" } } },
+                    { label: "Female Lead", target: { page: "category", attributes: { category: "Female Lead", param: "tags/55" } } },
+                    { label: "Story", target: { page: "category", attributes: { category: "Story", param: "tags/56" } } },
+                    { label: "President", target: { page: "category", attributes: { category: "President", param: "tags/57" } } },
+                    { label: "Wuxia", target: { page: "category", attributes: { category: "Wuxia", param: "tags/58" } } },
+                    { label: "Super Power", target: { page: "category", attributes: { category: "Super Power", param: "tags/59" } } },
+                    { label: "Korean", target: { page: "category", attributes: { category: "Korean", param: "tags/61" } } },
                 ]
             }
         ],
@@ -208,10 +208,10 @@ class Manhua5Source extends ComicSource {
         },
         optionList: [
             {
-                label: "排序",
+                label: "Sort",
                 options: [
-                    "hits-热门人气",
-                    "addtime-更新时间"
+                    "hits-Popular",
+                    "addtime-Update Time"
                 ],
             }
         ]
