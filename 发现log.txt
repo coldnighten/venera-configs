@@ -1,0 +1,641 @@
+Logs
+
+info Network 2026-06-23 14:06:35.573843 
+GET https://itunes.apple.com/lookup?bundleId=jp.co.bookwalker.cwapp.ios&country=jp
+headers:
+{User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
+data:
+null
+
+info Network 2026-06-23 14:06:35.592570 
+GET https://www.copy20.com/search
+headers:
+{User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
+data:
+null
+
+info Network 2026-06-23 14:06:35.592631 
+GET https://api.copy-manga.com/api/v3/system/network2?platform=3
+headers:
+{User-Agent: COPY/3.0.6, source: copyApp, deviceinfo: 3198131V-9778, dt: 2026.06.23, platform: 3, referer: com.copymanga.app-3.0.6, version: 3.0.6, device: PV7N.420807.530, pseudoid: 0vB6ql2fbptWBBeM, Accept: application/json, region: 0, authorization: Token, umstring: b4c89ca4104ea9a97750314d791520ac, x-auth-timestamp: 1782194795, x-auth-signature: f726d9c6a51894db8c930fbed4b6881680c4f9f86628b68b41cb0af1593ca327}
+data:
+null
+
+info Network 2026-06-23 14:06:35.662690 
+GET https://rup4a04-c02.tos-cn-hongkong.bytepluses.com/newsvr-2025.txt
+headers:
+{Accept: */*, Accept-Encoding: gzip, deflate, br, zstd, Accept-Language: zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7, Connection: keep-alive, Origin: https://localhost, Referer: https://localhost/, Sec-Fetch-Dest: empty, Sec-Fetch-Mode: cors, Sec-Fetch-Site: cross-site, X-Requested-With: com.example.app, User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
+data:
+null
+
+info Network 2026-06-23 14:06:35.675131 
+GET http://fn.coldnight.asia:4002/api/v1/libraries
+headers:
+{Accept: application/json, Authorization: Basic MjY3NDc0ODkzM0BxcS5jb206Y3AxMjQ4NzkxOTYy, User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36, cookie: KOMGA-SESSION=ZDRkYjIwMGEtMmQ2ZC00ZmM0LWJjNzQtMTEwYmQ2ZmNkN2Zh}
+data:
+null
+
+info Network 2026-06-23 14:06:35.675212 
+GET http://fn.coldnight.asia:4002/api/v1/tags/series
+headers:
+{Accept: application/json, Authorization: Basic MjY3NDc0ODkzM0BxcS5jb206Y3AxMjQ4NzkxOTYy, User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36, cookie: KOMGA-SESSION=ZDRkYjIwMGEtMmQ2ZC00ZmM0LWJjNzQtMTEwYmQ2ZmNkN2Zh}
+data:
+null
+
+info Network 2026-06-23 14:06:35.675244 
+GET http://fn.coldnight.asia:4002/api/v1/languages
+headers:
+{Accept: application/json, Authorization: Basic MjY3NDc0ODkzM0BxcS5jb206Y3AxMjQ4NzkxOTYy, User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36, cookie: KOMGA-SESSION=ZDRkYjIwMGEtMmQ2ZC00ZmM0LWJjNzQtMTEwYmQ2ZmNkN2Zh}
+data:
+null
+
+info Network 2026-06-23 14:06:35.678818 
+GET http://fn.coldnight.asia:4002/api/v1/collections?unpaged=true&sort=name%2Casc
+headers:
+{Accept: application/json, Authorization: Basic MjY3NDc0ODkzM0BxcS5jb206Y3AxMjQ4NzkxOTYy, User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36, cookie: KOMGA-SESSION=ZDRkYjIwMGEtMmQ2ZC00ZmM0LWJjNzQtMTEwYmQ2ZmNkN2Zh}
+data:
+null
+
+info Network 2026-06-23 14:06:35.678889 
+GET http://fn.coldnight.asia:4002/api/v1/genres
+headers:
+{Accept: application/json, Authorization: Basic MjY3NDc0ODkzM0BxcS5jb206Y3AxMjQ4NzkxOTYy, User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36, cookie: KOMGA-SESSION=ZDRkYjIwMGEtMmQ2ZC00ZmM0LWJjNzQtMTEwYmQ2ZmNkN2Zh}
+data:
+null
+
+info Network 2026-06-23 14:06:35.688990 
+GET http://lrr.tvc-16.science/api/categories
+headers:
+{Authorization: , User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36, cookie: lrr_baseurl=}
+data:
+null
+
+info Network 2026-06-23 14:06:35.780257 
+GET https://apps.apple.com/jp/app/id875750302
+headers:
+{User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
+data:
+null
+
+info Network 2026-06-23 14:06:35.880730 
+Response https://itunes.apple.com/lookup?bundleId=jp.co.bookwalker.cwapp.ios&country=jp 200
+headers:
+{content-type: text/javascript; charset=utf-8, x-ksc-request-id: 04485c1f5d2c7c8d15b211818ac4db03, x-dynamic-status: [MISS from KS-CLOUD-XA-CT-61-16-L, MISS from KS-CLOUD-ZHOUS-MP-05-32, MISS from KS-CLOUD-FZ-CT-321-15], server: nginx, x-apple-jingle-correlation-key: FWM3CXXYWOVK5SHW6Q73ACP46U, x-apple-request-uuid: 2d99b15e-f8b3-aaae-c8f6-f43fb009fcf5, x-apple-translated-wo-url: /WebObjects/MZStoreServices.woa/ws/wsLookup?bundleId=jp.co.bookwalker.cwapp.ios&country=jp&urlDesc=, apple-tk: false, x-b3-spanid: a4ef76da140d8268, b3: 2d99b15ef8b3aaaec8f6f43fb009fcf5-a4ef76da140d8268, x-content-type-options: nosniff, x-b3-traceid: 2d99b15ef8b3aaaec8f6f43fb009fcf5, x-webobjects-loadaverage: 0, x-responding-instance: MZStoreServices:6501532:::, apple-seq: 0.0, content-disposition: attachment; filename=1.txt, apple-originating-system: MZStoreServices, x-cdn-request-id: 04485c1f5d2c7c8d15b211818ac4db03, strict-transport-security: max-age=31536000; includeSubDomains, x-apple-orig-url: https://itunes.apple.com/lookup?bundleId=jp.co.bookwalker.cwapp.ios&country=jp, x-apple-application-site: MR22, apple-timing-app: 21 ms, x-apple-application-instance: 6501532, x-daiquiri-instance: daiquiri:12282006:mr47p00it-qujn05121902:7987:26RELEASE107:daiquiri-amp-store-l7shared-ext-001-mr, x-daiquiri-debug-worker-pid: 23744, vary: Accept-Encoding, cache-control: max-age=61595, date: Tue, 23 Jun 2026 06:06:35 GMT, x-cache: MISS KS-CLOUD, x-true-cache-key: /L/itunes.apple.com/lookup?bundleId=jp.co.bookwalker.cwapp.ios&country=jpBrowser vcd=2897, x-apple-partner: origin.0, x-link-via: xact61:443;zhousmp05:443;fzct321:443;}
+
+
+
+{
+ "resultCount":1,
+ "results": [
+{"isGameCenterEnabled":false, 
+"screenshotUrls":["https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/bf/c7/b6/bfc7b6c0-66a9-956a-0de4-afda937ff947/5.5_U30a4_U30f3_U30c1_01.jpg/406x228bb.jpg", "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/5c/15/39/5c153985-e025-7d64-09ae-aa8d43a4b5fd/5.5_U30a4_U30f3_U30c1_02.jpg/406x228bb.jpg", "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/93/2d/95/932d95b1-2848-9963-1987-7b5b142dc5ac/5.5_U30a4_U30f3_U30c1_03.jpg/406x228bb.jpg", "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/e5/d8/c7/e5d8c763-83e2-0321-c5d8-80f94e85bd01/5.5_U30a4_U30f3_U30c1_04.jpg/406x228bb.jpg", "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/5c/a5/ec/5ca5ece5-153a-16b7-56e7-f3f44d27ff22/5.5_U30a4_U30f3_U30c1_05.jpg/406x228bb.jpg", "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/8a/c2/05/8ac20523-d068-a4f4-5f49-ba17920b80b9/5.5_U30a4_U30f3_U30c1_06.jpg/406x228bb.jpg", "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/13/11/74/1311744c-f436-dd74-4173-eb7cfdc26bf5/5.5_U30a4_U30f3_U30c1_07.jpg/406x228bb.jpg"], 
+"ipadScreenshotUrls":[
+"https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/0c/24/85/0c248508-595b-1107-80f3-f83b279...
+
+info Network 2026-06-23 14:06:35.883134 
+GET https://wn01.link/
+headers:
+{User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
+data:
+null
+
+info Network 2026-06-23 14:06:35.988788 
+Response http://fn.coldnight.asia:4002/api/v1/genres 200
+headers:
+{vary: [Origin, Access-Control-Request-Method, Access-Control-Request-Headers], cache-control: max-age=0, must-revalidate, private, etag: "0d751713988987e9331980363e24189ce", x-content-type-options: nosniff, x-xss-protection: 0, x-frame-options: SAMEORIGIN, content-type: application/json, content-length: 2, date: Tue, 23 Jun 2026 06:06:35 GMT}
+[]
+
+info Network 2026-06-23 14:06:35.989023 
+Response http://fn.coldnight.asia:4002/api/v1/tags/series 200
+headers:
+{vary: [Origin, Access-Control-Request-Method, Access-Control-Request-Headers], cache-control: max-age=0, must-revalidate, private, etag: "0d751713988987e9331980363e24189ce", x-content-type-options: nosniff, x-xss-protection: 0, x-frame-options: SAMEORIGIN, content-type: application/json, content-length: 2, date: Tue, 23 Jun 2026 06:06:35 GMT}
+[]
+
+info Network 2026-06-23 14:06:35.989140 
+Response http://fn.coldnight.asia:4002/api/v1/collections?unpaged=true&sort=name%2Casc 200
+headers:
+{vary: [Origin, Access-Control-Request-Method, Access-Control-Request-Headers], cache-control: max-age=0, must-revalidate, private, etag: "022079a02d1b6de4faa068d0b1420f9c6", x-content-type-options: nosniff, x-xss-protection: 0, x-frame-options: SAMEORIGIN, content-type: application/json, content-length: 514, date: Tue, 23 Jun 2026 06:06:35 GMT}
+{"content":[{"id":"0MGT2KHQX2E4X","name":"MyLove","ordered":false,"seriesIds":["0M3XPGK60PNT4","0M3YN9R78PMFG"],"createdDate":"2025-08-02T15:40:47Z","lastModifiedDate":"2025-08-02T15:43:19Z","filtered":false}],"pageable":{"pageNumber":0,"pageSize":20,"sort":{"empty":false,"sorted":true,"unsorted":false},"offset":0,"paged":true,"unpaged":false},"totalElements":1,"totalPages":1,"last":true,"size":20,"number":0,"sort":{"empty":false,"sorted":true,"unsorted":false},"numberOfElements":1,"first":true,"empty":false}
+
+info Network 2026-06-23 14:06:35.990278 
+Response http://fn.coldnight.asia:4002/api/v1/languages 200
+headers:
+{vary: [Origin, Access-Control-Request-Method, Access-Control-Request-Headers], cache-control: max-age=0, must-revalidate, private, etag: "0d751713988987e9331980363e24189ce", x-content-type-options: nosniff, x-xss-protection: 0, x-frame-options: SAMEORIGIN, content-type: application/json, content-length: 2, date: Tue, 23 Jun 2026 06:06:35 GMT}
+[]
+
+error Network 2026-06-23 14:06:35.991963 
+GET https://www.copy20.com/search
+DioException [unknown]: null
+Error: [RhttpConnectionException] Connection error. URL: https://www.copy20.com/search (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+null
+
+info Network 2026-06-23 14:06:36.047478 
+Response http://fn.coldnight.asia:4002/api/v1/libraries 200
+headers:
+{vary: [Origin, Access-Control-Request-Method, Access-Control-Request-Headers], cache-control: max-age=0, must-revalidate, private, etag: "05f67a8437f2cf36e75b4467adb678ca6", x-content-type-options: nosniff, x-xss-protection: 0, x-frame-options: SAMEORIGIN, content-type: application/json, content-length: 6016, date: Tue, 23 Jun 2026 06:06:35 GMT}
+[{"id":"0PN0C7FF7KSTW","name":"2018","root":"/data/comic/2018","importComicInfoBook":true,"importComicInfoSeries":true,"importComicInfoCollection":true,"importComicInfoReadList":true,"importComicInfoSeriesAppendVolume":true,"importEpubBook":true,"importEpubSeries":true,"importMylarSeries":true,"importLocalArtwork":true,"importBarcodeIsbn":false,"scanForceModifiedTime":false,"scanInterval":"DISABLED","scanOnStartup":true,"scanCbx":true,"scanPdf":true,"scanEpub":true,"scanDirectoryExclusions":["#recycle","@Recycle","@eaDir"],"repairExtensions":false,"convertToCbz":false,"emptyTrashAfterScan":false,"seriesCover":"FIRST","hashFiles":true,"hashPages":false,"hashKoreader":false,"analyzeDimensions":true,"oneshotsDirectory":null,"unavailable":false},{"id":"0M3XW6SE0PHVS","name":"2019","root":"/data/comic/2019","importComicInfoBook":true,"importComicInfoSeries":true,"importComicInfoCollection":true,"importComicInfoReadList":true,"importComicInfoSeriesAppendVolume":true,"importEpubBook":true,"importEpubSeries":true,"importMylarSeries":true,"importLocalArtwork":true,"importBarcodeIsbn":false,"scanForceModifiedTime":false,"scanInterval":"DISABLED","scanOnStartup":false,"scanCbx":true,"scanPdf":true,"scanEpub":true,"scanDirectoryExclusions":["#recycle","@Recycle","@eaDir"],"repairExtensions":false,"convertToCbz":false,"emptyTrashAfterScan":false,"seriesCover":"FIRST","hashFiles":true,"hashPages":false,"hashKoreader":false,"analyzeDimensions":true,"oneshotsDirectory":null,"unavailable":false},{"id":"0M3XW4FNCPN1W","name":"2020","root":"/data/comic/2020","importComicInfoBook":true,"importComicInfoSeries":true,"importComicInfoCollection":true,"importComicInfoReadList":true,"importComicInfoSeriesAppendVolume":true,"importEpubBook":true,"importEpubSeries":true,"importMylarSeries":true,"importLocalArtwork":true,"importBarcodeIsbn":false,"scanForceModifiedTime":false,"scanInterval":"DISABLED","scanOnStartup":false,"scanCbx":true,"scanPdf":true,"scanEpub":true,"scanDirectoryExclusions":["#recycle","@Recycle","@eaDir"],"repairExtensions":false,"convertToCbz":false,"emptyTrashAfterScan":false,"seriesCover":"FIRST","hashFiles":true,"hashPages":false,"hashKoreader":false,"analyzeDimensions":true,"oneshotsDirectory":null,"unavailable":false},{"id":"0M3XW2E9GPK89","name":"2021","root":"/data/comic/2021","importComicInfoBook":true,"importComicInfoSeries":true,"importComicInfoCollection":true,"importComicInfoReadList":true,"importComicInfoSeriesAppendVolume":true,"importEpubBook":true,"importEpubSeries":true,"importMylarSeries":true,"importLocalArtwork":true,"impor...
+
+error Network 2026-06-23 14:06:36.413336 
+GET https://wn01.link/
+DioException [unknown]: null
+Error: [RhttpConnectionException] Connection error. URL: https://wn01.link/ (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+null
+
+info Network 2026-06-23 14:06:36.440659 
+Response https://apps.apple.com/jp/app/id875750302 200
+headers:
+{content-type: text/html, cdn-server: ksftf, alt-svc: h3=":443";ma=2592000,h3-29=":443";ma=2592000, server: nginx, etag: "BOsjdvk3KnyX+s1YGcsoqeIQDbv6aOxPMrwOv3XRxcc=", date: Tue, 23 Jun 2026 05:53:43 GMT, expires: Tue, 23 Jun 2026 06:08:43 GMT, age: 773, cache-control: public, max-age=900, accept-ranges: bytes, x-dynamic-status: MISS from KS-CLOUD-CS-MP-17-11, x-cdn-request-id: 18cfcde12534a0d69c9e3c3cd775e350, content-security-policy: upgrade-insecure-requests; default-src 'none'; manifest-src 'self' https://*.apple.com; img-src 'self' https://*.apple.com https://*.mzstatic.com data:; font-src 'self' https://*.apple.com; style-src 'self' https://*.apple.com 'unsafe-inline'; script-src 'self' https://*.apple.com 'sha256-MS6/3FCg4WjP9gwgaBGwLpRCY6fZBgwmhVCdrPrNf3E=' 'sha256-tQjf8gvb2ROOMapIxFvFAYBeUJ0v1HCbOcSmDNXGtDo=' 'sha256-p7PoC97FO+Lu90RNjGWxhbm13yALSR4xzV8vaDhaQBo=' 'sha256-+5XkZFazzJo8n0iOP4ti/cLCMUudTf//Mzkb7xNPXIc='; connect-src 'self' https://*.apple.com https://*.mzstatic.com; media-src 'self' https://*.apple.com blob:; child-src 'self' https://*.apple.com; frame-src 'self' https://*.apple.com itms-appss: macappstore:; worker-src blob:; frame-ancestors 'none'; block-all-mixed-content; report-uri /api/csp-report, link: <https://is1-ssl.mzstatic.com>; rel=preconnect, vary: accept-encoding, x-apple-jingle-correlation-key: VCPU6EOLT4QGKDRRBOIGZZKOPI, x-content-type-options: nosniff, x-frame-options: DENY, x-original-content-length: 1137439, x-responding-instance: amp-web-app-store-server:amp-web-app-store-server-main-78d987c594-hxr67:4200:2624.6.0-external, x-xss-protection: 1; mode=block, strict-transport-security: max-age=31536000; includeSubDomains, x-daiquiri-instance: [daiquiri:10001:daiquiri-cluster-66df5ccdbb-8q2lm:7987:26RELEASE107:daiquiri-amp-kubernetes-shared-cluster-ak8s-prod-ty2-amp-web-app-store-prod, daiquiri:10001:daiquiri-all-shared-ext-5f58b76d64-zm9xn:7987:26RELEASE107:daiquiri-amp-kubernetes-shared-ext-ak8s-prod-ty2-amp-daiquiri-ingress-prod], x-daiquiri-debug-worker-pid: [103386, 594188], x-link-via: xact61:443;csmp17:443;, x-cache-status: HIT from KS-CLOUD-XA-CT-61-05-L, x-ksc-request-id: 18cfcde12534a0d69c9e3c3cd775e350, x-cache: HIT KS-CLOUD}
+<!DOCTYPE html>
+<html dir="ltr" lang="zh-Hans-CN">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="applicable-device" content="pc,mobile" />
+        <meta name="referrer" content="strict-origin" />
+
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="/assets/favicon/favicon-180.png"
+        />
+
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/assets/favicon/favicon-32.png"
+        />
+
+        <link
+            rel="icon"
+            type="image/png"
+       ...
+
+info Network 2026-06-23 14:06:37.145101 
+Response https://rup4a04-c02.tos-cn-hongkong.bytepluses.com/newsvr-2025.txt 200
+headers:
+{accept-ranges: bytes, access-control-allow-credentials: true, access-control-allow-methods: GET, access-control-allow-origin: *, access-control-max-age: 3600, content-length: 451, content-type: text/plain, date: Tue, 23 Jun 2026 06:06:36 GMT, etag: "aa4561437006e276402f50332d778e4c", last-modified: Fri, 29 May 2026 03:58:22 GMT, server: TosServer, x-tos-create-time: Fri, 29 May 2026 03:58:22 GMT, x-tos-hash-crc64ecma: 9109789646350212367, x-tos-id-2: cedf073a226ce80c6a3a226c-b215fc0-1wbuHM-GO-ch-tos-1az-front-aza-1, x-tos-request-id: cedf073a226ce80c6a3a226c-b215fc0-1wbuHM-GO-ch-tos-1az-front-aza-1, x-tos-server-time: 2, x-tos-storage-class: STANDARD}
+X+bnzYIcwF6C7Rd3T7njPDNH08zsH9zyqCrrjCr7qcnHb1LsmIZGIHtrNVR/GiraHE6OuhvrxEzwciVvhdU0I9OYcmWTxF1K7fLfcwkn7kMQg2DZ2qpE7dKGkqKCmQijaSUOswxL1/p9pSVe/vRYEzbB5pfcAB6Yz/zVVIendBJK629QiqQndRXM9bijtZuYQGhQS91cgMlYTujl5ouyy85KZvbdoT5y5xdlQSRMA5/8Pb/+EfGpFWkk1iziXNJycvvb5trdlvfe73KhS/dYpJSrilRGR07XaWi04FhMV2i47SM9s5VWX8t42K8yme8fiy+6NNnOlgeB1evbNVagiWJft5d0TcA4ydIkTZxvaf3GmS/8urE/Iu/FnN/FmYTgMZA7DhYhjab0t3qIygNMBoaU7VrLlK14Eme4pRD7bSbzoayRhkSSe1MeB4Mw2DtQ
+
+info Network 2026-06-23 14:06:37.148802 
+GET https://www.cdnhjk.net/setting?app_img_shunt=1&express=
+headers:
+{Accept: */*, Accept-Encoding: gzip, deflate, br, zstd, Accept-Language: zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7, Connection: keep-alive, Origin: https://localhost, Referer: https://localhost/, Sec-Fetch-Dest: empty, Sec-Fetch-Mode: cors, Sec-Fetch-Site: cross-site, X-Requested-With: com.example.app, Authorization: Bearer, Sec-Fetch-Storage-Access: active, token: 0d2e43480dd1684e2cad849c837aa78a, tokenparam: 1782194797,2.0.16, User-Agent: Mozilla/5.0 (Linux; Android 10; K; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/130.0.0.0 Mobile Safari/537.36, cookie: theme=light; AVS=ao7g8a284s7r3rn5k661l22t5a; __cflb=02DiuE2Zf1N6nw9KjUSdgCHu1ENVDihv1AVuQq6dwaSKe; ipcountry=CN; ipm5=52d9299af0819c40f7e0db00c6c75378}
+data:
+null
+
+info Network 2026-06-23 14:06:38.110285 
+Response https://www.cdnhjk.net/setting?app_img_shunt=1&express= 200
+headers:
+{date: Tue, 23 Jun 2026 06:06:37 GMT, content-type: application/json; charset=utf-8;, cf-ray: a1014ecc7f8034b7-AMS, server: cloudflare, expires: Thu, 19 Nov 1981 08:52:00 GMT, cache-control: no-store, no-cache, must-revalidate, pragma: no-cache, access-control-allow-origin: https://localhost, access-control-allow-credentials: true, access-control-allow-methods: GET, POST, OPTIONS, access-control-allow-headers: Content-Type, Authorization, Tokenparam, Token, set-cookie: [ipcountry=CN; path=/, ipm5=b3d192d5a5733ea1e95706d7aa1c91cf; path=/], last-modified: Tue, 23 Jun 2026 06:06:37 GMT, vary: Accept-Encoding, alt-svc: h3=":443"; ma=86400, nel: {"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}, report-to: {"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=SXigisVKjFQJJapnJttvMsw4kzPRGiSEB9rYYA9SFG8s4QytHvJW6j5FqhKwH2q%2FXd5QYWm8TP5JhoQBdBCUK3FO2%2FYVHetY7NQD9gXS40KOlAQs15HSNpa62tNGjufnyZAZroNK%2FFvtdkSC1g%3D%3D"}]}, cf-cache-status: DYNAMIC}
+{"code":200,"data":"IkadIpyF9ne3bthcKUSvu9z1mpfLLxGyJjWnIwQj3NA3MN00EG1U3\/3FUxIsJcUODugsHxv\/\/cesPZgBrdNpjgQnndXHLZO94wxcgkMGQdvpFkCfvmTyB7ZOMAAXlkn3tU8pGhIXssPmjaV4YVoytrHaAeJZvzsOxe1qU2XyoTJ11uQQnMGRws6gndKqnN7AZcz+NdOnY+wowMOoG\/btd\/dO+kthvnYUI5OZdzidjNM\/A1QFli\/T6QxyUq3y\/KgfiJE4OBwN9e2+lfXtyh9DL69QgmPDvukM0QcDYS5qc7W9HOUKJAmm94qoB1ZBsxWMiPyMJd\/\/N93Po29K9r8MvJtkhGhPlf6GAYcje4lzrFt9lsaFt9qLRaPw6SCZRc4yDugsHxv\/\/cesPZgBrdNpjgQnndXHLZO94wxcgkMGQdvpFkCfvmTyB7ZOMAAXlkn3tU8pGhIXssPmjaV4YVoytrHaAeJZvzsOxe1qU2XyoTLriW\/5fijh6wFB7Ol+SqL9cOkHInKkjzpSW+94LyipXGfIPHmUO50NaxM4RSrbg\/lZQucGThcWbOMgKH2PaFFu2vU3GdBw3NJvdHpDtmCWhSGH0+Ex1JQ74w2miAKtIgE0Z\/ocu9Wl4JK9B3lIWYs6XKA32Plvst87eydKLdDYSsyH4s\/cUMiwj1OlLS7GuMehWnk9APlJI3Gm4D3oHJ7dD0OZkNRQk3slUi7U2DisPYkg3Mgoan6wRwu9jA92sgXaRvfPkFsZoea4XbbVSACH2vroIxw2VbIxgHrcbjC9uWx8bkn+INrVjlOiCMj4baMu+G0M65b6M0J1GSJFhvnoIpfDKhaEtekl1YFpfatFwTnoQ9EBrN6gUCSpmr3n3yb\/2RYoYGMom6AM8a+1mSSJRqQ+A14tqhoCdtDwlgEhfHhp9nw1sXqHyoFG2ul32BxuDhpvm10GzB6OXEHO2HWeEL5kq5nqVWeRorFXaRvUe+qiGDz07l2YbCY6wqq05cf8ezXXSHUqG4Kmr9u10M5IICcmSOk2bWS7C9A+PQI3YI9fj5NkWn9bC\/a\/7ZLedQF4S776AlRyEb1gozYuqDKS9nlG9WDqJZz\/S4mIQVjH+ieU813j32km418FVsE4Yg2blmQ2g4FGIhF0AorltserD48c7KtJwG49gZ9B\/nxN2VNsbv87D5bfD4wAqYWpB6VrRJv0GGfwttGXlmbCPtFEjd4qAoCYiBmAEIzEI0HJHjzAmjSUuX+uhgRouHDBmadVHYkHagydYU\/tJXCg2S2yY2lHmTg7Sk6J3s0iFMX7\/Dv\/MeqK6lvt+gXhmaK2BeqibJZ9kLWwLvqZQsjV8Fk8Ur8ju+HygQPCT+0YE89TNRFCg28qLQMod58cWyeg2LmFRLeAxTAplu63sizBfhTJM8d1+j\/xVDUmgUCqMPJRFdfy9ceOpMb3G5M6QCzN2iUXVmBC9qu26mr5QUJqQRRjg5ZXu3FJCDvmLMY17sqdnV26ez+TWfWpPT8qEtV6PfWXx3DhK1zjZkI02ze4TQ9se6cwJfoiIA86a7psdztrDWhnP9hTp1nl5mE+SgMVPmiUrDLR0+IvP2q19w69ibOw8wFm42vPleqPcji9eod+tW99qlR3wkIg1me0DDq2K4T1oyga3oH8kZrsTUZR7hbN\/+3AKWTf\/fqDuiVteZn8PgU5VcqZuJ9DkWeLMitWB+lkuvm8aR5NmVMtAIAyqqDKaDOUaKgvC7Kh+EtlJ\/uuHedF15RCo\/jSR5Fzqwq9ZmEg70GiItEvTEXnnLqyICSGBKYeGd1xwnoa43F8i5se06JrLEpOuZAD2vC5NY+cdj4F5RgJP+FupNWTwmzMYrRbPccYKR...
+
+info Network 2026-06-23 14:06:38.132938 
+Response http://lrr.tvc-16.science/api/categories 200
+headers:
+{access-control-allow-headers: Authorization, access-control-allow-methods: [OPTIONS,HEAD,GET,POST,PUT,PATCH,DELETE, GET, OPTIONS, POST, DELETE, PUT], access-control-allow-origin: [*, *], alt-svc: h3=":443"; ma=2592000, content-type: application/json;charset=UTF-8, date: Tue, 23 Jun 2026 06:06:37 GMT, server: Mojolicious (Perl), set-cookie: lrr_baseurl=; path=/; SameSite=lax, via: 1.1 Caddy, content-length: 731}
+[{"archives":[],"id":"SET_1589919077","last_used":"1671821865","name":"sega","pinned":"0","search":"sega"},{"archives":["6646c24b0951483ff23709452e130ed2bc85defb","6440d00f35b4f0a008d3fd63c3cdcce32d4cb608"],"id":"SET_1589919132","last_used":"1671821859","name":"PDF Files","pinned":"1","search":""},{"archives":[],"id":"SET_1589919075","last_used":"1671821864","name":"jojo's","pinned":"0","search":"jojo's"},{"archives":[],"id":"SET_1589919074","last_used":"1671821861","name":"group:wadamemo","pinned":"0","search":"group:wadamemo"},{"archives":["28697b96f0ac5858be2614ed10ca47742c9522fd","2810d5e0a8d027ecefebca6237031a0fa7b91eb3"],"id":"SET_1589919095","last_used":"1671821863","name":"Fate\/GO Memo","pinned":"0","search":""}]
+
+info Network 2026-06-23 14:06:40.295871 
+Response https://api.copy-manga.com/api/v3/system/network2?platform=3 200
+headers:
+{content-type: application/json, vary: Accept, Accept-Language, Accept-Encoding, Origin, allow: GET, OPTIONS, x-frame-options: ALLOWALL, cross-origin-opener-policy: same-origin, content-language: zh-hant, x-content-type-options: nosniff, referrer-policy: same-origin}
+{"code":200,"message":"请求成功","results":{"static":"s3.mangafunb.fun","image":"","share":["www.copymanga.fun"],"api":[["api.copy202601.com"],["api.copy202601.com"]],"ads":[["marketing.aiacgn.com"],["marketing.aiacgn.com"]],"host_comic":"comic.zaimanhua.com","host_cartoon":"cartoon.zaimanhua.com","host_novel":"novel.zaimanhua.com","day_downloads_total":5,"ads_reward_downloads":5,"ads_reward_day_show":3,"ads_screen_show":2,"ads_read_express_show":1,"ads_home_seconds":500,"ads_restart_seconds":20,"ads_comic_show":300,"ads_cartoon_show":200,"day_downloads":5,"vip_downloads":0,"reward_downloads":0,"ads_vip_end":null,"ads_stat_switch":false,"ads_stat_switch2":true,"ads_reward_seconds":1200,"in_mainland":true}}
+
+info Network 2026-06-23 14:06:52.910606 
+HEAD https://itunes.apple.com/lookup?bundleId=jp.co.bookwalker.cwapp.ios&country=jp
+headers:
+{User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
+data:
+null
+
+info Network 2026-06-23 14:06:52.932066 
+GET https://www.copy20.com/search
+headers:
+{User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
+data:
+null
+
+info Network 2026-06-23 14:06:52.932139 
+GET https://api.copy-manga.com/api/v3/system/network2?platform=3
+headers:
+{User-Agent: COPY/3.0.6, source: copyApp, deviceinfo: 3198131V-9778, dt: 2026.06.23, platform: 3, referer: com.copymanga.app-3.0.6, version: 3.0.6, device: PV7N.420807.530, pseudoid: 0vB6ql2fbptWBBeM, Accept: application/json, region: 0, authorization: Token, umstring: b4c89ca4104ea9a97750314d791520ac, x-auth-timestamp: 1782194812, x-auth-signature: a20e02ed2429caa02334c2edec0169453013fd5da8fc0a0c68ae183182305b45}
+data:
+null
+
+info Network 2026-06-23 14:06:53.017191 
+HEAD https://rup4a04-c02.tos-cn-hongkong.bytepluses.com/newsvr-2025.txt
+headers:
+{Accept: */*, Accept-Encoding: gzip, deflate, br, zstd, Accept-Language: zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7, Connection: keep-alive, Origin: https://localhost, Referer: https://localhost/, Sec-Fetch-Dest: empty, Sec-Fetch-Mode: cors, Sec-Fetch-Site: cross-site, X-Requested-With: com.example.app, User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
+data:
+null
+
+info Network 2026-06-23 14:06:53.028645 
+HEAD http://lrr.tvc-16.science/api/categories
+headers:
+{Authorization: , User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36, cookie: lrr_baseurl=; lrr_baseurl=}
+data:
+null
+
+info Network 2026-06-23 14:06:53.096901 
+GET https://apps.apple.com/jp/app/id875750302
+headers:
+{User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
+data:
+null
+
+info Network 2026-06-23 14:06:53.096986 
+GET https://wn01.link/
+headers:
+{User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
+data:
+null
+
+info Network 2026-06-23 14:06:53.108433 
+Response https://itunes.apple.com/lookup?bundleId=jp.co.bookwalker.cwapp.ios&country=jp 200
+headers:
+{content-type: text/javascript; charset=utf-8, x-ksc-request-id: 55cb72c2304f5ddfcd53a5549f1b7ae7, x-dynamic-status: [MISS from KS-CLOUD-XA-CT-61-20-L, MISS from KS-CLOUD-ZHOUS-MP-05-15, MISS from KS-CLOUD-FZ-CT-321-76], server: nginx, x-apple-jingle-correlation-key: FWM3CXXYWOVK5SHW6Q73ACP46U, x-apple-request-uuid: 2d99b15e-f8b3-aaae-c8f6-f43fb009fcf5, x-apple-translated-wo-url: /WebObjects/MZStoreServices.woa/ws/wsLookup?bundleId=jp.co.bookwalker.cwapp.ios&country=jp&urlDesc=, apple-tk: false, x-b3-spanid: a4ef76da140d8268, b3: 2d99b15ef8b3aaaec8f6f43fb009fcf5-a4ef76da140d8268, x-content-type-options: nosniff, x-b3-traceid: 2d99b15ef8b3aaaec8f6f43fb009fcf5, x-webobjects-loadaverage: 0, x-responding-instance: MZStoreServices:6501532:::, apple-seq: 0.0, content-disposition: attachment; filename=1.txt, apple-originating-system: MZStoreServices, x-cdn-request-id: 55cb72c2304f5ddfcd53a5549f1b7ae7, strict-transport-security: max-age=31536000; includeSubDomains, x-apple-orig-url: https://itunes.apple.com/lookup?bundleId=jp.co.bookwalker.cwapp.ios&country=jp, x-apple-application-site: MR22, apple-timing-app: 21 ms, x-apple-application-instance: 6501532, x-daiquiri-instance: daiquiri:12282006:mr47p00it-qujn05121902:7987:26RELEASE107:daiquiri-amp-store-l7shared-ext-001-mr, x-daiquiri-debug-worker-pid: 23744, vary: Accept-Encoding, cache-control: max-age=61578, date: Tue, 23 Jun 2026 06:06:52 GMT, x-cache: MISS KS-CLOUD, x-true-cache-key: /L/itunes.apple.com/lookup?bundleId=jp.co.bookwalker.cwapp.ios&country=jpBrowser vcd=2897, x-apple-partner: origin.0, x-link-via: xact61:443;zhousmp05:443;fzct321:443;}
+
+
+info Network 2026-06-23 14:06:53.108857 
+GET https://itunes.apple.com/lookup?bundleId=jp.co.bookwalker.cwapp.ios&country=jp
+headers:
+{User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
+data:
+null
+
+error Network 2026-06-23 14:06:53.178686 
+GET https://wn01.link/
+DioException [unknown]: null
+Error: [RhttpConnectionException] Connection error. URL: https://wn01.link/ (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+null
+
+info Network 2026-06-23 14:06:53.280811 
+Response https://itunes.apple.com/lookup?bundleId=jp.co.bookwalker.cwapp.ios&country=jp 200
+headers:
+{content-type: text/javascript; charset=utf-8, x-ksc-request-id: 41006f4a0805146ba8233b5cd2712904, x-dynamic-status: [MISS from KS-CLOUD-XA-CT-61-20-L, MISS from KS-CLOUD-TAIZ-MP-013-27, MISS from KS-CLOUD-GZ-CT-61-30], server: nginx, x-apple-jingle-correlation-key: FWM3CXXYWOVK5SHW6Q73ACP46U, x-apple-request-uuid: 2d99b15e-f8b3-aaae-c8f6-f43fb009fcf5, x-apple-translated-wo-url: /WebObjects/MZStoreServices.woa/ws/wsLookup?bundleId=jp.co.bookwalker.cwapp.ios&country=jp&urlDesc=, apple-tk: false, x-b3-spanid: a4ef76da140d8268, b3: 2d99b15ef8b3aaaec8f6f43fb009fcf5-a4ef76da140d8268, x-content-type-options: nosniff, x-b3-traceid: 2d99b15ef8b3aaaec8f6f43fb009fcf5, x-webobjects-loadaverage: 0, x-responding-instance: MZStoreServices:6501532:::, apple-seq: 0.0, content-disposition: attachment; filename=1.txt, apple-originating-system: MZStoreServices, x-cdn-request-id: 41006f4a0805146ba8233b5cd2712904, strict-transport-security: max-age=31536000; includeSubDomains, x-apple-orig-url: https://itunes.apple.com/lookup?bundleId=jp.co.bookwalker.cwapp.ios&country=jp, x-apple-application-site: MR22, apple-timing-app: 21 ms, x-apple-application-instance: 6501532, x-daiquiri-instance: daiquiri:12282006:mr47p00it-qujn05121902:7987:26RELEASE107:daiquiri-amp-store-l7shared-ext-001-mr, x-daiquiri-debug-worker-pid: 23744, vary: Accept-Encoding, cache-control: max-age=61578, date: Tue, 23 Jun 2026 06:06:52 GMT, x-cache: MISS KS-CLOUD, x-true-cache-key: /L/itunes.apple.com/lookup?bundleId=jp.co.bookwalker.cwapp.ios&country=jpBrowser vcd=2897, x-apple-partner: origin.0, x-link-via: xact61:443;taizmp013:443;gzct61:443;}
+
+
+
+{
+ "resultCount":1,
+ "results": [
+{"isGameCenterEnabled":false, 
+"screenshotUrls":["https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/bf/c7/b6/bfc7b6c0-66a9-956a-0de4-afda937ff947/5.5_U30a4_U30f3_U30c1_01.jpg/406x228bb.jpg", "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/5c/15/39/5c153985-e025-7d64-09ae-aa8d43a4b5fd/5.5_U30a4_U30f3_U30c1_02.jpg/406x228bb.jpg", "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/93/2d/95/932d95b1-2848-9963-1987-7b5b142dc5ac/5.5_U30a4_U30f3_U30c1_03.jpg/406x228bb.jpg", "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/e5/d8/c7/e5d8c763-83e2-0321-c5d8-80f94e85bd01/5.5_U30a4_U30f3_U30c1_04.jpg/406x228bb.jpg", "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/5c/a5/ec/5ca5ece5-153a-16b7-56e7-f3f44d27ff22/5.5_U30a4_U30f3_U30c1_05.jpg/406x228bb.jpg", "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/8a/c2/05/8ac20523-d068-a4f4-5f49-ba17920b80b9/5.5_U30a4_U30f3_U30c1_06.jpg/406x228bb.jpg", "https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/13/11/74/1311744c-f436-dd74-4173-eb7cfdc26bf5/5.5_U30a4_U30f3_U30c1_07.jpg/406x228bb.jpg"], 
+"ipadScreenshotUrls":[
+"https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/0c/24/85/0c248508-595b-1107-80f3-f83b2797b...
+
+error Network 2026-06-23 14:06:53.310594 
+GET https://www.copy20.com/search
+DioException [unknown]: null
+Error: [RhttpConnectionException] Connection error. URL: https://www.copy20.com/search (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+null
+
+info Network 2026-06-23 14:06:53.810353 
+Response https://rup4a04-c02.tos-cn-hongkong.bytepluses.com/newsvr-2025.txt 200
+headers:
+{accept-ranges: bytes, content-length: 451, content-type: text/plain, date: Tue, 23 Jun 2026 06:06:53 GMT, etag: "aa4561437006e276402f50332d778e4c", last-modified: Fri, 29 May 2026 03:58:22 GMT, server: TosServer, x-tos-create-time: Fri, 29 May 2026 03:58:22 GMT, x-tos-hash-crc64ecma: 9109789646350212367, x-tos-id-2: e345073a227d01826a3a227d-bd1730f-1wbuHd-HO-ch-tos-1az-front-aza-2, x-tos-request-id: e345073a227d01826a3a227d-bd1730f-1wbuHd-HO-ch-tos-1az-front-aza-2, x-tos-server-time: 3, x-tos-storage-class: STANDARD}
+
+
+info Network 2026-06-23 14:06:53.811381 
+GET https://rup4a04-c02.tos-cn-hongkong.bytepluses.com/newsvr-2025.txt
+headers:
+{Accept: */*, Accept-Encoding: gzip, deflate, br, zstd, Accept-Language: zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7, Connection: keep-alive, Origin: https://localhost, Referer: https://localhost/, Sec-Fetch-Dest: empty, Sec-Fetch-Mode: cors, Sec-Fetch-Site: cross-site, X-Requested-With: com.example.app, User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
+data:
+null
+
+info Network 2026-06-23 14:06:54.112583 
+Response https://apps.apple.com/jp/app/id875750302 200
+headers:
+{content-type: text/html, cdn-server: ksftf, alt-svc: h3=":443";ma=2592000,h3-29=":443";ma=2592000, server: nginx, etag: "BOsjdvk3KnyX+s1YGcsoqeIQDbv6aOxPMrwOv3XRxcc=", date: Tue, 23 Jun 2026 05:53:43 GMT, expires: Tue, 23 Jun 2026 06:08:43 GMT, age: 790, cache-control: public, max-age=900, accept-ranges: bytes, x-dynamic-status: MISS from KS-CLOUD-CS-MP-17-11, x-cdn-request-id: bc1c56ff9ca0b16d7eb48ed4d1771b9c, content-security-policy: upgrade-insecure-requests; default-src 'none'; manifest-src 'self' https://*.apple.com; img-src 'self' https://*.apple.com https://*.mzstatic.com data:; font-src 'self' https://*.apple.com; style-src 'self' https://*.apple.com 'unsafe-inline'; script-src 'self' https://*.apple.com 'sha256-MS6/3FCg4WjP9gwgaBGwLpRCY6fZBgwmhVCdrPrNf3E=' 'sha256-tQjf8gvb2ROOMapIxFvFAYBeUJ0v1HCbOcSmDNXGtDo=' 'sha256-p7PoC97FO+Lu90RNjGWxhbm13yALSR4xzV8vaDhaQBo=' 'sha256-+5XkZFazzJo8n0iOP4ti/cLCMUudTf//Mzkb7xNPXIc='; connect-src 'self' https://*.apple.com https://*.mzstatic.com; media-src 'self' https://*.apple.com blob:; child-src 'self' https://*.apple.com; frame-src 'self' https://*.apple.com itms-appss: macappstore:; worker-src blob:; frame-ancestors 'none'; block-all-mixed-content; report-uri /api/csp-report, link: <https://is1-ssl.mzstatic.com>; rel=preconnect, vary: accept-encoding, x-apple-jingle-correlation-key: VCPU6EOLT4QGKDRRBOIGZZKOPI, x-content-type-options: nosniff, x-frame-options: DENY, x-original-content-length: 1137439, x-responding-instance: amp-web-app-store-server:amp-web-app-store-server-main-78d987c594-hxr67:4200:2624.6.0-external, x-xss-protection: 1; mode=block, strict-transport-security: max-age=31536000; includeSubDomains, x-daiquiri-instance: [daiquiri:10001:daiquiri-cluster-66df5ccdbb-8q2lm:7987:26RELEASE107:daiquiri-amp-kubernetes-shared-cluster-ak8s-prod-ty2-amp-web-app-store-prod, daiquiri:10001:daiquiri-all-shared-ext-5f58b76d64-zm9xn:7987:26RELEASE107:daiquiri-amp-kubernetes-shared-ext-ak8s-prod-ty2-amp-daiquiri-ingress-prod], x-daiquiri-debug-worker-pid: [103386, 594188], x-link-via: xact61:443;csmp17:443;, x-cache-status: HIT from KS-CLOUD-XA-CT-61-05-L, x-ksc-request-id: bc1c56ff9ca0b16d7eb48ed4d1771b9c, x-cache: HIT KS-CLOUD}
+<!DOCTYPE html>
+<html dir="ltr" lang="zh-Hans-CN">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="applicable-device" content="pc,mobile" />
+        <meta name="referrer" content="strict-origin" />
+
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="/assets/favicon/favicon-180.png"
+        />
+
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/assets/favicon/favicon-32.png"
+        />
+
+        <link
+            rel="icon"
+            type="image/png"
+       ...
+
+info Network 2026-06-23 14:06:55.933804 
+Response http://lrr.tvc-16.science/api/categories 200
+headers:
+{access-control-allow-headers: Authorization, access-control-allow-methods: [OPTIONS,HEAD,GET,POST,PUT,PATCH,DELETE, GET, OPTIONS, POST, DELETE, PUT], access-control-allow-origin: [*, *], alt-svc: h3=":443"; ma=2592000, content-type: application/json;charset=UTF-8, date: Tue, 23 Jun 2026 06:06:55 GMT, server: Mojolicious (Perl), set-cookie: lrr_baseurl=; path=/; SameSite=lax, via: 1.1 Caddy, content-length: 731}
+
+
+info Network 2026-06-23 14:06:56.534969 
+Response https://rup4a04-c02.tos-cn-hongkong.bytepluses.com/newsvr-2025.txt 200
+headers:
+{accept-ranges: bytes, access-control-allow-credentials: true, access-control-allow-methods: GET, access-control-allow-origin: *, access-control-max-age: 3600, content-length: 451, content-type: text/plain, date: Tue, 23 Jun 2026 06:06:56 GMT, etag: "aa4561437006e276402f50332d778e4c", last-modified: Fri, 29 May 2026 03:58:22 GMT, server: TosServer, x-tos-create-time: Fri, 29 May 2026 03:58:22 GMT, x-tos-hash-crc64ecma: 9109789646350212367, x-tos-id-2: cf1d073a228010656a3a2280-b6c80f7-1wbuHg-GO-ch-tos-1az-front-aza-2, x-tos-request-id: cf1d073a228010656a3a2280-b6c80f7-1wbuHg-GO-ch-tos-1az-front-aza-2, x-tos-server-time: 2, x-tos-storage-class: STANDARD}
+X+bnzYIcwF6C7Rd3T7njPDNH08zsH9zyqCrrjCr7qcnHb1LsmIZGIHtrNVR/GiraHE6OuhvrxEzwciVvhdU0I9OYcmWTxF1K7fLfcwkn7kMQg2DZ2qpE7dKGkqKCmQijaSUOswxL1/p9pSVe/vRYEzbB5pfcAB6Yz/zVVIendBJK629QiqQndRXM9bijtZuYQGhQS91cgMlYTujl5ouyy85KZvbdoT5y5xdlQSRMA5/8Pb/+EfGpFWkk1iziXNJycvvb5trdlvfe73KhS/dYpJSrilRGR07XaWi04FhMV2i47SM9s5VWX8t42K8yme8fiy+6NNnOlgeB1evbNVagiWJft5d0TcA4ydIkTZxvaf3GmS/8urE/Iu/FnN/FmYTgMZA7DhYhjab0t3qIygNMBoaU7VrLlK14Eme4pRD7bSbzoayRhkSSe1MeB4Mw2DtQ
+
+info Network 2026-06-23 14:06:56.547387 
+GET https://www.cdnhjk.net/setting?app_img_shunt=1&express=
+headers:
+{Accept: */*, Accept-Encoding: gzip, deflate, br, zstd, Accept-Language: zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7, Connection: keep-alive, Origin: https://localhost, Referer: https://localhost/, Sec-Fetch-Dest: empty, Sec-Fetch-Mode: cors, Sec-Fetch-Site: cross-site, X-Requested-With: com.example.app, Authorization: Bearer, Sec-Fetch-Storage-Access: active, token: 10db6986a5fdf37ee703629c23859269, tokenparam: 1782194816,2.0.16, User-Agent: Mozilla/5.0 (Linux; Android 10; K; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/130.0.0.0 Mobile Safari/537.36, cookie: theme=light; AVS=ao7g8a284s7r3rn5k661l22t5a; __cflb=02DiuE2Zf1N6nw9KjUSdgCHu1ENVDihv1AVuQq6dwaSKe; ipcountry=CN; ipm5=b3d192d5a5733ea1e95706d7aa1c91cf}
+data:
+null
+
+info Network 2026-06-23 14:06:56.752464 
+GET https://www.mhua5.com/index.php/search?key=%E4%B8%80%E6%8B%B3%E8%B6%85%E4%BA%BA
+headers:
+{User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36, cookie: SITE_TOTAL_ID=231c3a7a62b190c47839c53bb3ce47de}
+data:
+null
+
+info Network 2026-06-23 14:06:58.442903 
+Response https://www.cdnhjk.net/setting?app_img_shunt=1&express= 200
+headers:
+{date: Tue, 23 Jun 2026 06:06:56 GMT, content-type: application/json; charset=utf-8;, cf-ray: a1014f44ed2bf5d1-AMS, server: cloudflare, expires: Thu, 19 Nov 1981 08:52:00 GMT, cache-control: no-store, no-cache, must-revalidate, pragma: no-cache, access-control-allow-origin: https://localhost, access-control-allow-credentials: true, access-control-allow-methods: GET, POST, OPTIONS, access-control-allow-headers: Content-Type, Authorization, Tokenparam, Token, set-cookie: [ipcountry=CN; path=/, ipm5=22bde98e4274b520b16572002f9f03ab; path=/], last-modified: Tue, 23 Jun 2026 06:06:56 GMT, vary: Accept-Encoding, alt-svc: h3=":443"; ma=86400, nel: {"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}, report-to: {"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=ujH2ZPKn2482%2FNtjLHxSHa4EgGqvJ7Gi9GF7S2bQ0AWazcBqElyNYFulFCk3xLXHOTqcB7cJXaCkHV2MrWbP5%2Bl1JhDLHMzIZWBsGgjal3m9v9Uvj763cAtFw2L6yPXbtwQ%2Bw91r1YXYUg0FNw%3D%3D"}]}, cf-cache-status: DYNAMIC}
+{"code":200,"data":"1iwVeu5rqThfdwt3K58YxYLRxEhKyJ9b7SijRN+FBSARkVjJs8gB6GRox75jxgrXd1TXmlSSv9pJYraqh+iGGmmXZqkD2sUPz3ixh9ipLceY8Q0D5VVAVCKMTaW9g7vVY0bWpyg64lg9txF1nYMD6c+1f6CqfvBsM4537bILIuHgXMddDKGT3xMbUiCiyJ67HZHf02osvwbbgGbKJPMEwl39V9htDY3WGc1m8AB6kbyt17HUv8b\/CGBRl+0a526CFIqSOpblM5bJOfs6wo4FAtPY5eegu9DjcrBPcTLcpF9AXN0HfqLOLtg0VeDYxnDStwUM7K6MkquTWCxStQSul\/4jqCymqN1iVnWQ7eoc94drmOSmn0z5PcONWnCYAdh3d1TXmlSSv9pJYraqh+iGGmmXZqkD2sUPz3ixh9ipLceY8Q0D5VVAVCKMTaW9g7vVY0bWpyg64lg9txF1nYMD6c+1f6CqfvBsM4537bILIuExPLqhPXuPpDJ7QPkBsC7PMPEYCsCcOLanYmHKpTB1tbufPDfD5cRho0HGu6KectuL4fXB9zoXTcHQlbcnSej4R6i1iT15DYe+Q6ZwgCpF5aTcJFoy8PjdclTk8vt0cbCJP7vC1Fj0lNBLpndfzbP4tR8CzTBWTFvs\/6c9SxVsqPVMTkqEKpvwYX0Dr4z5ZhFQo94isksiNXGNeX4WBHqaLxHUFc55Q02MgYE3PkVFEkTtgnjz5BNxCFC7cWmZJhO92\/wgjns8nNgUY95MFJFFeiIJr5lFUcMdvXVQCFEt+Eqcgw8HfhkrZQP8MyIIKL3\/zOI\/eV+J7FXQ5LybT8e1xRt0PXgfoM9MW00TV1lCoemEBodB5whzAEyea1mbGO9t809kURLHaujF\/0LLfw5fC6ymVpldS3wk2gtP0c0G0CsRgY1rImQ3UerYhsTlZp+rmfsfXboavB7XI5+H02rHJR\/sRA9ziPAmAF\/ahuHEhBvNyPZ9pMaBEneh+mqek9btk+nsuj303qb2gujQvT7F+VN7LDX1IV\/0o1MnPu08KQrbCBjjepVMbXqJvqTky7AXLm2BEi72nNW+fIE\/4bEDDsdA58TQo2l\/sFaVz0M8nOUFGDRMIurBtQj6hf97yh2Thp5LAZ6VQIUwfdQhlp8oDPXASwxKwKEzYvoyk3jLIAITaf4JBJ+8feuLBuMjyVj9jsCOLRNCaJGZVs5F1oWmzuJ+fvQRNiGFJSNNvohUmn+DDoev6yr5SrCN5PYAOuNMRcohuXNrpHvXEqKkZOxgP95qYtrMiEnEwOtnG2PJtSWAEMVybRUYXMlpiUKVDcPTNi1+nuqowGy+WfjMOphjKMoUsXOoaQhGzYYxnA0QVwkPVSOBP\/fUr3uTfzw40FM2e+S+MvbDZICEjpTGpBSlm7\/Pp9C7C2EBQ7Ao3s9F9d4erJ2UOgtKyxpZpLQvY5oj1\/hWZSC2EUzdG417VEpSDbKnbQ1LPxuPk\/cEhws4tOILz71ySkuKT4XFArAmiZRnVfl\/3FWsBOeVJHHIT3nAQvogqatm6j5\/+lA7cotDtg6fzsuawjI0EeZZeK0w3UUEJ14kRWsM4r4o5x5XvrWSfyqN43Y6XOy0GdXfR83hyAp\/pv3ML7R2nDB\/J+gxfJ8Yir4Hc19DqMh5eeY2oJCfaCO2Ok8sSTCjm1VgCyufOP3fzAv57pzinQh8r4qbONaNyypZVE3USCleDv5V8vuUlZkRV8Zq8ltOTD4qRUpGJ8b3U3SxFgzdR2xjx2x21C+If5B9UgBgX9+u2M9lzcbhaBYdFVGg3CtPEv5ReZQONcwjKHT3DxonbG917FANy91tBY177u4onSJdAATbhWhMygyD8psWscJ4qOg...
+
+info Network 2026-06-23 14:06:59.251139 
+Response https://www.mhua5.com/index.php/search?key=%E4%B8%80%E6%8B%B3%E8%B6%85%E4%BA%BA 200
+headers:
+{date: Tue, 23 Jun 2026 06:06:57 GMT, content-type: text/html; charset=utf-8, server: cloudflare, vary: Accept-Encoding, x-generator: Mccms comic(http://www.mccms.cn), strict-transport-security: max-age=31536000, alt-svc: h3=":443"; ma=86400, nel: {"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}, cf-cache-status: DYNAMIC, report-to: {"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=RxyY8Cp5Bpa2BPup%2BPD4Zs35HXqNq%2Ba%2BZ4NKyB3Q6NA0oTo568QelMKBIycVBdXtD5kBQ5DfqOi%2B%2FkHZe9uHfZ6ujpIY7411N1AmbHzVwVFfVYp81hceIT5AQlnWI9%2F8"}]}, cf-ray: a1014f4918d83d7f-AMS}
+<!DOCTYPE html>
+<html>
+<head>
+<title>一拳超人 - 漫画屋-漫画大全-免费漫画在线看-最好看的漫画</title>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+<meta name="keywords" content="漫画屋,动漫屋,在线漫画,漫画大全,免费漫画,漫画在线看,手机看漫画,手机漫画,日漫,国漫,韩漫">
+<meta name="description" content="漫画屋&#40;www.mhua5.com&#41;为您提供优质的漫画阅读体验，日本漫画,港台漫画,韩国漫画,欧美漫画,好漫画。热门漫画：火影忍者、海贼王、死神、一拳超人、古惑仔等漫画阅读网站，就在漫画屋">
+<!-- Mccms core JS build, must be loaded -->
+<script>var Mcpath = {url:'www.mhua5.com',web:'/',basepath:'/packs/',tpl:'/template/pc/default/',istel:1};</script>
+<link rel="stylesheet" href="/packs/layui/css/layui.css">
+<script src="/packs/layui/layui.all.js"></script>
+<script src="/packs/mccms/base.js"></script>
+<!-- //Mccms core JS build, must be loaded -->
+
+<!-- This template needs to be built -->
+<link rel="shortcut icon" href="/template/pc/default/images/favicon.ico" type="image/x-icon"/>
+<link rel="Bookmark" href="/template/pc/default/images/favicon.ico"/>
+<link rel="stylesheet" href="/template/pc/default/css/common_home.css">
+<link rel="stylesheet" href="/template/pc/default/css/home.css">
+<script src="/template/pc/default/js/jquery.lazyload.min.js"></script>
+<script src="/template/pc/default/js/jquery.SuperSlide.2.1.3.js"></script>
+<script src="/template/pc/default/js/index.js"></script>
+<!--[if lt IE 9]>
+	<script src="/template/pc/default/js/respond.js"></script>
+<![endif]-->
+<script>
+window._bd_share_config = {"common" : {"bdSnsKey" : {},"bdText" : document.title,"bdUrl" : window.location.href,"bdDesc":'',"bdMini" : "2","bdMiniList" : false,"bdStyle" : "0","bdSize" : "32",},"share" : {}};
+with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+</head>
+<body class="p-index">
+<div style='display:none;'><img src='/template/pc/default/images/app_logo.png' /></div>
+<div class="in-header">
+	<div class="in-header__wrap container--response">
+    	<a class="in-header__logo" href="https://www.mhua5.com/"></a>
+    	<div class="in-header__nav">
+      		<ul class="clearfix">
+		        <li id="nav_index" class="nav-item">
+		        	<a href="https://www.mhua5.com/">首页</...
+
+error Network 2026-06-23 14:06:59.254233 
+ReferenceError: Document is not defined
+    at load (Manhua5Source:227:28)
+
+
+
+info Network 2026-06-23 14:06:59.637795 
+Response https://api.copy-manga.com/api/v3/system/network2?platform=3 200
+headers:
+{content-type: application/json, vary: Accept, Accept-Language, Accept-Encoding, Origin, allow: OPTIONS, GET, x-frame-options: ALLOWALL, cross-origin-opener-policy: same-origin, content-language: zh-hant, x-content-type-options: nosniff, referrer-policy: same-origin}
+{"code":200,"message":"请求成功","results":{"static":"s3.mangafunb.fun","image":"","share":["www.copymanga.fun"],"api":[["api.copy202601.com"],["api.copy202601.com"]],"ads":[["marketing.aiacgn.com"],["marketing.aiacgn.com"]],"host_comic":"comic.zaimanhua.com","host_cartoon":"cartoon.zaimanhua.com","host_novel":"novel.zaimanhua.com","day_downloads_total":5,"ads_reward_downloads":5,"ads_reward_day_show":3,"ads_screen_show":2,"ads_read_express_show":1,"ads_home_seconds":500,"ads_restart_seconds":20,"ads_comic_show":300,"ads_cartoon_show":200,"day_downloads":5,"vip_downloads":0,"reward_downloads":0,"ads_vip_end":null,"ads_stat_switch":false,"ads_stat_switch2":true,"ads_reward_seconds":1200,"in_mainland":true}}
+
+info Network 2026-06-23 14:07:07.601606 
+GET https://cn.bzmgcn.com
+headers:
+{User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
+data:
+null
+
+info Network 2026-06-23 14:07:08.489347 
+Response https://cn.bzmgcn.com 200
+headers:
+{server: nginx/1.18.0 (Ubuntu), date: Tue, 23 Jun 2026 06:07:07 GMT, content-type: text/html; charset=utf-8, transfer-encoding: chunked, connection: keep-alive, vary: Accept-Encoding, cache-control: max-age=120, expires: Tue, 23 Jun 2026 06:09:07 GMT}
+<!doctype html>
+<html ⚡ data-n-head-ssr lang="zh-CN" amp data-n-head="%7B%22lang%22:%7B%22ssr%22:%22zh-CN%22%7D,%22amp%22:%7B%22ssr%22:true%7D%7D">
+<head>
+  <meta data-n-head="ssr" charset="utf-8"><meta data-n-head="ssr" name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"><meta data-n-head="ssr" data-hid="description" name="description" content="包子漫画为您提供优质的漫画阅读体验。连载漫画，免费漫画，玄幻漫画，言情漫画，穿越漫画，都市漫画，仙侠漫画，武侠漫画，现代言情漫画，古代言情漫画，灵异漫画，游戏漫画，历史漫画，悬疑漫画，科幻漫画，竞技体育漫画，军事漫画，青春漫画，耽美漫画，日漫，国漫，看不完的漫画，漫画阅读网站，就在包子漫画"><meta data-n-head="ssr" data-hid="keywords" name="keywords" content="漫畫，動漫，漫画，动漫，漫画，漫畫網，動漫網，動畫網，漫画网，动漫网，漫画网，漫畫網站，包子漫畫，包子，包子漫画，免费漫画，连载漫画，韩国漫画，耽美漫画，武炼巅峰，斗罗大陆，绝世唐门，斗破苍穹，星武神诀，百炼成神包子漫画"><meta data-n-head="ssr" data-hid="og:type" name="og:type" content="website"><meta data-n-head="ssr" data-hid="og:title" name="og:title" content="🌈️包子漫画"><meta data-n-head="ssr" data-hid="og:locale:alternate" name="og:locale:alternate" content="zh_TW"><meta data-n-head="ssr" data-hid="og:site_name" name="og:site_name" content="🌈️包子漫画"><meta data-n-head="ssr" data-hid="og:url" name="og:url" content="https://www.bzmgcn.com/"><meta data-n-head="ssr" data-hid="og:image" name="og:image" content="https://www.bzmgcn.com/apple-icon-120x120.png"><meta data-n-head="ssr" data-hid="og:image:width" name="og:image:width" content="120"><meta data-n-head="ssr" data-hid="og:image:height" name="og:image:height" content="120"><meta data-n-head="ssr" data-hid="og:description" name="og:description" content="包子漫画为您提供优质的漫画阅读体验。连载漫画，免费漫画，玄幻漫画，言情漫画，穿越漫画，都市漫画，仙侠漫画，武侠漫画，现代言情漫画，古代言情漫画，灵异漫画，游戏漫画，历史漫画，悬疑漫画，科幻漫画，竞技体育漫画，军事漫画，青春漫画，耽美漫画，日漫，国漫，看不完的漫画，漫画阅读网站，就在包子漫画"><meta data-n-head="ssr" data-hid="twitter:card" name="twitter:card" content="summary_large_image"><meta data-n-head="ssr" data-hid="twitter:title" name="twitter:title" content="🌈️包子漫画"><meta data-n-head="ssr" data-hid="twitter:description" name="twitter:description" content="包子漫画为您提供优质的漫画阅读体验。连载漫画，免费漫画，玄幻漫画，言情漫画，穿越漫画，都市漫画，仙侠漫画，武侠漫画，现代言情漫画，古代言情漫画，灵异漫画，游戏漫画，历史漫画，悬疑漫画，科幻漫画，竞技体育漫画，军事漫画，青春漫画，耽美漫画，日漫，国漫，看不完的漫画，漫画阅读网站，就在包子漫画"><title>🌈️包子漫画</title><link data-n-head="ssr" rel="apple-touch-icon" sizes="57x57" href="https://static-tw.bzmgcn.com/static/bzmh/img/apple-icon-57x57.png"><link data-n-head="ssr" rel="apple-touch-icon" sizes="60x60" href="https://static-tw.bzmgcn.com/static/bzmh/img/apple-icon-60x60.png"><link data-n-head="ssr" rel="apple-touch-icon" sizes="72x72" href="https://static-tw.bzmgcn.com/static/bzmh/img/apple-icon-72x72.png"><link data-n-head="ssr" rel="apple-touch-icon" sizes="76x76" href="https://static-tw.bzmgcn.com/static/bzmh/img/apple-icon-76x76.png"><link data-n-head="ssr" rel="apple-touch-icon" sizes="114x114" href="h...
+
+info Network 2026-06-23 14:07:08.893737 
+GET https://static-tw.bzmgcn.com/cover/xingtianfeiwen-yizhijingwenhua.jpg?w=285&h=375&q=100
+headers:
+{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
+data:
+null
+
+info Network 2026-06-23 14:07:09.820382 
+Response https://static-tw.bzmgcn.com/cover/xingtianfeiwen-yizhijingwenhua.jpg?w=285&h=375&q=100 200
+headers:
+{date: Tue, 23 Jun 2026 06:07:09 GMT, content-type: image/jpeg, content-length: 142876, server: cloudflare, nel: {"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}, cache-control: max-age=14400, content-security-policy: script-src 'none', x-request-id: f30b277484d4dcf9319a079fcc44d51e, expires: Tue, 23 Jun 2026 07:04:22 GMT, age: 228, accept-ranges: bytes, last-modified: Tue, 23 Jun 2026 06:03:20 GMT, cf-cache-status: HIT, report-to: {"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=jnDIPelU4c54%2FKUO1OOA4TNSEKbDK0qosooX5%2FqnbohRCZ6t9S%2F88RkaTLfYf1P0Lj1Ap6nenp%2FXpssHGmetOI9PwgXOXForloEn%2FYi7nth4or5S2zC6t3HyqhyVDT3MUdElfuNU9dTM4iZq6kWvwcYLYA%3D%3D"}]}, cf-ray: a1014f93780155af-AMS, alt-svc: h3=":443"; ma=86400}
+Instance of 'ResponseBody'
+
+info Network 2026-06-23 14:07:10.642587 
+GET https://www.mhua5.com/
+headers:
+{User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36, cookie: SITE_TOTAL_ID=231c3a7a62b190c47839c53bb3ce47de}
+data:
+null
+
+info Network 2026-06-23 14:07:12.258796 
+Response https://www.mhua5.com/ 200
+headers:
+{date: Tue, 23 Jun 2026 06:07:11 GMT, content-type: text/html; charset=utf-8, server: cloudflare, vary: Accept-Encoding, x-generator: Mccms comic(http://www.mccms.cn), strict-transport-security: max-age=31536000, alt-svc: h3=":443"; ma=86400, nel: {"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}, cf-cache-status: DYNAMIC, report-to: {"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=xYOYDl7VXBayZ5sW05rY%2FY%2BprYMNfViAU3%2FVE0jnwGPxnZS0Lpfx1aPpHKhl34KH1%2Bl1B8RZtBi8IQthvAtU6tLGuckRzrUgrOH6U5XDNfqCgRvfyTowyf5XWWJZppnkNQCc9yVTPa%2BpNVZ7"}]}, cf-ray: a1014f9e0b27a01a-AMS}
+<!DOCTYPE html>
+<html>
+<head>
+<title>漫画屋-漫画大全-免费漫画在线看-最好看的漫画</title>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+<meta name="keywords" content="漫画屋,动漫屋,在线漫画,漫画大全,免费漫画,漫画在线看,手机看漫画,手机漫画,日漫,国漫,韩漫">
+<meta name="description" content="漫画屋&#40;www.mhua5.com&#41;为您提供优质的漫画阅读体验，日本漫画,港台漫画,韩国漫画,欧美漫画,好漫画。热门漫画：火影忍者、海贼王、死神、一拳超人、古惑仔等漫画阅读网站，就在漫画屋">
+<!-- Mccms core JS build, must be loaded -->
+<script>var Mcpath = {url:'www.mhua5.com',web:'/',basepath:'/packs/',tpl:'/template/pc/default/',istel:1};</script>
+<link rel="stylesheet" href="/packs/layui/css/layui.css">
+<script src="/packs/layui/layui.all.js"></script>
+<script src="/packs/mccms/base.js"></script>
+<!-- //Mccms core JS build, must be loaded -->
+
+<!-- This template needs to be built -->
+<link rel="shortcut icon" href="/template/pc/default/images/favicon.ico" type="image/x-icon"/>
+<link rel="Bookmark" href="/template/pc/default/images/favicon.ico"/>
+<link rel="stylesheet" href="/template/pc/default/css/common_home.css">
+<link rel="stylesheet" href="/template/pc/default/css/home.css">
+<script src="/template/pc/default/js/jquery.lazyload.min.js"></script>
+<script src="/template/pc/default/js/jquery.SuperSlide.2.1.3.js"></script>
+<script src="/template/pc/default/js/index.js"></script>
+<!--[if lt IE 9]>
+	<script src="/template/pc/default/js/respond.js"></script>
+<![endif]-->
+<script>
+window._bd_share_config = {"common" : {"bdSnsKey" : {},"bdText" : document.title,"bdUrl" : window.location.href,"bdDesc":'',"bdMini" : "2","bdMiniList" : false,"bdStyle" : "0","bdSize" : "32",},"share" : {}};
+with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+</head>
+<body class="p-index">
+<div style='display:none;'><img src='/template/pc/default/images/app_logo.png' /></div>
+<div class="in-header">
+	<div class="in-header__wrap container--response">
+    	<a class="in-header__logo" href="https://www.mhua5.com/"></a>
+    	<div class="in-header__nav">
+      		<ul class="clearfix">
+		        <li id="nav_index" class="nav-item">
+		        	<a href="https://www.mhua5.com/">首页</a>
+		        	<div class="underline"></div>
+		  ...
+
+error Data Analysis 2026-06-23 14:07:12.263281 
+ReferenceError: Document is not defined
+    at load (Manhua5Source:20:32)
+
+
+
+info Network 2026-06-23 14:07:27.073035 
+GET https://www.mhua5.com/index.php/category/tags/7/
+headers:
+{User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36, cookie: SITE_TOTAL_ID=231c3a7a62b190c47839c53bb3ce47de}
+data:
+null
+
+info Network 2026-06-23 14:07:28.210836 
+Response https://www.mhua5.com/index.php/category/tags/7/ 200
+headers:
+{date: Tue, 23 Jun 2026 06:07:27 GMT, content-type: text/html; charset=utf-8, server: cloudflare, vary: Accept-Encoding, x-generator: Mccms comic(http://www.mccms.cn), strict-transport-security: max-age=31536000, alt-svc: h3=":443"; ma=86400, report-to: {"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=omg%2BCRxZhMxyIVBBb7gp9tmA1VczYRu968HCGu6OicTeR%2BwyzsHMrxdlc9zj40%2BQyhfydDJvrQRYoQfNWFQiL8JNSspH2UbmsQuw2or02AWcvQQBAZRe%2Fkw4%2BmFVuk1H73cZ2dxxW5EYQuet"}]}, cf-cache-status: DYNAMIC, nel: {"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}, cf-ray: a1015003cbb611cb-AMS}
+<!DOCTYPE html>
+<html>
+<head>
+<title>冒险 - 漫画大全 - 漫画分类检索 - 漫画屋-漫画大全-免费漫画在线看-最好看的漫画</title>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+<meta name="keywords" content="漫画屋,动漫屋,在线漫画,漫画大全,免费漫画,漫画在线看,手机看漫画,手机漫画,日漫,国漫,韩漫">
+<meta name="description" content="漫画屋&#40;www.mhua5.com&#41;为您提供优质的漫画阅读体验，日本漫画,港台漫画,韩国漫画,欧美漫画,好漫画。热门漫画：火影忍者、海贼王、死神、一拳超人、古惑仔等漫画阅读网站，就在漫画屋">
+<!-- Mccms core JS build, must be loaded -->
+<script>var Mcpath = {url:'www.mhua5.com',web:'/',basepath:'/packs/',tpl:'/template/pc/default/',istel:1};</script>
+<link rel="stylesheet" href="/packs/layui/css/layui.css">
+<script src="/packs/layui/layui.all.js"></script>
+<script src="/packs/mccms/base.js"></script>
+<!-- //Mccms core JS build, must be loaded -->
+
+<!-- This template needs to be built -->
+<link rel="shortcut icon" href="/template/pc/default/images/favicon.ico" type="image/x-icon"/>
+<link rel="Bookmark" href="/template/pc/default/images/favicon.ico"/>
+<link rel="stylesheet" href="/template/pc/default/css/common_home.css">
+<link rel="stylesheet" href="/template/pc/default/css/home.css">
+<script src="/template/pc/default/js/jquery.lazyload.min.js"></script>
+<script src="/template/pc/default/js/jquery.SuperSlide.2.1.3.js"></script>
+<script src="/template/pc/default/js/index.js"></script>
+<!--[if lt IE 9]>
+	<script src="/template/pc/default/js/respond.js"></script>
+<![endif]-->
+<script>
+window._bd_share_config = {"common" : {"bdSnsKey" : {},"bdText" : document.title,"bdUrl" : window.location.href,"bdDesc":'',"bdMini" : "2","bdMiniList" : false,"bdStyle" : "0","bdSize" : "32",},"share" : {}};
+with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+</head>
+<body class="p-index">
+<div style='display:none;'><img src='/template/pc/default/images/app_logo.png' /></div>
+<div class="in-header">
+	<div class="in-header__wrap container--response">
+    	<a class="in-header__logo" href="https://www.mhua5.com/"></a>
+    	<div class="in-header__nav">
+      		<ul class="clearfix">
+		        <li id="nav_index" class="nav-item">
+		        	<a href="https://www.mhua5.com/">首页</a>...
+
+error Network 2026-06-23 14:07:28.214296 
+ReferenceError: Document is not defined
+    at load (Manhua5Source:157:28)
+
+
+
+info Network 2026-06-23 14:07:30.845720 
+GET https://www.mhua5.com/index.php/category/tags/28/
+headers:
+{User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36, cookie: SITE_TOTAL_ID=231c3a7a62b190c47839c53bb3ce47de}
+data:
+null
+
+info Network 2026-06-23 14:07:33.066726 
+Response https://www.mhua5.com/index.php/category/tags/28/ 200
+headers:
+{date: Tue, 23 Jun 2026 06:07:32 GMT, content-type: text/html; charset=utf-8, server: cloudflare, vary: Accept-Encoding, x-generator: Mccms comic(http://www.mccms.cn), strict-transport-security: max-age=31536000, alt-svc: h3=":443"; ma=86400, report-to: {"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=9s%2FzY2EUXaLIvcUWCOtdC2huWowuyudHubwtPCKkA%2BaZpTHGnC9yjZ52fKfzszTqkBxrJEspSQU8UVCCLaAxQu9hJ9zXCHaSRDIhfYkI82L0z4jq4ccDqkfR36n1erSrBDEPW8iEFjQrG1RO"}]}, cf-cache-status: DYNAMIC, nel: {"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}, cf-ray: a10150215ac3b1bd-AMS}
+<!DOCTYPE html>
+<html>
+<head>
+<title>古风 - 漫画大全 - 漫画分类检索 - 漫画屋-漫画大全-免费漫画在线看-最好看的漫画</title>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+<meta name="keywords" content="漫画屋,动漫屋,在线漫画,漫画大全,免费漫画,漫画在线看,手机看漫画,手机漫画,日漫,国漫,韩漫">
+<meta name="description" content="漫画屋&#40;www.mhua5.com&#41;为您提供优质的漫画阅读体验，日本漫画,港台漫画,韩国漫画,欧美漫画,好漫画。热门漫画：火影忍者、海贼王、死神、一拳超人、古惑仔等漫画阅读网站，就在漫画屋">
+<!-- Mccms core JS build, must be loaded -->
+<script>var Mcpath = {url:'www.mhua5.com',web:'/',basepath:'/packs/',tpl:'/template/pc/default/',istel:1};</script>
+<link rel="stylesheet" href="/packs/layui/css/layui.css">
+<script src="/packs/layui/layui.all.js"></script>
+<script src="/packs/mccms/base.js"></script>
+<!-- //Mccms core JS build, must be loaded -->
+
+<!-- This template needs to be built -->
+<link rel="shortcut icon" href="/template/pc/default/images/favicon.ico" type="image/x-icon"/>
+<link rel="Bookmark" href="/template/pc/default/images/favicon.ico"/>
+<link rel="stylesheet" href="/template/pc/default/css/common_home.css">
+<link rel="stylesheet" href="/template/pc/default/css/home.css">
+<script src="/template/pc/default/js/jquery.lazyload.min.js"></script>
+<script src="/template/pc/default/js/jquery.SuperSlide.2.1.3.js"></script>
+<script src="/template/pc/default/js/index.js"></script>
+<!--[if lt IE 9]>
+	<script src="/template/pc/default/js/respond.js"></script>
+<![endif]-->
+<script>
+window._bd_share_config = {"common" : {"bdSnsKey" : {},"bdText" : document.title,"bdUrl" : window.location.href,"bdDesc":'',"bdMini" : "2","bdMiniList" : false,"bdStyle" : "0","bdSize" : "32",},"share" : {}};
+with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+</head>
+<body class="p-index">
+<div style='display:none;'><img src='/template/pc/default/images/app_logo.png' /></div>
+<div class="in-header">
+	<div class="in-header__wrap container--response">
+    	<a class="in-header__logo" href="https://www.mhua5.com/"></a>
+    	<div class="in-header__nav">
+      		<ul class="clearfix">
+		        <li id="nav_index" class="nav-item">
+		        	<a href="https://www.mhua5.com/">首页</a>
+		  ...
+
+error Network 2026-06-23 14:07:33.070783 
+ReferenceError: Document is not defined
+    at load (Manhua5Source:157:28)
+
+
+

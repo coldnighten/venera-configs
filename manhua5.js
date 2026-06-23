@@ -18,7 +18,7 @@ class Manhua5Source extends ComicSource {
                     throw `Invalid status code: ${res.status}`
                 }
 
-                let soup = new Document(res.body)
+                let soup = new HtmlDocument(res.body)
 
                 function parseComic(elem) {
                     let img = elem.querySelector('img.lazy')
@@ -27,15 +27,15 @@ class Manhua5Source extends ComicSource {
 
                     let id = null
                     if (titleLink) {
-                        let href = titleLink.getAttribute('href') || ''
+                        let href = titleLink.attributes['href'] || ''
                         let parts = href.split('/comic/')
                         if (parts.length > 1) {
                             id = parts[parts.length - 1]
                         }
                     }
 
-                    let title = titleLink ? titleLink.textContent.trim() : ''
-                    let cover = img ? (img.getAttribute('data-original') || img.getAttribute('src')) : ''
+                    let title = titleLink ? titleLink.text.trim() : ''
+                    let cover = img ? (img.attributes['data-original'] || img.attributes['src']) : ''
 
                     return new Comic({
                         id: id,
@@ -46,14 +46,13 @@ class Manhua5Source extends ComicSource {
 
                 let result = {}
 
-                // 查找所有区块
                 let sections = soup.querySelectorAll('div.in-sec-wr')
 
                 for (let sec of sections) {
                     let title = ''
                     let firstElem = sec.querySelector('h2, h3, strong, span, a')
                     if (firstElem) {
-                        title = firstElem.textContent.trim()
+                        title = firstElem.text.trim()
                     }
                     if (!title || title.length < 2) {
                         title = '精品推荐'
@@ -61,19 +60,16 @@ class Manhua5Source extends ComicSource {
 
                     let comics = []
 
-                    // 大推荐漫画
                     let big = sec.querySelector('div.in-fine__big')
                     if (big) {
                         comics.push(parseComic(big))
                     }
 
-                    // Type-A 漫画
                     let typeA = sec.querySelectorAll('div.in-comic--type-a')
                     for (let t of typeA) {
                         comics.push(parseComic(t))
                     }
 
-                    // Type-B 漫画
                     let typeB = sec.querySelectorAll('div.in-comic--type-b')
                     for (let t of typeB) {
                         comics.push(parseComic(t))
@@ -84,6 +80,7 @@ class Manhua5Source extends ComicSource {
                     }
                 }
 
+                soup.dispose()
                 return result
             }
         }
@@ -142,15 +139,12 @@ class Manhua5Source extends ComicSource {
 
     categoryComics = {
         load: async (category, param, options, page) => {
-            // 构造URL
             let baseUrl = "https://www.mhua5.com/index.php/category/"
             let url = ""
 
             if (param && param.length > 0) {
-                // param 形如 "list/1" 或 "tags/6"
                 url = baseUrl + param + "/"
             } else {
-                // 全部 - 使用排序
                 let order = options && options[0] ? options[0] : "hits"
                 url = baseUrl + "order/" + order + "/"
             }
@@ -164,7 +158,7 @@ class Manhua5Source extends ComicSource {
                 throw `Invalid status code: ${res.status}`
             }
 
-            let soup = new Document(res.body)
+            let soup = new HtmlDocument(res.body)
             let items = soup.querySelectorAll('div.common-comic-item')
 
             let comics = []
@@ -174,15 +168,15 @@ class Manhua5Source extends ComicSource {
 
                 let id = null
                 if (titleLink) {
-                    let href = titleLink.getAttribute('href') || ''
+                    let href = titleLink.attributes['href'] || ''
                     let parts = href.split('/comic/')
                     if (parts.length > 1) {
                         id = parts[parts.length - 1]
                     }
                 }
 
-                let title = titleLink ? titleLink.textContent.trim() : ''
-                let cover = img ? (img.getAttribute('data-original') || img.getAttribute('src')) : ''
+                let title = titleLink ? titleLink.text.trim() : ''
+                let cover = img ? (img.attributes['data-original'] || img.attributes['src']) : ''
 
                 if (id && title) {
                     comics.push(new Comic({
@@ -193,12 +187,11 @@ class Manhua5Source extends ComicSource {
                 }
             }
 
-            // 获取最大页数
             let maxPage = 1
             let allLinks = soup.querySelectorAll('a')
             for (let link of allLinks) {
-                let href = link.getAttribute('href') || ''
-                let text = link.textContent.trim()
+                let href = link.attributes['href'] || ''
+                let text = link.text.trim()
                 if (href.includes('/page/') && /^\d+$/.test(text)) {
                     let num = parseInt(text)
                     if (num > maxPage) {
@@ -207,6 +200,7 @@ class Manhua5Source extends ComicSource {
                 }
             }
 
+            soup.dispose()
             return {
                 comics: comics,
                 maxPage: maxPage
@@ -225,7 +219,6 @@ class Manhua5Source extends ComicSource {
 
     search = {
         load: async (keyword, options, page) => {
-            // 构造搜索URL
             let url = `https://www.mhua5.com/index.php/search?key=${encodeURIComponent(keyword)}`
             if (page > 1) {
                 url = url + `&page=${page}`
@@ -236,7 +229,7 @@ class Manhua5Source extends ComicSource {
                 throw `Invalid status code: ${res.status}`
             }
 
-            let soup = new Document(res.body)
+            let soup = new HtmlDocument(res.body)
             let items = soup.querySelectorAll('div.common-comic-item')
 
             let comics = []
@@ -246,15 +239,15 @@ class Manhua5Source extends ComicSource {
 
                 let id = null
                 if (titleLink) {
-                    let href = titleLink.getAttribute('href') || ''
+                    let href = titleLink.attributes['href'] || ''
                     let parts = href.split('/comic/')
                     if (parts.length > 1) {
                         id = parts[parts.length - 1]
                     }
                 }
 
-                let title = titleLink ? titleLink.textContent.trim() : ''
-                let cover = img ? (img.getAttribute('data-original') || img.getAttribute('src')) : ''
+                let title = titleLink ? titleLink.text.trim() : ''
+                let cover = img ? (img.attributes['data-original'] || img.attributes['src']) : ''
 
                 if (id && title) {
                     comics.push(new Comic({
@@ -265,13 +258,12 @@ class Manhua5Source extends ComicSource {
                 }
             }
 
-            // 获取最大页数
             let maxPage = 1
             let allLinks = soup.querySelectorAll('a')
             for (let link of allLinks) {
-                let href = link.getAttribute('href') || ''
-                let text = link.textContent.trim()
-                if (href.includes('/search') && text.isdigit()) {
+                let href = link.attributes['href'] || ''
+                let text = link.text.trim()
+                if (href.includes('/search') && /^\d+$/.test(text)) {
                     let num = parseInt(text)
                     if (num > maxPage) {
                         maxPage = num
@@ -279,6 +271,7 @@ class Manhua5Source extends ComicSource {
                 }
             }
 
+            soup.dispose()
             return {
                 comics: comics,
                 maxPage: maxPage
@@ -296,48 +289,29 @@ class Manhua5Source extends ComicSource {
                 throw `Invalid status code: ${res.status}`
             }
 
-            let soup = new Document(res.body)
+            let soup = new HtmlDocument(res.body)
 
-            // 封面
             let coverImg = soup.querySelector('div.de-info__cover img')
-            let cover = coverImg ? (coverImg.getAttribute('src') || coverImg.getAttribute('data-original')) : ''
+            let cover = coverImg ? (coverImg.attributes['src'] || coverImg.attributes['data-original']) : ''
 
-            // 标题
             let titleElem = soup.querySelector('p.comic-title')
-            let title = titleElem ? titleElem.textContent.trim() : ''
+            let title = titleElem ? titleElem.text.trim() : ''
 
-            // 作者
             let authorElem = soup.querySelector('div.comic-author span.name a')
-            let author = authorElem ? authorElem.textContent.trim() : ''
+            let author = authorElem ? authorElem.text.trim() : ''
 
-            // 简介
             let introElem = soup.querySelector('p.intro-total')
-            let description = introElem ? introElem.textContent.trim() : ''
+            let description = introElem ? introElem.text.trim() : ''
 
-            // 标签
             let tags = []
             let tagLinks = soup.querySelectorAll('div.comic-status a')
             for (let link of tagLinks) {
-                let href = link.getAttribute('href') || ''
+                let href = link.attributes['href'] || ''
                 if (href.includes('/category/tags/')) {
-                    tags.push(link.textContent.trim())
+                    tags.push(link.text.trim())
                 }
             }
 
-            // 状态信息
-            let statusDiv = soup.querySelector('div.comic-status')
-            let statusTexts = statusDiv ? statusDiv.querySelectorAll('span.text') : []
-
-            // 解析人气
-            let popularity = ''
-            for (let s of statusTexts) {
-                let text = s.textContent.trim()
-                if (text.includes('人气')) {
-                    popularity = text.replace('人气:', '').trim()
-                }
-            }
-
-            // 章节列表
             let eps = []
             let chapterList = soup.querySelector('ul.chapter__list-box')
             if (chapterList) {
@@ -345,12 +319,12 @@ class Manhua5Source extends ComicSource {
                 for (let item of items) {
                     let link = item.querySelector('a.j-chapter-link')
                     if (link) {
-                        let href = link.getAttribute('href') || ''
+                        let href = link.attributes['href'] || ''
                         let chId = ''
                         if (href.includes('/chapter/')) {
                             chId = href.split('/chapter/')[1]
                         }
-                        let chTitle = link.textContent.trim()
+                        let chTitle = link.text.trim()
                         if (chId && chTitle) {
                             eps.push({
                                 id: chId,
@@ -361,10 +335,10 @@ class Manhua5Source extends ComicSource {
                 }
             }
 
-            // 最新章节
             let updateSpan = soup.querySelector('span.update-time')
-            let updateTime = updateSpan ? updateSpan.textContent.trim() : ''
+            let updateTime = updateSpan ? updateSpan.text.trim() : ''
 
+            soup.dispose()
             return new ComicDetails({
                 id: id,
                 title: title,
@@ -374,7 +348,7 @@ class Manhua5Source extends ComicSource {
                 tags: tags,
                 status: updateTime,
                 updateTime: updateTime,
-                eps: eps,
+                chapters: eps,
                 isMultiEp: eps.length > 0
             })
         },
@@ -390,7 +364,6 @@ class Manhua5Source extends ComicSource {
             let html = res.body
             let images = []
 
-            // 从HTML中提取所有图片URL
             let pattern = /https?:\/\/[^\s"'<>]+\.jpg[^\s"'<>]*/g
             let matches = html.match(pattern)
 
