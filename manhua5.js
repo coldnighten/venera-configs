@@ -9,7 +9,7 @@ class Manhua5Source extends ComicSource {
 
     explore = [
         {
-            title: "精品推荐",
+            title: "漫画屋",
             type: "multiPartPage",
             load: async (page) => {
                 let res = await Network.get(this.url)
@@ -87,7 +87,7 @@ class Manhua5Source extends ComicSource {
     ]
 
     category = {
-        title: "漫画分类",
+        title: "漫画屋分类",
         parts: [
             {
                 name: "标签",
@@ -364,13 +364,14 @@ class Manhua5Source extends ComicSource {
             let html = res.body
             let images = []
 
-            let pattern = /https?:\/\/[^\s"'<>]+\.jpg[^\s"'<>]*/g
+            let pattern = /https?:\/\/[^\s"'<>]+\.(jpg|png|webp)[^\s"'<>]*/gi
             let matches = html.match(pattern)
 
             if (matches) {
                 for (let m of matches) {
-                    if ((m.includes('baozimh.com') || m.includes('mkzcdn.com')) &&
+                    if ((m.includes('baozimh.com') || m.includes('mkzcdn.com') || m.includes('mhua5.com')) &&
                         !m.includes('/cover') &&
+                        !m.includes('/template') &&
                         images.indexOf(m) === -1) {
                         images.push(m)
                     }
