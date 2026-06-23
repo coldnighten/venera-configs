@@ -286,4 +286,146 @@ class Manhua5Source extends ComicSource {
         },
         enableTagsSuggestions: false,
     }
+
+    comic = {
+        loadInfo: async (id) => {
+            let url = `https://www.mhua5.com/index.php/comic/${id}`
+            let res = await Network.get(url)
+
+            if (res.status !== 200) {
+                throw `Invalid status code: ${res.status}`
+            }
+
+            let soup = new Document(res.body)
+
+            // 封面
+            let coverImg = soup.querySelector('div.de-info__cover img')
+            let cover = coverImg ? (coverImg.getAttribute('src') || coverImg.getAttribute('data-original')) : ''
+
+            // 标题
+            let titleElem = soup.querySelector('p.comic-title')
+            let title = titleElem ? titleElem.textContent.trim() : ''
+
+            // 作者
+            let authorElem = soup.querySelector('div.comic-author span.name a')
+            let author = authorElem ? authorElem.textContent.trim() : ''
+
+            // 简介
+            let introElem = soup.querySelector('p.intro-total')
+            let description = introElem ? introElem.textContent.trim() : ''
+
+            // 标签
+            let tags = []
+            let tagLinks = soup.querySelectorAll('div.comic-status a')
+            for (let link of tagLinks) {
+                let href = link.getAttribute('href') || ''
+                if (href.includes('/category/tags/')) {
+                    tags.push(link.textContent.trim())
+                }
+            }
+
+            // 状态信息
+            let statusDiv = soup.querySelector('div.comic-status')
+            let statusTexts = statusDiv ? statusDiv.querySelectorAll('span.text') : []
+
+            // 解析人气
+            let popularity = ''
+            for (let s of statusTexts) {
+                let text = s.textContent.trim()
+                if (text.includes('人气')) {
+                    popularity = text.replace('人气:', '').trim()
+                }
+            }
+
+            // 章节列表
+            let eps = []
+            let chapterList = soup.querySelector('ul.chapter__list-box')
+            if (chapterList) {
+                let items = chapterList.querySelectorAll('li.chapter__item')
+                for (let item of items) {
+                    let link = item.querySelector('a.j-chapter-link')
+                    if (link) {
+                        let href = link.getAttribute('href') || ''
+                        let chId = ''
+                        if (href.includes('/chapter/')) {
+                            chId = href.split('/chapter/')[1]
+                        }
+                        let chTitle = link.textContent.trim()
+                        if (chId && chTitle) {
+                            eps.push({
+                                id: chId,
+                                title: chTitle
+                            })
+                        }
+                    }
+                }
+            }
+
+            // 最新章节
+            let updateSpan = soup.querySelector('span.update-time')
+            let updateTime = updateSpan ? updateSpan.textContent.trim() : ''
+
+            return new ComicDetails({
+                id: id,
+                title: title,
+                cover: cover,
+                author: author,
+                description: description,
+                tags: tags,
+                status: updateTime,
+                updateTime: updateTime,
+                eps: eps,
+                isMultiEp: eps.length > 0
+            })
+        },
+
+        loadEp: async (comicId, epId) => {
+            let url = `https://www.mhua5.com/index.php/chapter/${epId}`
+            let res = await Network.get(url)
+
+            if (res.status !== 200) {
+                throw `Invalid status code: ${res.status}`
+            }
+
+            let soup = new Document(res.body)
+
+            // 查找图片列表
+            // 图片可能在 script 标签中或特定的容器中
+            let images = []
+
+            // 尝试从页面中提取图片URL
+            // 查找所有图片元素
+            let imgElements = soup.querySelectorAll('img')
+            for (let img of imgElements) {
+                let src = img.getAttribute('src') || img.getAttribute('data-original') || img.getAttribute('data-src')
+                if (src && (src.includes('mkzcdn') || src.includes('baozimh') || src.includes('comic'))) {
+                    images.push(src)
+                }
+            }
+
+            // 如果没找到，尝试从 script 中解析
+            if (images.length === 0) {
+                let scripts = soup.querySelectorAll('script')
+                for (let script of scripts) {
+                    let content = script.textContent || ''
+                    // 查找图片数组
+                    if (content.includes('images') || content.includes('imgList') || content.includes('chapterImages')) {
+                        // 尝试匹配图片URL
+                        let matches = content.match(/https?:\/\/[^\s"'`]+(?:mkzcdn|baozimh)[^\s"'`]+/g)
+                        if (matches) {
+                            for (let m of matches) {
+                                if (!images.includes(m)) {
+                                    images.push(m)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return {
+                images: images
+            }
+        }
+    }
 }
