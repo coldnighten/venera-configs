@@ -44,18 +44,18 @@ class Manhua5Source extends ComicSource {
                     })
                 }
 
-                let result = {}
+                let result = []
 
                 let sections = soup.querySelectorAll('div.in-sec-wr')
 
                 for (let sec of sections) {
-                    let title = ''
+                    let sectionTitle = ''
                     let firstElem = sec.querySelector('h2, h3, strong, span, a')
                     if (firstElem) {
-                        title = firstElem.text.trim()
+                        sectionTitle = firstElem.text.trim()
                     }
-                    if (!title || title.length < 2) {
-                        title = '精品推荐'
+                    if (!sectionTitle || sectionTitle.length < 2) {
+                        sectionTitle = '精品推荐'
                     }
 
                     let comics = []
@@ -76,7 +76,7 @@ class Manhua5Source extends ComicSource {
                     }
 
                     if (comics.length > 0) {
-                        result[title] = comics
+                        result.push({title: sectionTitle, comics: comics})
                     }
                 }
 
