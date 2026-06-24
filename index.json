@@ -200,5 +200,11 @@
         "fileName": "mhua5.js",
         "key": "mhua5",
         "version": "1.0.0"
+    },
+    {
+        "name": "神奇漫画",
+        "fileName": "shenqimanhua.js",
+        "key": "shenqimanhua",
+        "version": "1.0.0"
     }
 ]
