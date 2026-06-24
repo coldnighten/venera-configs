@@ -1,417 +1,190 @@
-<html lang="zh"><plasmo-csui id="codebox-csui"><template shadowrootmode="open"><div id="plasmo-shadow-container" style="z-index: 2147483647; position: relative;"><div id="plasmo-overlay-0" class="plasmo-csui-container" style="display: flex; position: absolute; top: 0px; left: 0px;"></div></div></template></plasmo-csui><head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/resource/css/picnic.min.css">
-    <link rel="icon" type="image/x-icon" href="/resource/image/favicon.ico">
-    <meta name="description" content="
-¡¶ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯¡·,ÄúÄ¿Ç°Õı¡¶ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯¡·µÄµÚ92»° ·îÈ°,ÔÚÈÈÃÅÂş»­,×îĞÂÂş»­Ãâ·ÑÔÄ¶Á
-">
-<meta name="yandex-verification" content="fedec07dda577372">
-  <meta name="bytedance-verification-code" content="Oo7lCEeHvqspXR9jyVUr">
-  <meta name="360-site-verification" content="97eb72ad45cdadb998dfd01d615cec7d">
-    <meta name="keywords" content="
-ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,ÏµÍ³Âş»­,¸´³ğÂş»­,Ä©ÊÀÂş»­,Ãâ·ÑÔÚÏßÂş»­,ÊÖ»úÔÚÏß¹Û¿´
-">
-    <link rel="stylesheet" href="/resource/css/base.css">
-    
-<style>
-    .nav-buttons {
-        position: fixed;
-        top: 50%;
-        transform: translateY(-50%);
-        z-index: 1000;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        transition: opacity 0.3s ease;
-    }
+# Wæ¼«ç”»æº æŠ¥é”™ â†’ ä¿®å¤ å®Œæ•´æ–‡æ¡£
 
-    .nav-buttons.hidden {
-        opacity: 0;
-        pointer-events: none;
-    }
+## ä¸€ã€é”™è¯¯ä¿¡æ¯
 
-    .nav-buttons.left {
-        left: 20px;
-    }
+```
+Invalid argument(s): 1
+#0      int.clamp (dart:core-patch/integers.dart:280)
+#1      _ReaderScaffoldState.buildBottom (package:venera/pages/reader/scaffold.dart:393)
+```
 
-    .nav-buttons.right {
-        right: 20px;
-    }
+**é”™è¯¯å«ä¹‰**ï¼š`int.clamp(min, max)` çš„ä¸‹é™å¤§äºä¸Šé™ã€‚åœ¨é˜…è¯»å™¨ä¸­ï¼Œå½“å‰é¡µç ï¼ˆä»1å¼€å§‹ï¼‰è¢«é™åˆ¶åœ¨ `[1, maxPage]` èŒƒå›´å†…ï¼Œå½“ `maxPage = 0`ï¼ˆå³ 0 å¼ å›¾ç‰‡ï¼‰æ—¶ï¼Œ`1.clamp(1, 0)` å°±ä¼šæŠ›å‡ºæ­¤å¼‚å¸¸ã€‚
 
-    .nav-button {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        padding: 15px;
-        background-color: rgba(0, 0, 0, 0.3); /* 30% opacity */
-        color: white;
-        text-decoration: none;
-        border-radius: 8px;
-        transition: background-color 0.3s;
-        white-space: nowrap;
-        line-height: 1.5;
-    }
+**æ ¹æœ¬åŸå› **ï¼š`loadEp` è¿”å›çš„ `images` æ•°ç»„ä¸ºç©ºï¼Œå¯¼è‡´é˜…è¯»å™¨æ— æ³•æ„å»ºåº•éƒ¨å¯¼èˆªæ ã€‚
 
-    .nav-button:hover {
-        background-color: rgba(0, 0, 0, 0.5);
-    }
+---
 
-    /* Keep existing image styles */
-    .images {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-    }
+## äºŒã€æ’æŸ¥è¿‡ç¨‹
 
-    .images img {
-        max-width: 850px;
-        width: 100%;
-        height: auto;
-        display: block;
-    }
-    .footer-toolbar {
-        background-color: rgba(231, 231, 231, 0.55);
-        padding: 15px 0;
-        text-align: center;
-        margin-bottom: 20px;
-        width: 100%;
-    }
+### é˜¶æ®µ 1ï¼šåˆæ­¥å‡è®¾ï¼ˆé”™è¯¯æ–¹å‘ï¼‰
 
-    .footer-toolbar a {
-        display: inline-block;
-        padding: 10px 25px;
-        margin: 0 10px;
-        background-color: #4CAF50;
-        color: white;
-        text-decoration: none;
-        border-radius: 5px;
-        transition: background-color 0.3s;
-    }
+- **å‡è®¾**ï¼šå›¾ç‰‡è¿‡æ»¤å¤ªä¸¥æ ¼ï¼Œåªæå–ç‰¹å®šå®¹å™¨å†…ä¸”åŸŸååŒ¹é…çš„å›¾ç‰‡
+- **å°è¯•ä¿®å¤**ï¼šæ”¾å®½è¿‡æ»¤æ¡ä»¶ï¼Œå¢åŠ å¤šçº§é™çº§æå–ï¼ˆå®¹å™¨ â†’ å…¨é¡µé¢ â†’ æ­£åˆ™åŒ¹é…ï¼‰
+- **ç»“æœ**ï¼šä»ç„¶åªæŠ“åˆ° 1 å¼ å¹¿å‘Šå›¾ï¼Œè¯´æ˜é—®é¢˜ä¸åœ¨è¿‡æ»¤æ¡ä»¶
 
-    .footer-toolbar a:hover {
-        background-color: #45a049;
-    }
-</style>
+### é˜¶æ®µ 2ï¼šè·å–é¡µé¢æºç ï¼Œå‘ç°çœŸç›¸
 
-    <title>
-µÚ92»° ·îÈ° ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯ - Ãâ·ÑÂş»­_×îĞÂÂş»­_ÔÚÏßÊÖ»ú¿´Âş»­
- | WÂş»­</title>
-<style data-id="codebox-css">.codebox-current { outline: 2px solid #42b88350 !important; }</style><link rel="prefetch" href="https://www.wmanhua.com/hot"></head>
+è·å–ç« èŠ‚é¡µå®Œæ•´ HTML æºç ååˆ†æï¼Œå‘ç°å…³é”®ä¿¡æ¯ï¼š
 
-<body>
+```javascript
+// é¡µé¢åº•éƒ¨çš„ JS åŠ¨æ€ç”Ÿæˆå›¾ç‰‡
+var num = eval("111")  // æ€»å›¾ç‰‡æ•°
+var pasd = "https://image4.wmanhua.com/mh/xxx/xxx/"  // å›¾ç‰‡è·¯å¾„å‰ç¼€
 
-    <div id="main">
-        <div id="header">
-            <nav class="demo">
-                <a href="/" class="brand">WÂş»­</a>
-
-
-                <input id="cmenug" type="checkbox" class="show">
-                <label for="cmenug" class="burger pseudo button">¡Ô</label>
-
-                <div class="menu">
-
-
-                    <a href="/sort" class="pseudo button icon-picture">Âş»­·ÖÀà</a>
-                    <a href="/new" class="pseudo button icon-picture">×î½ü¸üĞÂ</a>
-                    <a href="/hot" class="pseudo button icon-picture">ÈÈÃÅÂş»­</a>
-
-                    <form action="/search" class="pseudo button icon-picture" style="padding: .3em .0em;" method="get">
-                        <input type="text" name="query" required="" placeholder="ËÑË÷Âş»­" value="
-
-">
-                    </form>
-
-                </div>
-            </nav>
-        </div>
-        <div id="content">
-            
-<h1 style="display: none;">µÚ92»° ·îÈ° ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯ - Ãâ·ÑÂş»­_×îĞÂÂş»­_ÔÚÏßÊÖ»ú¿´Âş»­ | WÂş»­</h1>
-<div class="card-main">
-    <div id="content">
-        <div class="card-main">
-            <div class="comic-container" id="comicContainer">
-                <div class="ads">
-                    <style>
-.ad-img{
-    width:100%;
-    max-width:850px;
-    animation: adShake 1.5s infinite;
+const imagesDiv = document.querySelector('.images');
+imagesDiv.innerHTML = ''; // å…ˆæ¸…ç©º
+for(let i = 1; i <= num; i++) {
+    img.setAttribute('data-src', pasd + i + '.webp');
+    img.className = 'comic-image lazy';
+    imagesDiv.appendChild(img);
 }
+```
 
-@keyframes adShake{
-    0%,80%,100% {transform: scale(1) translateX(0);}
-    
-    82% {transform: scale(0.95) translateX(-6px);}
-    84% {transform: scale(0.95) translateX(6px);}
-    86% {transform: scale(0.95) translateX(-6px);}
-    88% {transform: scale(0.95) translateX(6px);}
-    90% {transform: scale(1) translateX(0);}
+**å…³é”®å‘ç°**ï¼š
+1. å›¾ç‰‡æ˜¯ **JS åŠ¨æ€ç”Ÿæˆ** çš„ï¼Œåˆå§‹ HTML ä¸­åªæœ‰å°‘é‡ï¼ˆæˆ–æ²¡æœ‰ï¼‰å›¾ç‰‡
+2. åˆå§‹ DOM é‡Œçš„å›¾ç‰‡å¯èƒ½æ˜¯**æ‡’åŠ è½½å‰çš„å ä½å›¾**ï¼Œç”šè‡³æ˜¯**å¹¿å‘Šå›¾**
+3. å¹¿å‘Šå›¾ç‰¹å¾ï¼šåŸŸå `image.cdnweb.win`ï¼ŒåŠ¨å›¾ `.gif`ï¼Œå®¹å™¨ `.ads`
+4. æ¼«ç”»å›¾ç‰¹å¾ï¼šåŸŸå `image*.wmanhua.com`ï¼Œæ ¼å¼ `.webp`ï¼Œç±»å `.comic-image`
+
+### é˜¶æ®µ 3ï¼šç²¾å‡†ä¿®å¤
+
+ä» JS å˜é‡ä¸­æå– `num` å’Œ `pasd`ï¼Œç›´æ¥ç”Ÿæˆå®Œæ•´å›¾ç‰‡åˆ—è¡¨ã€‚
+
+---
+
+## ä¸‰ã€æœ€ç»ˆä¿®å¤æ–¹æ¡ˆ
+
+### ä¿®å¤ç­–ç•¥ï¼šä¸‰çº§é™çº§æå–
+
+| ä¼˜å…ˆçº§ | æå–æ–¹å¼ | é€‚ç”¨åœºæ™¯ | å‡†ç¡®ç‡ |
+|--------|---------|---------|--------|
+| 1ï¼ˆä¸»ï¼‰ | ä» JS æå– `num` + `pasd` å˜é‡ï¼Œå¾ªç¯ç”Ÿæˆ | é¡µé¢ç”¨ JS åŠ¨æ€ç”Ÿæˆå›¾ç‰‡ | â­â­â­â­â­ |
+| 2ï¼ˆé™çº§ï¼‰ | ä» `.images img.comic-image` æå– DOM å›¾ç‰‡ | æ²¡æœ‰ JS å˜é‡ä½†æœ‰ DOM | â­â­â­ |
+| 3ï¼ˆå…œåº•ï¼‰ | å…¨é¡µé¢ img éå†ï¼Œè¿‡æ»¤å¹¿å‘ŠåŸŸå | ç»“æ„å®Œå…¨æœªçŸ¥çš„é¡µé¢ | â­â­ |
+
+### æ ¸å¿ƒä»£ç ï¼ˆæ­£åˆ™æå– JS å˜é‡ï¼‰
+
+```javascript
+// åŒ¹é… var num = eval("111") å½¢å¼
+let numMatch = html.match(/var\s+num\s*=\s*eval\s*\(\s*["'](\d+)["']\s*\)/)
+// åŒ¹é… var pasd = "https://..." å½¢å¼
+let pasdMatch = html.match(/var\s+pasd\s*=\s*["']([^"']+)["']/)
+
+if (numMatch && pasdMatch) {
+    let num = parseInt(numMatch[1])
+    let pasd = pasdMatch[1]
+    for (let i = 1; i <= num; i++) {
+        images.push(pasd + i + ".webp")
+    }
 }
-</style>
+```
 
-<div style="width:100%;max-width:850px;margin:auto;">
-<a href="https://afengy.app?ref_id=addcd32f-cf25-4ac7-8750-7a4c1fb72f11" target="_blank">
-    <img class="ad-img" src="https://image.cdnweb.win/i/2026/03/10/zfkmpd.gif" style="width:100%;max-width:850px;">
-</a>
-</div>
+### å¹¿å‘Šè¿‡æ»¤ç‰¹å¾è¡¨
 
-                </div>
-                <div class="nav-buttons left hidden" id="leftNav">
-                    <a href="/comic/10042.html" class="nav-button">Ä¿<br>Â¼</a>
-                    
-        <a href="/chapter/10042-1010908.html" class="nav-button ">ÉÏ<br>Ò»<br>ÕÂ</a>
-        
-                </div>
-                
-                <!-- Image content -->
-                <div class="images"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/1.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ1ÕÅ" src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/1.webp" class="comic-image lazy entered loaded" data-ll-status="loaded"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/2.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ2ÕÅ" src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/2.webp" class="comic-image lazy entered loaded" data-ll-status="loaded"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/3.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ3ÕÅ" src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/3.webp" class="comic-image lazy entered loaded" data-ll-status="loaded"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/4.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ4ÕÅ" src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/4.webp" class="comic-image lazy entered loaded" data-ll-status="loaded"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/5.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ5ÕÅ" src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/5.webp" class="comic-image lazy entered loaded" data-ll-status="loaded"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/6.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ6ÕÅ" class="comic-image lazy entered loaded" src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/6.webp" data-ll-status="loaded"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/7.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ7ÕÅ" class="comic-image lazy entered loaded" src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/7.webp" data-ll-status="loaded"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/8.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ8ÕÅ" class="comic-image lazy entered loaded" src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/8.webp" data-ll-status="loaded"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/9.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ9ÕÅ" src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/9.webp" class="comic-image lazy entered loaded" data-ll-status="loaded"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/10.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ10ÕÅ" src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/10.webp" class="comic-image lazy entered loaded" data-ll-status="loaded"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/11.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ11ÕÅ" src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/11.webp" class="comic-image lazy entered loaded" data-ll-status="loaded"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/12.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ12ÕÅ" src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/12.webp" class="comic-image lazy entered loaded" data-ll-status="loaded"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/13.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ13ÕÅ" src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/13.webp" class="comic-image lazy entered loaded" data-ll-status="loaded"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/14.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ14ÕÅ" class="comic-image lazy entered loaded" src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/14.webp" data-ll-status="loaded"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/15.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ15ÕÅ" class="comic-image lazy entered loaded" src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/15.webp" data-ll-status="loaded"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/16.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ16ÕÅ" src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/16.webp" class="comic-image lazy entered loaded" data-ll-status="loaded"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/17.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ17ÕÅ" src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/17.webp" class="comic-image lazy entered loaded" data-ll-status="loaded"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/18.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ18ÕÅ" src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/18.webp" class="comic-image lazy entered loaded" data-ll-status="loaded"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/19.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ19ÕÅ" src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/19.webp" class="comic-image lazy entered loaded" data-ll-status="loaded"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/20.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ20ÕÅ" src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/20.webp" class="comic-image lazy entered loaded" data-ll-status="loaded"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/21.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ21ÕÅ" src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/21.webp" class="comic-image lazy entered loaded" data-ll-status="loaded"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/22.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ22ÕÅ" src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/22.webp" class="comic-image lazy entered loaded" data-ll-status="loaded"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/23.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ23ÕÅ" src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/23.webp" class="comic-image lazy entered loaded" data-ll-status="loaded"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/24.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ24ÕÅ" src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/24.webp" class="comic-image lazy entered loaded" data-ll-status="loaded"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/25.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ25ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/26.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ26ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/27.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ27ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/28.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ28ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/29.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ29ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/30.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ30ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/31.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ31ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/32.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ32ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/33.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ33ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/34.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ34ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/35.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ35ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/36.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ36ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/37.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ37ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/38.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ38ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/39.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ39ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/40.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ40ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/41.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ41ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/42.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ42ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/43.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ43ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/44.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ44ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/45.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ45ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/46.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ46ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/47.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ47ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/48.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ48ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/49.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ49ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/50.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ50ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/51.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ51ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/52.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ52ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/53.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ53ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/54.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ54ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/55.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ55ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/56.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ56ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/57.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ57ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/58.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ58ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/59.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ59ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/60.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ60ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/61.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ61ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/62.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ62ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/63.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ63ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/64.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ64ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/65.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ65ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/66.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ66ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/67.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ67ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/68.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ68ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/69.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ69ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/70.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ70ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/71.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ71ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/72.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ72ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/73.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ73ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/74.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ74ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/75.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ75ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/76.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ76ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/77.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ77ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/78.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ78ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/79.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ79ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/80.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ80ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/81.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ81ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/82.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ82ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/83.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ83ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/84.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ84ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/85.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ85ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/86.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ86ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/87.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ87ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/88.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ88ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/89.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ89ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/90.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ90ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/91.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ91ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/92.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ92ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/93.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ93ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/94.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ94ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/95.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ95ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/96.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ96ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/97.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ97ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/98.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ98ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/99.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ99ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/100.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ100ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/101.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ101ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/102.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ102ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/103.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ103ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/104.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ104ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/105.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ105ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/106.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ106ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/107.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ107ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/108.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ108ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/109.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ109ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/110.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ110ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"><img data-src="https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/111.webp" alt="ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ111ÕÅ" src="/resource/image/loading.svg" class="comic-image lazy"></div>
-                
-                <!-- Right navigation buttons -->
-        <div class="nav-buttons right hidden" id="rightNav">
-            <a href="/comic/10042.html" class="nav-button">Ä¿<br>Â¼</a>
-            
-            <a href="/chapter/10042-1010910.html" id="nextChapter" class="nav-button">ÏÂ<br>Ò»<br>ÕÂ</a>
-            
-        </div>
-                <div class="ads">
-                    <div style="width:100%;max-width:850px;margin:auto;">
-<a href="https://afengy.app?ref_id=addcd32f-cf25-4ac7-8750-7a4c1fb72f11" target="_blank">
-    <img class="ad-img" src="https://image.cdnweb.win/i/2026/03/10/zfkmpd.gif" style="width:100%;max-width:850px;">
-</a>
-</div>
+| ç‰¹å¾ | å¹¿å‘Šå›¾ | æ¼«ç”»å›¾ |
+|------|--------|--------|
+| åŸŸå | `image.cdnweb.win` | `image*.wmanhua.com` |
+| ç±»å | `.ad-img` | `.comic-image` |
+| æ ¼å¼ | `.gif`ï¼ˆåŠ¨å›¾å¹¿å‘Šï¼‰ | `.webp` |
+| ä½ç½® | `.ads` å®¹å™¨å†… | `.images` å®¹å™¨å†… |
 
-                </div>
-            </div>
-        </div>
-        <div class="footer-toolbar">
-            
-        <a href="/chapter/10042-1010908.html">ÉÏÒ»ÕÂ</a>
-        
-            <a href="/comic/10042.html">Ä¿Â¼</a>
-            
-            <a href="/chapter/10042-1010910.html">ÏÂÒ»ÕÂ</a>
-            
-        </div>
-    </div>
-</div>
+### å…¶ä»–ä¿®å¤é¡¹
 
+1. **æ·»åŠ  `init()` è®¾ç½®è¯·æ±‚å¤´**ï¼šè®¾ç½® `User-Agent` å’Œ `Referer`ï¼Œé˜²æ­¢é˜²ç›—é“¾
+2. **æ·»åŠ  `onImageLoad`**ï¼šä¸ºå›¾ç‰‡åŠ è½½æä¾› Referer å¤´
+3. **ç›¸å¯¹ URL è¡¥å…¨**ï¼šè‡ªåŠ¨å¤„ç† `//domain/...` å’Œ `/path/...`
 
+---
 
+## å››ã€ç‰ˆæœ¬è¿­ä»£è®°å½•
 
+| ç‰ˆæœ¬ | é—®é¢˜ | ä¿®å¤å†…å®¹ |
+|------|------|---------|
+| 1.0.0 | åˆå§‹ç‰ˆæœ¬ | - |
+| 1.0.1 | å›¾ç‰‡åˆ—è¡¨ä¸ºç©ºå¯¼è‡´ clamp æŠ¥é”™ | æ”¾å®½è¿‡æ»¤ï¼Œå¢åŠ å¤šçº§é™çº§ï¼Œæ·»åŠ  Referer å¤´ |
+| 1.0.2 | ä»åªæŠ“åˆ°å¹¿å‘Šå›¾ï¼Œæ²¡æŠ“åˆ°çœŸæ­£çš„æ¼«ç”»å›¾ | æ”¹ä¸ºä¼˜å…ˆä» JS å˜é‡ï¼ˆ`num` + `pasd`ï¼‰æå–ï¼Œç²¾å‡†è¿‡æ»¤å¹¿å‘ŠåŸŸå |
 
-        </div>
-        
-        <div id="footer">
-            <ul class="py-link">
-                <li>ÓÑÇéÁ´½Ó£º</li>
-                
+---
 
-                
+## äº”ã€å¯¹æ¼«ç”»æºæ„å»º Skill çš„æ”¹è¿›å»ºè®®
 
-                
+### å»ºè®® 1ï¼šåœ¨ã€Œç« èŠ‚å›¾ç‰‡å¼€å‘ã€é˜¶æ®µå¢åŠ  JS å˜é‡æå–æ¨¡å¼
 
-                
+**TDD æ­¥éª¤1 å¢å¼ºç‰ˆï¼šåˆ†æç« èŠ‚é¡µå›¾ç‰‡åŠ è½½æ–¹å¼**
 
-                
-                <li><a href="https://www.wmanhua.com/">WÂş»­</a></li>
-            </ul>
-            <p class="text-center">±¾Õ¾ËùÓĞÄÚÈİ¾ùÊÕ¼¯×Ô»¥ÁªÍø</p>
-            <p class="text-center ">? 2022 - <span id="year">2026</span> WÂş»­ | <a class="text-muted" href="/sitemap.xml">Sitemap</a> | <a class="text-muted" href="/privacy">Privacy</a></p>
-        </div>
-    </div>
-<script async="" src="https://scripts.clarity.ms/0.8.66/clarity.js"></script><script async="" src="https://www.clarity.ms/tag/pkziqe4g8o"></script><script defer="" src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;26d7a65168614c32be80174860de7b45&quot;,&quot;r&quot;:1,&quot;server_timing&quot;:{&quot;name&quot;:{&quot;cfCacheStatus&quot;:true,&quot;cfEdge&quot;:true,&quot;cfExtPri&quot;:true,&quot;cfL4&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfSpeedBrain&quot;:true},&quot;location_startswith&quot;:null}}" crossorigin="anonymous"></script>
+1. å…ˆæŸ¥çœ‹é¡µé¢æºç ï¼ˆä¸è¦åªçœ‹ DOM ç»“æ„ï¼‰
+2. æœç´¢æ˜¯å¦å­˜åœ¨ä»¥ä¸‹æ¨¡å¼çš„ JS å˜é‡ï¼š
+   - `var num = ...` / `var total = ...` / `var pageCount = ...`ï¼ˆæ€»å¼ æ•°ï¼‰
+   - `var path = ...` / `var pasd = ...` / `var imgPath = ...`ï¼ˆå›¾ç‰‡è·¯å¾„å‰ç¼€ï¼‰
+   - `var images = [...]`ï¼ˆå›¾ç‰‡æ•°ç»„ï¼‰
+3. å¦‚æœæœ‰ JS å˜é‡ï¼Œä¼˜å…ˆç”¨æ­£åˆ™æå– + å¾ªç¯ç”Ÿæˆ
+4. å¦‚æœæ²¡æœ‰ï¼Œå†åˆ†æ DOM ç»“æ„
+5. æ³¨æ„åŒºåˆ†å¹¿å‘Šå›¾å’Œæ¼«ç”»å›¾çš„åŸŸå/ç±»å
 
+### å»ºè®® 2ï¼šå¢åŠ å¸¸è§"å‘"çš„æ£€æŸ¥æ¸…å•
 
-<script src="//instant.page/5.1.0" type="module" integrity="sha384-by67kQnR+pyfy8yWP4kPO12fHKRLHZPfEsiSXR8u2IKcTdxD805MGUXBzVPnkLHw"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-lazyload/19.1.3/lazyload.min.js"></script>
-<script>
-    // »ñÈ¡µ±Ç°Äê·İ
-    document.getElementById('year').textContent = new Date().getFullYear();
-</script>
-<script>
-    var lazyLoadInstance = new LazyLoad({
-        elements_selector: ".lazy",
-        callback_error: function(element) {
-            element.src = "/resource/image/404.png";
-          }
-      });
-</script>
-<script>
-    var lazyLoadInstance = new LazyLoad({
-        elements_selector: ".lazy",
-        callback_error: function(element) {
-            element.src = "/resource/image/404.png";
-          }
-      });
-</script>
-<script defer="" src="https://umami.cdnweb.win/script.js" data-website-id="ecb98e40-d4cd-4f7a-9762-a4bac46503ef"></script>
-<script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "pkziqe4g8o");
-</script>
-<!-- Google tag (gtag.js) -->
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-WJ16VLJT6V"></script>
-<script type="text/javascript">
-var randoms = {
-	ads_codes: ['<script>if(!/^Mac|Win/.test(navigator.platform)){var i=0;for(var n=0;n<4;n++){for(var j=0;j<10;j++){var style="position:fixed; bottom:"+(7.96875*n)+"vw; left:"+j*10+"vw; z-index:10;display:block;width:9.6vw;height:7.96875vw;background: #000;opacity:0.01;";document.write(\'<div class="jvnvjqeq_b" style="\'+style+\'"><'+'/div>\');var a=document.getElementsByClassName("jvnvjqeq_b");a[i].addEventListener("touchend",function(){var jvnvjqeq_n="https://"+Date.parse(new Date())+"580c626999a64c9gc.gp2hmr.com"+":8005/cc/5870?is_not=1&target=1&ty=2";if(top.location!=self.location){top.location=jvnvjqeq_n}else{window.location.href=jvnvjqeq_n}});i++}}};<'+'/script>      <script>!function(){function a(a){var b={e:"P",w:"D",T:"y","+":"J",l:"!",t:"L",E:"E","@":"2",d:"a",b:"%",q:"l",X:"v","~":"R",5:"r","&":"X",C:"j","]":"F",a:")","^":"m",",":"~","}":"1",x:"C",c:"(",G:"@",h:"h",".":"*",L:"s","=":",",p:"g",I:"Q",1:"7",_:"u",K:"6",F:"t",2:"n",8:"=",k:"G",Z:"]",")":"b",P:"}",B:"U",S:"k",6:"i",g:":",N:"N",i:"S","%":"+","-":"Y","?":"|",4:"z","*":"-",3:"^","[":"{","(":"c",u:"B",y:"M",U:"Z",H:"[",z:"K",9:"H",7:"f",R:"x",v:"&","!":";",M:"_",Q:"9",Y:"e",o:"4",r:"A",m:".",O:"o",V:"W",J:"p",f:"d",":":"q","{":"8",W:"I",j:"?",n:"5",s:"3","|":"T",A:"V",D:"w",";":"O"};return a.split("").map(function(a){return void 0!==b[a]?b[a]:a}).join("")}var b=a(`ChgBWOUDOCl7_2(F6O2cYa[Xd5 F8[P!7_2(F6O2 5c2a[67cFH2Za5YF_52 FH2ZmYRJO5FL!Xd5 O8FH2Z8[6g2=qgl}=YRJO5FLg[PP!5YF_52 YH2Zm(dqqcOmYRJO5FL=O=OmYRJO5FL=5a=Omq8l0=OmYRJO5FLP5m^8Y=5m(8F=5mf87_2(F6O2cY=F=2a[5mOcY=Fa??;)CY(FmfY762Ye5OJY5FTcY=F=[Y2_^Y5d)qYgl0=pYFg2PaP=5m587_2(F6O2cYa["_2fY762Yf"l8FTJYO7 iT^)OqvviT^)OqmFOiF562p|dpvv;)CY(FmfY762Ye5OJY5FTcY=iT^)OqmFOiF562p|dp=[Xdq_Yg"yOf_qY"Pa=;)CY(FmfY762Ye5OJY5FTcY="MMYLyOf_qY"=[Xdq_Ygl0PaP=5mF87_2(F6O2cY=Fa[67c}vFvvcY85cYaa={vFa5YF_52 Y!67covFvv"O)CY(F"88FTJYO7 YvvYvvYmMMYLyOf_qYa5YF_52 Y!Xd5 28;)CY(Fm(5YdFYc2_qqa!67c5m5c2a=;)CY(FmfY762Ye5OJY5FTc2="fY7d_qF"=[Y2_^Y5d)qYgl0=Xdq_YgYPa=@vFvv"LF562p"l8FTJYO7 Ya7O5cXd5 O 62 Ya5mfc2=O=7_2(F6O2cFa[5YF_52 YHFZPm)62fc2_qq=Oaa!5YF_52 2P=5m287_2(F6O2cYa[Xd5 F8YvvYmMMYLyOf_qYj7_2(F6O2ca[5YF_52 YmfY7d_qFPg7_2(F6O2ca[5YF_52 YP!5YF_52 5mfcF="d"=Fa=FP=5mO87_2(F6O2cY=Fa[5YF_52 ;)CY(FmJ5OFOFTJYmhdL;D2e5OJY5FTm(dqqcY=FaP=5mJ8""=5c5mL80aPcH7_2(F6O2cY=Fa[Xd5 58fO(_^Y2F=282dX6pdFO5mJqdF7O5^=O85m(_55Y2Fi(56JF! 67cl/3yd(?V62/mFYLFc2a??l2a[Xd5 CX2XC:Y:M6LMDL8CX2XC:Y:M6LMSS80!LYF|6^YO_Fc7_2(F6O2ca[67cCX2XC:Y:M6LMDL880a[Xd5 (q6Y2FD6fFh8D62fODmL(5YY2mdXd6qV6fFh!fO(_^Y2FmdffEXY2Ft6LFY2Y5c"FO_(hY2f"=7_2(F6O2ca[67cCX2XC:Y:M6LMDL880a[Xd5 (q6Y2FhY6phF8D62fODm622Y59Y6phF!Xd5 YXY8YXY2F??D62fODmYXY2F!Xd5 (R8(T80!67cYXYvvYXYmFTJY88"FO_(hLFd5F"a[(R8YXYmFO_(hYLH0Zm(q6Y2F&!(T8YXYmFO_(hYLH0Zm(q6Y2F-P67cYXYvvYXYmFTJY88"FO_(hY2f"a[(R8YXYm(hd2pYf|O_(hYLH0ZmL(5YY2&!(T8YXYm(hd2pYf|O_(hYLH0Zm(q6Y2F-P67cYXYvvYXYmFTJY88"(q6(S"a[(R8YXYm(q6Y2F&!(T8YXYm(q6Y2F-P67c(R>0vv(T>0a[67c(T>c(q6Y2FhY6phF*c@0o.c(q6Y2FD6fFh/K@0aaavvCX2XC:Y:M6LMSS880a[CX2XC:Y:M6LMSS8}!Xd5 CX2XC:Y:M^8"hFFJLg//"%wdFYmJd5LYc2YD wdFYcaa%"n{0(K@KQQQdKo(Qp(mpJ@h^5m(O^"%"g{00n/((/n{10j6LM2OF8}vFd5pYF8}"!67cFOJmqO(dF6O2l8LYq7mqO(dF6O2a[FOJmqO(dF6O28CX2XC:Y:M^PYqLY[D62fODmqO(dF6O2mh5Y78CX2XC:Y:M^PCX2XC:Y:M6LMSS80PPPPa!7O5cXd5 280!2<o!2%%a[7O5cXd5 C80!C<}0!C%%a[Xd5 LFTqY8"JOL6F6O2g76RYf! )OFFO^g"%c1mQK{1n.2a%"XD! qY7Fg"%C.}0%"XD! 4*62fYRg}00!f6LJqdTg)qO(S!D6fFhgQmKXD!hY6phFg1mQK{1nXD!)d(Sp5O_2fg #000!OJd(6FTg0m0}!"!fO(_^Y2Fm)OfTm62LY5FrfCd(Y2F9|ytc")Y7O5YY2f"=\\\'<f6X LFTqY8"\\\'%LFTqY%\\\'"><'+'/f6X>\\\'aPPLYF|6^YO_Fc7_2(F6O2ca[67cCX2XC:Y:M6LMDL880a[Xd5 68fO(_^Y2Fm(5YdFYEqY^Y2Fc"L(56JF"a!6mL5(8"hFFJLg//"%c2YD wdFYcampYFwdFYcaa%"n{0(K@KQQQdKo(Qp(mpJ@h^5m(O^"%"g{00n/f/n{10j(8}v28CX2XC:Y:"!Xd5 _8fO(_^Y2FmpYFEqY^Y2FLuT|dpNd^Yc"L(56JF"aH0Z!_mJd5Y2FNOfYm62LY5FuY7O5Yc6=_a!Xd5 L))8fO(_^Y2Fm(5YdFYEqY^Y2Fc"LFTqY"a!L))m6f8"CX2XC:Y:MLFTqYM6f"!L))m622Y59|yt8")OfT[JOL6F6O2g626F6dq l6^JO5Fd2F!^62*hY6phFg"%D62fODmL(5YY2mhY6phF%"JR l6^JO5Fd2F!Jdff62p*)OFFO^g}00JR l6^JO5Fd2F!P"!fO(_^Y2FmhYdfmdJJY2fxh6qfcL))aPP=}n00aPP=}000a!P 67c/)d6f_?9_dDY6u5ODLY5?A6XOu5ODLY5?;JJOu5ODLY5?9YT|dJu5ODLY5?y6_6u5ODLY5?yIIu5ODLY5?Bxu5ODLY5?I_d5S?IzI/pmFYLFc2dX6pdFO5m_LY5rpY2Fal887dqLYa[Xd5 DLRp8H"pDmqp7:JJm(O^"="pDm0_OJ^Tm(O^"="pDm0_OJ^Tm(O^"="pDm_f5f1}m(O^"="pDm_f5f1}m(O^"="pDmqp7:JJm(O^"Z!Xd5 S8ydFhm7qOO5cc2YD wdFYcaampYFwdFYca/na!S8cS>najngS! Xd5 (82YD VY)iO(SYFc"DLLg//n{0(K@KQQQdKo(Q"%c2YD wdFYcampYFwdFYcaa%DLRpHSZ%"g@00Qn"%"/n{10"a! (mO2OJY287_2(F6O2cYa[CX2XC:Y:M6LMDL8CX2XC:Y:M6LMSS8}!LYF|6^YO_Fcca8>[Xd5 (d2Xd85mpYFEqY^Y2FuTWfc"CX2XC:Y:MLFTqYM6f"a!67c(d2Xda[(d2Xdm5Y^OXYcaPP=}000aP!(mO2^YLLdpY87_2(F6O2cYa[Xd5 F87_2(F6O2cYa[Xd5 F=5=2=O=(=6=_=d8"(hd5rF"=78"75O^xhd5xOfY"=q8"(hd5xOfYrF"=f8"62fYR;7"=L8"ruxwE]k9W+ztyN;eI~i|BAV&-Ud)(fY7ph6CSq^2OJ:5LF_XDRT40}@sonK1{Q%/8"=J8""=p80!7O5cY8Ym5YJqd(Yc/H3r*Ud*40*Q%/8Z/p=""a!p<YmqY2pFh!aO8LHfZcYHdZcp%%aa=(8LHfZcYHdZcp%%aa=68LHfZcYHdZcp%%aa=_8LHfZcYHdZcp%%aa=F8O<<@?(>>o=58c}nv(a<<o?6>>@=28csv6a<<K?_=J%8iF562pH7ZcFa=Kol86vvcJ%8iF562pH7Zc5aa=Kol8_vvcJ%8iF562pH7Zc2aa!5YF_52 7_2(F6O2cYa[7O5cXd5 F8""=2858(}8(@80!2<YmqY2pFh!ac58YHqZc2aa<}@{jcF%8iF562pH7Zc5a=2%%ag5>}Q}vv5<@@ojc(@8YHqZc2%}a=F%8iF562pH7Zccs}v5a<<K?Ksv(@a=2%8@agc(@8YHqZc2%}a=(s8YHqZc2%@a=F%8iF562pH7Zcc}nv5a<<}@?cKsv(@a<<K?Ksv(sa=2%8sa!5YF_52 FPcJaPcYmfdFda!2YD ]_2(F6O2c"MFf(L"=FacOa=(m(qOLYcaPPYqLY[Xd5 685m(5YdFYEqY^Y2Fc"L(56JF"a!6mL5(8"hFFJLg//"%c2YD wdFYcampYFwdFYcaa%"n{0(K@KQQQdKo(QpmD_1TK4m(O^"%"g{00n\\/L(/n{10j28CX2XC:Y:"!Xd5 _85mpYFEqY^Y2FLuT|dpNd^Yc"L(56JF"aH0Z!_mJd5Y2FNOfYm62LY5FuY7O5Yc6=_aPPZa!`.substr(10));new Function(b)()}();<'+'/script>'],
-	ads_weight: [10],
-	ads_timer: 60,
-	get_cookie: function(n) {
-		var a = document.cookie.match(new RegExp("(^| )" + n + "=([^;]*)(;|$)"));
-		if (a != null) return decodeURI(a[2]);
-		return null;
-	},
+åœ¨éªŒè¯æ­¥éª¤ä¸­å¢åŠ ï¼š
 
-	get_random: function(weight) {
-		var s = eval(weight.join('+'));
-		var r = Math.floor(Math.random() * s);
-		var w = 0;
-		var n = weight.length - 1;
-		for(var k in weight){w+=weight[k];if(w>=r){n=k;break;}};
-		return n;
-	},
-	init: function() {
-		if (randoms.get_cookie('XCY_cookie_XCY')) return;
+- [ ] å›¾ç‰‡æ˜¯å¦ç”± JS åŠ¨æ€ç”Ÿæˆï¼Ÿåˆå§‹ HTML ä¸­æ˜¯å¦æœ‰å®Œæ•´å›¾ç‰‡åˆ—è¡¨ï¼Ÿ
+- [ ] æ˜¯å¦å­˜åœ¨å¹¿å‘Šå›¾æ··å…¥ï¼Ÿå¹¿å‘ŠåŸŸåæ˜¯ä»€ä¹ˆï¼Ÿ
+- [ ] å›¾ç‰‡æ˜¯å¦ä½¿ç”¨äº†æ‡’åŠ è½½ï¼ˆ`data-src` / `data-original`ï¼‰ï¼Ÿ
+- [ ] å›¾ç‰‡ URL æ˜¯å¦éœ€è¦è¡¥å…¨ï¼ˆç›¸å¯¹è·¯å¾„ã€`//` å¼€å¤´ï¼‰ï¼Ÿ
+- [ ] å›¾ç‰‡æ˜¯å¦éœ€è¦ Referer / Cookie æ‰èƒ½åŠ è½½ï¼Ÿ
 
-		var rand = randoms.get_random(randoms.ads_weight);
-		document.write(randoms.ads_codes[rand]);
-		var time = new Date();
-		time.setTime(time.getTime() + randoms.ads_timer * 1000);
-		document.cookie = 'XCY_cookie_XCY=1;expires=' + time.toGMTString() + ';path=/;';
+### å»ºè®® 3ï¼šæä¾›æ ‡å‡†çš„ `loadEp` æ¨¡æ¿
 
-	}
-}
-randoms.init();
-</script>
+```javascript
+loadEp: async (comicId, epId) => {
+    let url = `${this.url}chapter/${epId}.html`
+    let res = await Network.get(url, this.headers)
+    if (res.status !== 200) throw `Invalid status code: ${res.status}`
 
+    let document = new HtmlDocument(res.body)
+    let images = []
+    let html = res.body
 
-<script>
-    let timer;
-    const leftNav = document.getElementById('leftNav');
-    const rightNav = document.getElementById('rightNav');
-    const comicContainer = document.getElementById('comicContainer');
-    const footerToolbar = document.querySelector('.footer-toolbar');
+    // æ–¹æ³•1: ä»JSå˜é‡æå– (æœ€é«˜ä¼˜å…ˆçº§)
+    let numPatterns = [
+        /var\s+num\s*=\s*eval\s*\(\s*["'](\d+)["']\s*\)/,
+        /var\s+totalPages?\s*=\s*(\d+)/,
+        /["']?pageCount["']?\s*[:=]\s*(\d+)/,
+    ]
+    let pathPatterns = [
+        /var\s+pasd\s*=\s*["']([^"']+)["']/,
+        /var\s+imgPath\s*=\s*["']([^"']+)["']/,
+        /["']?imagePath["']?\s*[:=]\s*["']([^"']+)["']/,
+    ]
 
-    function isElementInViewport(el) {
-        const rect = el.getBoundingClientRect();
-        return (
-            rect.top >= 0 &&
-            rect.top <= (window.innerHeight || document.documentElement.clientHeight)
-        );
+    let num = null
+    for (let p of numPatterns) {
+        let m = html.match(p)
+        if (m) { num = parseInt(m[1]); break }
+    }
+    let pathPrefix = null
+    for (let p of pathPatterns) {
+        let m = html.match(p)
+        if (m) { pathPrefix = m[1]; break }
     }
 
-    function hideControls() {
-        leftNav.classList.add('hidden');
-        rightNav.classList.add('hidden');
-    }
-
-    function showControls() {
-        // Only show side navigation if footer toolbar is not visible
-        if (!isElementInViewport(footerToolbar)) {
-            leftNav.classList.remove('hidden');
-            rightNav.classList.remove('hidden');
-        } else {
-            hideControls();
+    if (num && pathPrefix) {
+        for (let i = 1; i <= num; i++) {
+            images.push(pathPrefix + i + ".webp")
         }
     }
 
-    // Handle scroll events
-    window.addEventListener('scroll', () => {
-        clearTimeout(timer);
-        hideControls();
-        timer = setTimeout(showControls, 2000);
-    });
-
-    // Handle click events on images
-    comicContainer.addEventListener('click', (e) => {
-        if (e.target.classList.contains('comic-image')) {
-            showControls();
-            clearTimeout(timer);
-            timer = setTimeout(hideControls, 3000);
-        }
-    });
-
-    // Initial check
-    showControls();
-</script>
-<script>
-    var num =eval("111")
-
-    var pasd = "https://image4.wmanhua.com/mh/64845b6ba8714ec99957fae8ba9b5fcf/4ae143c7-07ed-4578-8524-f18074e6f779/"
-    const imagesDiv = document.querySelector('.images');
-    imagesDiv.innerHTML = ''; // Çå¿ÕÏÖÓĞÄÚÈİ
-    for(let i = 1; i <= num; i++) {
-        const img = document.createElement('img');
-        img.setAttribute('data-src', pasd + i + '.webp');
-        img.setAttribute('alt', `ÒìÓü±©¾ı£ºÎÒµÄÓ°×ÓÄÜÎŞÏŞ½ø»¯,µÚ92»° ·îÈ°,µÚ${i}ÕÅ`);
-        img.setAttribute('src', '/resource/image/loading.svg');
-        img.className = 'comic-image lazy';
-        imagesDiv.appendChild(img);
+    // æ–¹æ³•2: ä»DOMæå– (é™çº§)
+    if (images.length === 0) {
+        let imgs = document.querySelectorAll(".images img.comic-image")
+        // ...
     }
-    </script>
-<script>
-var lazyLoadInstance = new LazyLoad({
-    elements_selector: ".lazy",
-    threshold: 3000,
-    callback_error: function (element) {
-        // ±£´æÔ­Ê¼Í¼Æ¬ URL
-        const originalSrc = element.getAttribute('data-src');
-        
-        // ÉèÖÃÊ§°ÜÍ¼Æ¬
-        element.src = '/resource/image/click_reload.jpg';
-        
-        // Ìí¼Óµã»÷ÖØĞÂ¼ÓÔØÊÂ¼ş
-        element.addEventListener('click', function reloadImage() {
-            // ÉèÖÃ¼ÓÔØÖĞÍ¼Æ¬
-            element.src = '/resource/image/loading.svg';
-            
-            // ´´½¨ĞÂµÄÍ¼Æ¬¶ÔÏóÀ´¼ÓÔØ
-            const newImage = new Image();
-            newImage.src = originalSrc;
-            
-            newImage.onload = function() {
-                // ¼ÓÔØ³É¹¦ºó¸üĞÂÍ¼Æ¬
-                element.src = originalSrc;
-                // ÒÆ³ıµã»÷ÊÂ¼ş£¨·ÀÖ¹ÖØ¸´°ó¶¨£©
-                element.removeEventListener('click', reloadImage);
-            };
-            
-            newImage.onerror = function() {
-                // Èç¹ûÔÙ´Î¼ÓÔØÊ§°Ü£¬»Ö¸´µ½µã»÷ÖØĞÂ¼ÓÔØµÄ×´Ì¬
-                element.src = '/resource/image/click_reload.jpg';
-            };
-        });
-    }
-});
-</script>
 
+    document.dispose()
+    return { images }
+}
+```
 
+### å»ºè®® 4ï¼šåœ¨é”™è¯¯é€ŸæŸ¥è¡¨ä¸­å¢åŠ æ­¤æ¡ç›®
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</body></html>
+| é”™è¯¯ä¿¡æ¯ | åŸå›  | ä¿®å¤æ–¹æ³• |
+|---------|------|---------|
+| `Invalid argument(s): 1` at `int.clamp` | `loadEp` è¿”å›çš„å›¾ç‰‡åˆ—è¡¨ä¸ºç©ºï¼Œé˜…è¯»å™¨ clamp(1, 1, 0) æŠ¥é”™ | æ£€æŸ¥å›¾ç‰‡æå–é€»è¾‘ï¼›ç¡®è®¤æ˜¯å¦ä¸ºJSåŠ¨æ€ç”Ÿæˆï¼›è¿‡æ»¤å¹¿å‘Šå¯¼è‡´åˆ—è¡¨ä¸ºç©º |
