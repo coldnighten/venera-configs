@@ -284,7 +284,7 @@ loadEp: async (comicId, epId) => {
 
 ## 阶段7：整合与最终验证
 
-**目标**：确保完整的漫画源可以正常工作
+**目标**：确保完整的漫画源可以正常工作，并生成 index.json 条目
 
 ### 验证清单
 
@@ -309,6 +309,33 @@ python3 scripts/validate_source.py <源文件路径>
 
 确认所有检查通过后，向用户交付最终的漫画源文件。
 
+### 生成 index.json 条目
+
+漫画源完成后，生成对应的 index.json 条目：
+
+**JSON 格式**：
+```json
+{
+    "name": "漫画源名称",
+    "fileName": "文件名.js",
+    "key": "source_key",
+    "version": "1.0.0",
+    "description": "可选描述"
+}
+```
+
+**输出方式**：
+
+1. **直接输出到对话框** - 默认方式，将JSON格式的条目直接展示给用户
+2. **写入 index.json** - 如果工作目录根目录存在 `index.json` 且格式正确：
+   - 先检查是否已存在相同 key 的条目
+   - 如果存在，询问用户是否更新
+   - 如果不存在，询问用户是否添加
+   - 经用户同意后，将新条目追加到数组末尾
+   - 保持 JSON 格式正确（缩进4空格）
+
+使用 `scripts/manage_index.py` 辅助管理 index.json。
+
 ---
 
 ## 常见错误速查表
@@ -331,7 +358,30 @@ python3 scripts/validate_source.py <源文件路径>
 |------|------|
 | `scripts/analyze_page.py` | 自动分析页面结构（列表/分类/详情） |
 | `scripts/validate_source.py` | 自动检查源代码常见错误 |
+| `scripts/manage_index.py` | 管理 index.json 索引文件 |
 | `references/test_template.py` | 测试脚本模板 |
+
+### manage_index.py 使用说明
+
+```bash
+# 检查 index.json 格式
+python scripts/manage_index.py check <index.json路径>
+
+# 生成单个条目JSON
+python scripts/manage_index.py generate <name> <fileName> <key> <version> [description]
+
+# 检查key是否存在
+python scripts/manage_index.py exists <index.json路径> <key>
+
+# 添加新条目
+python scripts/manage_index.py add <index.json路径> <name> <fileName> <key> <version> [description]
+
+# 更新条目
+python scripts/manage_index.py update <index.json路径> <name> <fileName> <key> <version> [description]
+
+# 列出所有条目
+python scripts/manage_index.py list <index.json路径>
+```
 
 ### 参考文件
 
