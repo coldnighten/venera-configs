@@ -313,7 +313,7 @@ class LcmhxSource extends ComicSource {
                     }
                 }
 
-                if (epTitle && /^第/.test(epTitle)) {
+                if (epTitle && /^\\u7B2C/.test(epTitle)) {
                     chapters.set(epId, epTitle)
                 }
             }
@@ -378,7 +378,7 @@ class LcmhxSource extends ComicSource {
             }
 
             let title = ""
-            let titleMatch = html.match(/<title>([^<]*第[^<]*)</title>/)
+            let titleMatch = html.match(/<title>([^<]*\\u7B2C[^<]*)</title>/)
             if (titleMatch) {
                 title = titleMatch.group(1).trim()
             }
