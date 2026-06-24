@@ -290,16 +290,16 @@ class NiceMhSource extends ComicSource {
 
             let encryptedParams = paramsMatch[1]
 
-            let encryptedBytes = Utils.decodeBase64(encryptedParams)
+            let encryptedBytes = Convert.decodeBase64(encryptedParams)
 
             let ivBytes = encryptedBytes.slice(0, 16)
             let cipherBytes = encryptedBytes.slice(16)
 
             let keyStr = "5V&RoR%Jf@pJPydF"
-            let keyBytes = Utils.encodeUtf8(keyStr)
+            let keyBytes = Convert.encodeUtf8(keyStr)
 
-            let decryptedBytes = Utils.decryptAesCbc(cipherBytes, keyBytes, ivBytes)
-            let decryptedText = Utils.decodeUtf8(decryptedBytes)
+            let decryptedBytes = Convert.decryptAesCbc(cipherBytes, keyBytes, ivBytes)
+            let decryptedText = Convert.decodeUtf8(decryptedBytes)
             let data = JSON.parse(decryptedText)
 
             let images = []
