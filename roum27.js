@@ -203,8 +203,9 @@ class Roum27Source extends ComicSource {
         enableTagsSuggestions: false,
     }
 
-    loadInfo = async (comicId) => {
-        let url = "http://roum27.xyz/books/" + comicId
+    comic = {
+        loadInfo: async (id) => {
+        let url = "http://roum27.xyz/books/" + id
         let res = await Network.get(url)
         if (res.status !== 200) {
             throw `Invalid status code: ${res.status}`
@@ -239,7 +240,7 @@ class Roum27Source extends ComicSource {
             let chapterHrefMatch = match.match(/"href":"([^"]+)"/)
             if (chapterTitleMatch && chapterHrefMatch) {
                 let chapterTitle = chapterTitleMatch[1]
-                let chapterId = chapterHrefMatch[1].replace('/books/' + comicId + '/read/', '')
+                let chapterId = chapterHrefMatch[1].replace('/books/' + id + '/read/', '')
                 chapters.set(chapterId, chapterTitle)
             }
         }
@@ -258,7 +259,7 @@ class Roum27Source extends ComicSource {
             chapters: chapters,
             tags: tags,
         })
-    }
+    },
 
     loadEp: async (comicId, epId) => {
         let url = "http://roum27.xyz/books/" + comicId + "/read/" + epId
@@ -295,13 +296,14 @@ class Roum27Source extends ComicSource {
             images: images,
             title: ""
         }
-    }
+    },
 
-    onImageLoad = (url, comicId, epId) => {
+    onImageLoad: (url, comicId, epId) => {
         return {
             headers: {
                 "Referer": this.url + "books/" + comicId + "/read/" + epId
             }
         }
+    },
     }
 }
