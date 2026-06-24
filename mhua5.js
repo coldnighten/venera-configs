@@ -3,7 +3,7 @@
 class Manhua5Source extends ComicSource {
     name = "漫画屋"
     key = "mhua5"
-    version = "1.0.0"
+    version = "1.1.0"
     minAppVersion = "1.6.0"
     url = "https://www.mhua5.com/"
 
@@ -76,7 +76,37 @@ class Manhua5Source extends ComicSource {
                     }
 
                     if (comics.length > 0) {
-                        result.push({title: sectionTitle, comics: comics})
+                        let part = { title: sectionTitle, comics: comics }
+
+                        let moreLink = sec.querySelector('a.more')
+                        if (moreLink) {
+                            let href = moreLink.attributes['href'] || ''
+                            
+                            if (href.includes('/custom/')) {
+                                let param = href.split('/custom/').pop()
+                                part.viewMore = {
+                                    page: "category",
+                                    attributes: {
+                                        category: sectionTitle,
+                                        param: "custom:" + param,
+                                    }
+                                }
+                            } else if (href.includes('/category/')) {
+                                let parts = href.split('/category/')
+                                if (parts.length > 1) {
+                                    let param = parts[parts.length - 1]
+                                    part.viewMore = {
+                                        page: "category",
+                                        attributes: {
+                                            category: sectionTitle,
+                                            param: "category:" + param,
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        result.push(part)
                     }
                 }
 
@@ -139,14 +169,19 @@ class Manhua5Source extends ComicSource {
 
     categoryComics = {
         load: async (category, param, options, page) => {
-            let baseUrl = "https://www.mhua5.com/index.php/category/"
             let url = ""
 
             if (param && param.length > 0) {
-                url = baseUrl + param + "/"
+                if (param.startsWith("custom:")) {
+                    url = "https://www.mhua5.com/index.php/custom/" + param.replace("custom:", "") + "/"
+                } else if (param.startsWith("category:")) {
+                    url = "https://www.mhua5.com/index.php/category/" + param.replace("category:", "") + "/"
+                } else {
+                    url = "https://www.mhua5.com/index.php/category/" + param + "/"
+                }
             } else {
                 let order = options && options[0] ? options[0] : "hits"
-                url = baseUrl + "order/" + order + "/"
+                url = "https://www.mhua5.com/index.php/category/order/" + order + "/"
             }
 
             if (page > 1) {
