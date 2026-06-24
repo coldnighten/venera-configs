@@ -3,9 +3,77 @@
 class Roum27Source extends ComicSource {
     name = "肉漫屋"
     key = "roum27"
-    version = "1.0.1"
+    version = "1.0.2"
     minAppVersion = "1.6.0"
-    url = "http://roum27.xyz/"
+    url = "https://roum27.xyz/"
+
+    parseComicFromLink(linkEl) {
+        let href = linkEl.attributes["href"] || ""
+        let id = href.replace("/books/", "")
+        if (!id) return null
+
+        let cover = ""
+        let bgDiv = linkEl.querySelector("[style*='background-image']")
+        if (bgDiv) {
+            let style = bgDiv.attributes["style"] || ""
+            let match = style.match(/url\(["']?([^"')]+)["']?\)/)
+            if (match) {
+                cover = match[1]
+            }
+        }
+
+        let title = ""
+        let titleEl = linkEl.querySelector(".truncate.text-foreground, .text-foreground.truncate")
+        if (titleEl) {
+            title = titleEl.text.trim()
+        }
+
+        if (!title) {
+            let allDivs = linkEl.querySelectorAll("div")
+            for (let d of allDivs) {
+                let cls = d.attributes["class"] || ""
+                if (cls.includes("truncate") && cls.includes("text-foreground")) {
+                    title = d.text.trim()
+                    break
+                }
+            }
+        }
+
+        if (!id || !title) return null
+
+        return new Comic({
+            id: id,
+            title: title,
+            cover: cover,
+        })
+    }
+
+    parseComicsFromGrid(document, gridSelector) {
+        let comics = []
+        let grid = gridSelector ? document.querySelector(gridSelector) : null
+        let links = []
+
+        if (grid) {
+            links = grid.querySelectorAll('a[href^="/books/"]')
+        } else {
+            links = document.querySelectorAll('a[href^="/books/"]')
+        }
+
+        let seen = new Set()
+        for (let link of links) {
+            let href = link.attributes["href"] || ""
+            let id = href.replace("/books/", "")
+            if (id && !seen.has(id) && id.length > 10) {
+                seen.add(id)
+                let comic = this.parseComicFromLink(link)
+                if (comic) {
+                    comics.push(comic)
+                }
+            }
+        }
+
+        return comics
+    }
 
     explore = [
         {
@@ -20,44 +88,50 @@ class Roum27Source extends ComicSource {
                 let document = new HtmlDocument(res.body)
                 let result = []
 
-                let scriptContent = ""
-                let scripts = document.querySelectorAll("script")
-                for (let script of scripts) {
-                    let content = script.text || ""
-                    if (content.includes("__next_f")) {
-                        scriptContent += content
+                let sectionTitles = ["正熱門", "今日最佳", "最近更新", "本週熱門", "已完結"]
+                let allGrids = document.querySelectorAll('div[class*="grid-cols-"]')
+
+                let comicGrids = []
+                for (let g of allGrids) {
+                    let cls = g.attributes["class"] || ""
+                    if (cls.includes("sm:grid-cols-4") || cls.includes("md:grid-cols-6")) {
+                        let links = g.querySelectorAll('a[href^="/books/"]')
+                        if (links.length >= 3) {
+                            comicGrids.push(g)
+                        }
                     }
                 }
 
-                let comicLinks = scriptContent.match(/"href":"\/books\/[^"]*"/g) || []
-                let comicImages = scriptContent.match(/"src":"[^"]*\.jpg[^"]*"/g) || []
-                let comicTitles = scriptContent.match(/"alt":"[^"]*"/g) || []
+                for (let i = 0; i < comicGrids.length && i < sectionTitles.length; i++) {
+                    let grid = comicGrids[i]
+                    let title = sectionTitles[i]
 
-                let comics = []
-                for (let i = 0; i < comicLinks.length && i < 20; i++) {
-                    let href = comicLinks[i].replace('"href":"', '').replace('"', '')
-                    let id = href.replace('/books/', '')
-                    
-                    let cover = ""
-                    if (i < comicImages.length) {
-                        cover = comicImages[i].replace('"src":"', '').replace('"', '')
-                        if (!cover.startsWith('http')) {
-                            cover = "http://roum27.xyz" + cover
+                    let comics = []
+                    let links = grid.querySelectorAll('a[href^="/books/"]')
+                    let seen = new Set()
+
+                    for (let link of links) {
+                        let href = link.attributes["href"] || ""
+                        let id = href.replace("/books/", "")
+                        if (id && !seen.has(id) && id.length > 10) {
+                            seen.add(id)
+                            let comic = this.parseComicFromLink(link)
+                            if (comic) {
+                                comics.push(comic)
+                            }
                         }
                     }
 
-                    let title = ""
-                    if (i < comicTitles.length) {
-                        title = comicTitles[i].replace('"alt":"', '').replace('"', '')
-                    }
-
-                    if (id && title) {
-                        comics.push(new Comic({ id, title, cover }))
+                    if (comics.length > 0) {
+                        result.push({ title: title, comics: comics })
                     }
                 }
 
-                if (comics.length > 0) {
-                    result.push({ title: "热门漫画", comics: comics })
+                if (result.length === 0) {
+                    let comics = this.parseComicsFromGrid(document, null)
+                    if (comics.length > 0) {
+                        result.push({ title: "熱門漫畫", comics: comics.slice(0, 20) })
+                    }
                 }
 
                 document.dispose()
@@ -70,7 +144,7 @@ class Roum27Source extends ComicSource {
         title: "肉漫屋",
         parts: [
             {
-                name: "分类",
+                name: "分類",
                 type: "fixed",
                 categories: ["全部", "韓漫", "日漫", "國漫", "美漫"],
                 categoryParams: ["", "korean", "japanese", "chinese", "western"],
@@ -82,12 +156,16 @@ class Roum27Source extends ComicSource {
 
     categoryComics = {
         load: async (category, param, options, page) => {
-            let url = "http://roum27.xyz/books"
+            let url = this.url + "books"
+            let params = []
             if (param) {
-                url += "?lang=" + param
+                params.push("lang=" + param)
             }
             if (page > 1) {
-                url += "&page=" + page
+                params.push("page=" + page)
+            }
+            if (params.length > 0) {
+                url += "?" + params.join("&")
             }
 
             let res = await Network.get(url)
@@ -96,41 +174,7 @@ class Roum27Source extends ComicSource {
             }
 
             let document = new HtmlDocument(res.body)
-            let scriptContent = ""
-            let scripts = document.querySelectorAll("script")
-            for (let script of scripts) {
-                let content = script.text || ""
-                if (content.includes("__next_f")) {
-                    scriptContent += content
-                }
-            }
-
-            let comicLinks = scriptContent.match(/"href":"\/books\/[^"]*"/g) || []
-            let comicImages = scriptContent.match(/"src":"[^"]*\.jpg[^"]*"/g) || []
-            let comicTitles = scriptContent.match(/"alt":"[^"]*"/g) || []
-
-            let comics = []
-            for (let i = 0; i < comicLinks.length; i++) {
-                let href = comicLinks[i].replace('"href":"', '').replace('"', '')
-                let id = href.replace('/books/', '')
-                
-                let cover = ""
-                if (i < comicImages.length) {
-                    cover = comicImages[i].replace('"src":"', '').replace('"', '')
-                    if (!cover.startsWith('http')) {
-                        cover = "http://roum27.xyz" + cover
-                    }
-                }
-
-                let title = ""
-                if (i < comicTitles.length) {
-                    title = comicTitles[i].replace('"alt":"', '').replace('"', '')
-                }
-
-                if (id && title) {
-                    comics.push(new Comic({ id, title, cover }))
-                }
-            }
+            let comics = this.parseComicsFromGrid(document, null)
 
             document.dispose()
             return {
@@ -140,14 +184,14 @@ class Roum27Source extends ComicSource {
         },
         optionList: [
             {
-                options: ["latest-最新", "popular-热门"],
+                options: ["latest-最新", "popular-熱門"],
             },
         ],
     }
 
     search = {
         load: async (keyword, options, page) => {
-            let url = "http://roum27.xyz/search?keyword=" + encodeURIComponent(keyword)
+            let url = this.url + "search?keyword=" + encodeURIComponent(keyword)
             if (page > 1) {
                 url += "&page=" + page
             }
@@ -158,41 +202,7 @@ class Roum27Source extends ComicSource {
             }
 
             let document = new HtmlDocument(res.body)
-            let scriptContent = ""
-            let scripts = document.querySelectorAll("script")
-            for (let script of scripts) {
-                let content = script.text || ""
-                if (content.includes("__next_f")) {
-                    scriptContent += content
-                }
-            }
-
-            let comicLinks = scriptContent.match(/"href":"\/books\/[^"]*"/g) || []
-            let comicImages = scriptContent.match(/"src":"[^"]*\.jpg[^"]*"/g) || []
-            let comicTitles = scriptContent.match(/"alt":"[^"]*"/g) || []
-
-            let comics = []
-            for (let i = 0; i < comicLinks.length; i++) {
-                let href = comicLinks[i].replace('"href":"', '').replace('"', '')
-                let id = href.replace('/books/', '')
-                
-                let cover = ""
-                if (i < comicImages.length) {
-                    cover = comicImages[i].replace('"src":"', '').replace('"', '')
-                    if (!cover.startsWith('http')) {
-                        cover = "http://roum27.xyz" + cover
-                    }
-                }
-
-                let title = ""
-                if (i < comicTitles.length) {
-                    title = comicTitles[i].replace('"alt":"', '').replace('"', '')
-                }
-
-                if (id && title) {
-                    comics.push(new Comic({ id, title, cover }))
-                }
-            }
+            let comics = this.parseComicsFromGrid(document, null)
 
             document.dispose()
             return {
@@ -205,105 +215,135 @@ class Roum27Source extends ComicSource {
 
     comic = {
         loadInfo: async (id) => {
-        let url = "http://roum27.xyz/books/" + id
-        let res = await Network.get(url)
-        if (res.status !== 200) {
-            throw `Invalid status code: ${res.status}`
-        }
-
-        let document = new HtmlDocument(res.body)
-        let scriptContent = ""
-        let scripts = document.querySelectorAll("script")
-        for (let script of scripts) {
-            let content = script.text || ""
-            if (content.includes("__next_f")) {
-                scriptContent += content
+            let url = this.url + "books/" + id
+            let res = await Network.get(url)
+            if (res.status !== 200) {
+                throw `Invalid status code: ${res.status}`
             }
-        }
 
-        let titleMatch = scriptContent.match(/"title":"([^"]+)"/)
-        let title = titleMatch ? titleMatch[1] : ""
+            let document = new HtmlDocument(res.body)
 
-        let coverMatch = scriptContent.match(/"coverImage":"([^"]+)"/)
-        let cover = coverMatch ? coverMatch[1] : ""
-        if (cover && !cover.startsWith('http')) {
-            cover = "http://roum27.xyz" + cover
-        }
-
-        let descMatch = scriptContent.match(/"description":"([^"]+)"/)
-        let desc = descMatch ? descMatch[1] : ""
-
-        let chapters = new Map()
-        let chapterMatches = scriptContent.match(/{"title":"[^"]+","href":"\/books\/[^"]+\/read\/[^"]+"}/g) || []
-        for (let match of chapterMatches) {
-            let chapterTitleMatch = match.match(/"title":"([^"]+)"/)
-            let chapterHrefMatch = match.match(/"href":"([^"]+)"/)
-            if (chapterTitleMatch && chapterHrefMatch) {
-                let chapterTitle = chapterTitleMatch[1]
-                let chapterId = chapterHrefMatch[1].replace('/books/' + id + '/read/', '')
-                chapters.set(chapterId, chapterTitle)
+            let title = ""
+            let titleEl = document.querySelector(".text-2xl")
+            if (titleEl) {
+                title = titleEl.text.trim()
             }
-        }
 
-        let tags = { "作者": [], "标签": [] }
-        let authorMatch = scriptContent.match(/"author":"([^"]+)"/)
-        if (authorMatch) {
-            tags["作者"].push(authorMatch[1])
-        }
-
-        document.dispose()
-        return new ComicDetails({
-            title: title,
-            cover: cover,
-            desc: desc,
-            chapters: chapters,
-            tags: tags,
-        })
-    },
-
-    loadEp: async (comicId, epId) => {
-        let url = "http://roum27.xyz/books/" + comicId + "/read/" + epId
-        let res = await Network.get(url)
-        if (res.status !== 200) {
-            throw `Invalid status code: ${res.status}`
-        }
-
-        let document = new HtmlDocument(res.body)
-        let scriptContent = ""
-        let scripts = document.querySelectorAll("script")
-        for (let script of scripts) {
-            let content = script.text || ""
-            if (content.includes("__next_f")) {
-                scriptContent += content
-            }
-        }
-
-        let images = []
-        let imageMatches = scriptContent.match(/"url":"([^"]+\.(jpg|png|webp))"/g) || []
-        for (let match of imageMatches) {
-            let urlMatch = match.match(/"url":"([^"]+)"/)
-            if (urlMatch) {
-                let imgUrl = urlMatch[1]
-                if (!imgUrl.startsWith('http')) {
-                    imgUrl = "http://roum27.xyz" + imgUrl
+            let cover = ""
+            let bgDiv = document.querySelector("[style*='background-image']")
+            if (bgDiv) {
+                let style = bgDiv.attributes["style"] || ""
+                let match = style.match(/url\(["']?([^"')]+)["']?\)/)
+                if (match) {
+                    cover = match[1]
                 }
-                images.push(imgUrl)
             }
-        }
 
-        document.dispose()
-        return {
-            images: images,
-            title: ""
-        }
-    },
-
-    onImageLoad: (url, comicId, epId) => {
-        return {
-            headers: {
-                "Referer": this.url + "books/" + comicId + "/read/" + epId
+            let desc = ""
+            let descCandidates = document.querySelectorAll(".text-muted-foreground")
+            for (let el of descCandidates) {
+                let text = el.text.trim()
+                if (text.length > 30 && text.length < 500) {
+                    desc = text
+                    break
+                }
             }
-        }
-    },
+
+            let chapters = new Map()
+            let chapterLinks = document.querySelectorAll('a[href^="/books/' + id + '/"]')
+            for (let link of chapterLinks) {
+                let href = link.attributes["href"] || ""
+                let epId = href.replace("/books/" + id + "/", "")
+                if (epId && /^\d+$/.test(epId)) {
+                    let epTitle = ""
+                    let titleDiv = link.querySelector(".truncate")
+                    if (titleDiv) {
+                        epTitle = titleDiv.text.trim()
+                    }
+                    if (!epTitle) {
+                        epTitle = link.text.trim()
+                    }
+                    if (epTitle) {
+                        chapters.set(epId, epTitle)
+                    }
+                }
+            }
+
+            if (chapters.size === 0) {
+                let allDivs = document.querySelectorAll("div")
+                let count = 0
+                for (let d of allDivs) {
+                    let text = d.text.trim()
+                    if (/^第\d+話/.test(text) && count < 200) {
+                        chapters.set(String(count), text)
+                        count++
+                    }
+                }
+            }
+
+            let tags = { "作者": [], "標籤": [] }
+            let authorMatch = res.body.match(/作者[：:]\s*<[^>]*>([^<]+)</)
+            if (authorMatch) {
+                let author = authorMatch[1].replace(/&amp;/g, "&").trim()
+                tags["作者"].push(author)
+            }
+
+            document.dispose()
+            return new ComicDetails({
+                title: title,
+                cover: cover,
+                desc: desc,
+                chapters: chapters,
+                tags: tags,
+            })
+        },
+
+        loadEp: async (comicId, epId) => {
+            let url = this.url + "books/" + comicId + "/" + epId
+            let res = await Network.get(url)
+            if (res.status !== 200) {
+                throw `Invalid status code: ${res.status}`
+            }
+
+            let images = []
+            let body = res.body
+
+            let imgMatches = body.match(/"imageUrl":"([^"]+\.(jpg|png|webp))"/g) || []
+            let seen = new Set()
+            for (let match of imgMatches) {
+                let urlMatch = match.match(/"imageUrl":"([^"]+)"/)
+                if (urlMatch) {
+                    let imgUrl = urlMatch[1]
+                    if (!seen.has(imgUrl)) {
+                        seen.add(imgUrl)
+                        images.push(imgUrl)
+                    }
+                }
+            }
+
+            if (images.length === 0) {
+                let directMatches = body.match(/https:\/\/r\d+\.rmcdn[^"\\']+\.jpg/g) || []
+                let seen2 = new Set()
+                for (let u of directMatches) {
+                    if (!seen2.has(u) && u.includes("/m/")) {
+                        seen2.add(u)
+                        images.push(u)
+                    }
+                }
+            }
+
+            return {
+                images: images,
+                title: ""
+            }
+        },
+
+        onImageLoad: (url, comicId, epId) => {
+            return {
+                headers: {
+                    "Referer": "https://roum27.xyz/"
+                }
+            }
+        },
     }
 }
