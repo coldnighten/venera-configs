@@ -17,6 +17,11 @@
 - [ ] `singlePageWithMultiPart` 类型返回对象格式：`{section1: [...], section2: [...]}`
 - [ ] 每个漫画项使用 `new Comic({id, title, cover})`
 - [ ] 漫画ID从链接中正确提取
+- [ ] **有"更多"按钮的区块是否添加了 viewMore**
+- [ ] **viewMore 格式正确**：对象格式 `{ page: "category|search", attributes: {...} }`
+- [ ] **viewMore.page 合法**：只能是 "category" 或 "search"
+- [ ] **跳转到分类页时 attributes 包含 category 和 param**
+- [ ] **跳转到搜索页时 attributes 包含 keyword**
 
 ## 分类页检查
 

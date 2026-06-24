@@ -7,6 +7,32 @@
  * 3. tags 必须是对象格式 {作者: [...], 标签: [...]}
  * 4. 探索页和分类页标题必须与 name 一致
  * 5. ComicDetails 只包含有效参数
+ * 6. 有"更多"按钮必须配置 viewMore，否则按钮点击无效
+ */
+
+/**
+ * @typedef {Object} PageJumpTarget
+ * @property {string} page - The page name (search, category)
+ * @property {Object} attributes - The attributes of the page
+ *
+ * @example
+ * // 跳转到分类页
+ * {
+ *     page: "category",
+ *     attributes: {
+ *         category: "热血",
+ *         param: "rexue",
+ *     },
+ * }
+ *
+ * @example
+ * // 跳转到搜索页
+ * {
+ *     page: "search",
+ *     attributes: {
+ *         keyword: "关键词",
+ *     },
+ * }
  */
 
 class ComicSourceTemplate extends ComicSource {
@@ -21,7 +47,17 @@ class ComicSourceTemplate extends ComicSource {
     explore = [
         {
             title: "漫画源名称",  // 必须与 name 一致
-            type: "multiPartPage",  // 或 singlePageWithMultiPart / multiPageComicList
+            type: "multiPartPage",  // 或 singlePageWithMultiPart / multiPageComicList / mixed
+
+            /**
+             * load function
+             * @param page {number | null} - page number, null for `singlePageWithMultiPart` type
+             * @returns {{}}
+             * - for `multiPartPage` type, return [{title: string, comics: Comic[], viewMore: PageJumpTarget}]
+             * - for `singlePageWithMultiPart` type, return {section1: [...], section2: [...]}
+             * - for `multiPageComicList` type, for each page(1-based), return {comics: Comic[], maxPage: number}
+             * - for `mixed` type, use param `page` as index. for each index(0-based), return {data: [], maxPage: number?}, data is an array contains Comic[] or {title: string, comics: Comic[], viewMore: PageJumpTarget}
+             */
             load: async (page) => {
                 let res = await Network.get(this.url)
                 if (res.status !== 200) {
@@ -54,13 +90,38 @@ class ComicSourceTemplate extends ComicSource {
                     }
 
                     if (comics.length > 0) {
-                        result.push({ title: title, comics: comics })
+                        let part = { title: title, comics: comics }
+
+                        // [可选] 添加 viewMore（"更多"按钮）
+                        // 检查区块是否有"更多"按钮，有则添加 viewMore
+                        // let moreLink = sec.querySelector("more-btn-selector")
+                        // if (moreLink) {
+                        //     let moreHref = moreLink.attributes["href"] || ""
+                        //     // 根据链接类型构造 viewMore
+                        //     part.viewMore = {
+                        //         page: "category",  // 或 "search"
+                        //         attributes: {
+                        //             category: title,
+                        //             param: "category-param",
+                        //         }
+                        //     }
+                        // }
+
+                        result.push(part)
                     }
                 }
 
                 document.dispose()
                 return result
-            }
+            },
+
+            /**
+             * Only use for `multiPageComicList` type.
+             * `loadNext` would be ignored if `load` function is implemented.
+             * @param next {string | null} - next page token, null if first page
+             * @returns {Promise<{comics: Comic[], next: string?}>} - next is null if no next page.
+             */
+            loadNext(next) {},
         }
     ]
 

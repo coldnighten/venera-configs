@@ -57,6 +57,160 @@ explore = [
 ]
 ```
 
+## viewMore 模板
+
+`viewMore` 是探索页每个区块的可选字段，类型为 `PageJumpTarget`，用于点击"更多"按钮时跳转到指定页面。
+
+### 标准格式（推荐）
+
+```javascript
+viewMore: {
+    page: "category",  // 或 "search"
+    attributes: {
+        category: "分类名称",
+        param: "传递给 categoryComics.load 的参数",
+    }
+}
+```
+
+### 6种常见模式
+
+#### 1. 跳转到分类页（tag 筛选）
+最常见的模式，点击"更多"跳转到对应分类页。
+
+```javascript
+// 场景：首页区块"热血漫画"的更多按钮指向 /category/rexue
+viewMore: {
+    page: "category",
+    attributes: {
+        category: "热血",
+        param: "rexue",  // 对应 categoryParams 中的值
+    }
+}
+```
+
+#### 2. 跳转到专题页（theme/id）
+某些网站使用专题/主题 ID 而非 tag 名称。
+
+```javascript
+// 场景：首页区块"校园青春"的更多按钮指向 /theme?id=xxx
+// 需在 categoryComics.load 中支持 theme: 前缀的 param
+viewMore: {
+    page: "category",
+    attributes: {
+        category: "校园青春",
+        param: "theme:cmigxicdg0008dsopt2563ct3",
+    }
+}
+```
+
+#### 3. 纯排序模式
+"抢先更新"、"热门漫画"这类区块，更多按钮是全部漫画按指定排序展示。
+
+```javascript
+// 场景："热门漫画"更多按钮指向全部漫画按热度排序
+// 需在 categoryComics.load 中支持 sort: 前缀的 param
+viewMore: {
+    page: "category",
+    attributes: {
+        category: "全部",
+        param: "sort:total",  // sort:latest 或 sort:total
+    }
+}
+```
+
+#### 4. 跳转到搜索结果页
+某些"更多"按钮实际是搜索某个关键词。
+
+```javascript
+// 场景："3D漫画"更多按钮是搜索 3D 关键词
+viewMore: {
+    page: "search",
+    attributes: {
+        keyword: "3D",
+    }
+}
+```
+
+#### 5. 分类 + 指定排序
+跳转到某个分类，同时指定排序方式。
+
+```javascript
+// 场景："最新日漫"更多按钮指向日漫分类按最新排序
+viewMore: {
+    page: "category",
+    attributes: {
+        category: "日漫",
+        param: "japanese",
+    }
+}
+// 注：排序由 optionList 控制，如需要固定排序，可在 param 中携带排序信息
+```
+
+#### 6. 字符串格式（兼容旧版）
+部分旧源码使用字符串格式 `category:名称@param`，新代码不推荐使用。
+
+```javascript
+// 旧格式，仅作兼容参考
+viewMore: `category:热血@rexue`
+```
+
+### 完整示例
+
+```javascript
+explore = [
+    {
+        title: "漫画源名称",
+        type: "multiPartPage",
+        load: async (page) => {
+            let res = await Network.get(this.url)
+            // ... 解析页面 ...
+
+            let sections = document.querySelectorAll(".section")
+            for (let sec of sections) {
+                let title = sec.querySelector(".section-title").text.trim()
+                let comics = []
+                // ... 解析漫画列表 ...
+
+                // 查找"更多"按钮
+                let moreLink = sec.querySelector(".more-btn")
+                let viewMore = null
+                if (moreLink) {
+                    let href = moreLink.attributes["href"] || ""
+                    // 根据 href 判断类型，构造 viewMore
+                    if (href.includes("/category/")) {
+                        let tag = href.split("/category/").pop().replace("/", "")
+                        viewMore = {
+                            page: "category",
+                            attributes: {
+                                category: title,
+                                param: tag,
+                            }
+                        }
+                    } else if (href.includes("/theme?id=")) {
+                        let themeId = href.split("id=").pop()
+                        viewMore = {
+                            page: "category",
+                            attributes: {
+                                category: title,
+                                param: "theme:" + themeId,
+                            }
+                        }
+                    }
+                }
+
+                let part = { title: title, comics: comics }
+                if (viewMore) part.viewMore = viewMore
+                result.push(part)
+            }
+
+            document.dispose()
+            return result
+        }
+    }
+]
+```
+
 ## 分类配置模板
 
 ```javascript

@@ -150,6 +150,61 @@ def check_source_file(filepath):
     else:
         warnings.append("⚠️ 未使用文本前缀区分（可能提取到标签名而非值）")
     
+    # 17. 检查 viewMore 格式
+    if 'explore' in content:
+        # 先检查是否有 viewMore 关键字
+        if 'viewMore' in content:
+            # 查找静态定义的 viewMore 对象（viewMore: { ... }）
+            viewmore_obj_matches = re.findall(r'viewMore\s*:\s*(\{[^}]+(?:\{[^}]*\}[^}]*)*\})', content, re.DOTALL)
+            
+            if viewmore_obj_matches:
+                info.append(f"✅ 发现 {len(viewmore_obj_matches)} 个静态 viewMore 配置")
+                
+                # 检查每个 viewMore 的格式
+                valid_count = 0
+                for i, vm in enumerate(viewmore_obj_matches):
+                    # 跳过 viewMore: null 的情况
+                    if vm.strip() == 'null' or vm.strip() == 'undefined':
+                        continue
+                    
+                    # 检查是否有 page 字段
+                    page_match = re.search(r'page\s*:\s*["\'](category|search)["\']', vm)
+                    if not page_match:
+                        # 也可能是用变量或其他方式，宽松处理
+                        page_any = re.search(r'page\s*:', vm)
+                        if not page_any:
+                            issues.append(f"❌ viewMore[{i}] 缺少 page 字段")
+                            continue
+                    
+                    page_value = page_match.group(1) if page_match else None
+                    
+                    # 检查是否有 attributes
+                    attrs_match = re.search(r'attributes\s*:\s*\{', vm)
+                    if not attrs_match:
+                        issues.append(f"❌ viewMore[{i}] 缺少 attributes 字段")
+                        continue
+                    
+                    # 根据 page 类型检查 attributes 内容
+                    if page_value == 'category':
+                        # 检查是否有 category 和 param（或 search 等其他字段，宽松处理）
+                        if 'category' not in vm[attrs_match.end():]:
+                            warnings.append(f"⚠️ viewMore[{i}] 跳转到分类页但 attributes 中可能缺少 category 字段")
+                        
+                    elif page_value == 'search':
+                        if 'keyword' not in vm[attrs_match.end():]:
+                            warnings.append(f"⚠️ viewMore[{i}] 跳转到搜索页但 attributes 中可能缺少 keyword 字段")
+                    
+                    valid_count += 1
+                
+                if valid_count > 0:
+                    info.append(f"✅ {valid_count} 个静态 viewMore 格式正确")
+            else:
+                # 有 viewMore 关键字但没有静态对象，说明是动态生成的
+                info.append("✅ 发现 viewMore 配置（动态生成）")
+        else:
+            # 有 explore 但没有 viewMore，给出警告（因为可能有"更多"按钮但忘了加）
+            warnings.append("⚠️ 未发现 viewMore 配置，请确认首页是否有'更多'按钮需要配置")
+    
     # 输出结果
     print("=" * 60)
     print(f"漫画源检查报告: {filepath}")
