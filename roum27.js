@@ -3,7 +3,7 @@
 class Roum27Source extends ComicSource {
     name = "肉漫屋"
     key = "roum27"
-    version = "1.0.0"
+    version = "1.0.1"
     minAppVersion = "1.6.0"
     url = "http://roum27.xyz/"
 
