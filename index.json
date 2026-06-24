@@ -212,5 +212,11 @@
         "fileName": "roum27.js",
         "key": "roum27",
         "version": "1.0.2"
+    },
+    {
+        "name": "乐成漫画",
+        "fileName": "lcmhx.js",
+        "key": "lcmhx",
+        "version": "1.0.0"
     }
 ]
