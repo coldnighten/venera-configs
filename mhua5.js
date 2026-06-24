@@ -82,25 +82,22 @@ class Manhua5Source extends ComicSource {
                         if (moreLink) {
                             let href = moreLink.attributes['href'] || ''
                             
-                            if (href.includes('/custom/')) {
-                                let param = href.split('/custom/').pop()
+                            if (href.startsWith('/index.php/custom/')) {
+                                let param = href.replace('/index.php/custom/', '')
                                 part.viewMore = {
                                     page: "category",
                                     attributes: {
                                         category: sectionTitle,
-                                        param: "custom:" + param,
+                                        param: "custom/" + param,
                                     }
                                 }
-                            } else if (href.includes('/category/')) {
-                                let parts = href.split('/category/')
-                                if (parts.length > 1) {
-                                    let param = parts[parts.length - 1]
-                                    part.viewMore = {
-                                        page: "category",
-                                        attributes: {
-                                            category: sectionTitle,
-                                            param: "category:" + param,
-                                        }
+                            } else if (href.startsWith('/index.php/category/')) {
+                                let param = href.replace('/index.php/category/', '')
+                                part.viewMore = {
+                                    page: "category",
+                                    attributes: {
+                                        category: sectionTitle,
+                                        param: param,
                                     }
                                 }
                             }
@@ -172,10 +169,8 @@ class Manhua5Source extends ComicSource {
             let url = ""
 
             if (param && param.length > 0) {
-                if (param.startsWith("custom:")) {
-                    url = "https://www.mhua5.com/index.php/custom/" + param.replace("custom:", "") + "/"
-                } else if (param.startsWith("category:")) {
-                    url = "https://www.mhua5.com/index.php/category/" + param.replace("category:", "") + "/"
+                if (param.startsWith("custom/")) {
+                    url = "https://www.mhua5.com/index.php/" + param + "/"
                 } else {
                     url = "https://www.mhua5.com/index.php/category/" + param + "/"
                 }
