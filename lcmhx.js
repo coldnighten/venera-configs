@@ -313,7 +313,7 @@ class LcmhxSource extends ComicSource {
                     }
                 }
 
-                if (epTitle && /^\\u7B2C/.test(epTitle)) {
+                if (epTitle && epTitle.charAt(0) === '\u7B2C') {
                     chapters.set(epId, epTitle)
                 }
             }
@@ -378,9 +378,12 @@ class LcmhxSource extends ComicSource {
             }
 
             let title = ""
-            let titleMatch = html.match(/<title>([^<]*\\u7B2C[^<]*)</title>/)
-            if (titleMatch) {
-                title = titleMatch.group(1).trim()
+            let startIdx = html.indexOf("<title>")
+            if (startIdx >= 0) {
+                let endIdx = html.indexOf("</title>", startIdx)
+                if (endIdx > startIdx) {
+                    title = html.substring(startIdx + 7, endIdx).trim()
+                }
             }
 
             return {
