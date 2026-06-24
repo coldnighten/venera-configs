@@ -1,7 +1,7 @@
 class WManhuaSource extends ComicSource {
     name = "W漫画"
     key = "wmanhua"
-    version = "1.0.2"
+    version = "1.0.3"
     minAppVersion = "1.6.0"
     url = "https://www.wmanhua.com/"
 
@@ -283,62 +283,105 @@ class WManhuaSource extends ComicSource {
             }
 
             let description = ""
-            let descElem = document.querySelector(".comic-desc, .description, .intro, .comic-info p, .detail-info p, .content")
+            let descElem = document.querySelector(".description, .comic-desc, .intro, .detail-info p")
             if (descElem) {
                 description = descElem.text.trim()
             }
 
             let author = ""
-            let authorElem = document.querySelector(".author a, .comic-author a, [class*='author'] a")
-            if (authorElem) {
-                author = authorElem.text.trim()
-            }
-
             let tags = []
-            let breadcrumbLinks = document.querySelectorAll(".breadcrumb a, .nav a, .tag-list a, .tags a")
-            for (let link of breadcrumbLinks) {
-                let text = link.text.trim()
-                let href = link.attributes["href"] || ""
-                if (text && text !== "首页" && text !== "W漫画" && href.indexOf("/sort") >= 0) {
-                    tags.push(text)
+            let updateTime = ""
+
+            let authorDivs = document.querySelectorAll(".author")
+            for (let div of authorDivs) {
+                let text = div.text.trim()
+                if (text.indexOf("作者") === 0 || text.indexOf("作者：") === 0 || text.indexOf("作者:") === 0) {
+                    author = text.replace(/^作者[：:]\s*/, "").trim()
+                } else if (text.indexOf("标签") === 0 || text.indexOf("标签：") === 0 || text.indexOf("标签:") === 0) {
+                    let tagLinks = div.querySelectorAll("a")
+                    for (let link of tagLinks) {
+                        let tagText = link.text.trim()
+                        if (tagText && tags.indexOf(tagText) === -1) {
+                            tags.push(tagText)
+                        }
+                    }
+                } else if (text.indexOf("更新") === 0 || text.indexOf("更新：") === 0 || text.indexOf("更新:") === 0) {
+                    updateTime = text.replace(/^更新[：:]\s*/, "").trim()
                 }
             }
 
             let chapters = new Map()
-            let chapterContainer = document.querySelector(".chapter-list, .list-chapter, .chapter-box, .chater-list, [class*='chapter'] ul")
-            if (chapterContainer) {
-                let chapterLinks = chapterContainer.querySelectorAll("a")
-                for (let link of chapterLinks) {
-                    let href = link.attributes["href"] || ""
-                    let chMatch = href.match(/\/chapter\/(\d+(?:-\d+)*)\.html/)
-                    if (chMatch) {
-                        let chId = chMatch[1]
-                        let chTitle = link.text.trim()
-                        if (chId && chTitle && !chapters.has(chId)) {
+
+            let apiUrl = `${this.url}comic/${id}`
+            let postHeaders = {}
+            for (let k in this.headers) {
+                postHeaders[k] = this.headers[k]
+            }
+            postHeaders["Content-Type"] = "application/json"
+
+            try {
+                let apiRes = await Network.post(apiUrl, postHeaders, JSON.stringify({}))
+                let apiData = JSON.parse(apiRes.body)
+                if (apiData.code === 0 && apiData.data && apiData.data.chapters && apiData.data.chapters.length > 0) {
+                    let chapterList = apiData.data.chapters
+                    for (let i = chapterList.length - 1; i >= 0; i--) {
+                        let ch = chapterList[i]
+                        let chId = ch.contentId ? `${ch.contentId}-${ch.id}` : String(ch.id)
+                        let chTitle = ch.chapterName
+                        if (chId && chTitle) {
                             chapters.set(chId, chTitle)
                         }
                     }
                 }
+            } catch (e) {
             }
+
             if (chapters.size === 0) {
-                let allLinks = document.querySelectorAll("a")
-                for (let link of allLinks) {
-                    let href = link.attributes["href"] || ""
-                    let chMatch = href.match(/\/chapter\/(\d+(?:-\d+)*)\.html/)
-                    if (chMatch) {
-                        let chId = chMatch[1]
-                        let chTitle = link.text.trim()
-                        if (chId && chTitle && !chapters.has(chId)) {
-                            chapters.set(chId, chTitle)
+                let chapterContainer = document.querySelector(".chapter-list .flex")
+                if (chapterContainer) {
+                    let chapterLinks = chapterContainer.querySelectorAll("a.chaper-btn")
+                    let chapterArr = []
+                    for (let link of chapterLinks) {
+                        let href = link.attributes["href"] || ""
+                        let chMatch = href.match(/\/chapter\/(\d+-\d+)\.html/)
+                        if (chMatch) {
+                            let chId = chMatch[1]
+                            let chTitle = link.text.trim()
+                            if (chId && chTitle) {
+                                chapterArr.push({ id: chId, title: chTitle })
+                            }
+                        }
+                    }
+                    for (let i = chapterArr.length - 1; i >= 0; i--) {
+                        if (!chapters.has(chapterArr[i].id)) {
+                            chapters.set(chapterArr[i].id, chapterArr[i].title)
                         }
                     }
                 }
             }
 
-            let updateTime = ""
-            let updateElem = document.querySelector(".update-time, .comic-update, [class*='update']")
-            if (updateElem) {
-                updateTime = updateElem.text.trim().replace(/更新[于时间]*[:：]?\s*/, "")
+            if (chapters.size === 0) {
+                let chapterContainer = document.querySelector(".chapter-list, .list-chapter, .chapter-box")
+                if (chapterContainer) {
+                    let chapterLinks = chapterContainer.querySelectorAll("a")
+                    let chapterArr = []
+                    for (let link of chapterLinks) {
+                        let href = link.attributes["href"] || ""
+                        let chMatch = href.match(/\/chapter\/(\d+-\d+)\.html/)
+                        if (chMatch) {
+                            let chId = chMatch[1]
+                            let chTitle = link.text.trim()
+                            if (chId && chTitle) {
+                                chapterArr.push({ id: chId, title: chTitle })
+                            }
+                        }
+                    }
+                    for (let i = chapterArr.length - 1; i >= 0; i--) {
+                        if (!chapters.has(chapterArr[i].id)) {
+                            chapters.set(chapterArr[i].id, chapterArr[i].title)
+                        }
+                    }
+                }
             }
 
             document.dispose()
