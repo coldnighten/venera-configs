@@ -1,5 +1,56 @@
 # 代码模板参考
 
+---
+
+## ⚠️ FlutterQjs 引擎限制（重要）
+
+由于 Venera 使用 FlutterQjs 引擎执行漫画源脚本，存在以下限制：
+
+### 1. 正则表达式不能包含中文
+
+**错误写法：**
+```javascript
+// ❌ 错误 - 正则中包含中文
+let match = html.match(/<title>(.*?第.*?)</title>/)
+if (/^第/.test(title)) { ... }
+```
+
+**正确写法：**
+```javascript
+// ✅ 正确 - 使用字符串方法
+let startIdx = html.indexOf("<title>")
+let endIdx = html.indexOf("</title>")
+let title = html.substring(startIdx + 7, endIdx)
+
+// 判断是否以"第"开头
+if (title.charAt(0) === '\u7B2C') { ... }
+```
+
+### 2. 方法必须包装在对象中
+
+**错误写法：**
+```javascript
+// ❌ 错误 - 直接在类中定义
+class MySource extends ComicSource {
+    loadInfo: async (id) => { ... }  // 语法错误！
+    loadEp: async (comicId, epId) => { ... }  // 语法错误！
+}
+```
+
+**正确写法：**
+```javascript
+// ✅ 正确 - 包装在 comic 对象中
+class MySource extends ComicSource {
+    comic = {
+        loadInfo: async (id) => { ... },
+        loadEp: async (comicId, epId) => { ... },
+        onImageLoad: (url, comicId, epId) => { ... }
+    }
+}
+```
+
+---
+
 ## 探索页模板
 
 ```javascript

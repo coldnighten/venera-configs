@@ -8,6 +8,14 @@
  * 4. 探索页和分类页标题必须与 name 一致
  * 5. ComicDetails 只包含有效参数
  * 6. 有"更多"按钮必须配置 viewMore，否则按钮点击无效
+ * 
+ * ⚠️ FlutterQjs 引擎限制：
+ * 7. 正则表达式中不能包含中文或 Unicode 转义序列（如 \u7B2C）
+ *    - 错误: /^第/ 或 /<title>(.*?第.*?)</title>/
+ *    - 正确: 使用 indexOf()、substring()、charAt() 等字符串方法
+ * 8. loadInfo、loadEp、onImageLoad 必须包装在 comic = { ... } 对象中
+ *    - 错误: 直接在类中定义 loadInfo: async () => {}
+ *    - 正确: comic = { loadInfo, loadEp, onImageLoad }
  */
 
 /**

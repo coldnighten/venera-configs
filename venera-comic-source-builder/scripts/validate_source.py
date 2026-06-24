@@ -205,6 +205,27 @@ def check_source_file(filepath):
             # 有 explore 但没有 viewMore，给出警告（因为可能有"更多"按钮但忘了加）
             warnings.append("⚠️ 未发现 viewMore 配置，请确认首页是否有'更多'按钮需要配置")
     
+    # 18. 检查正则表达式中是否包含中文（FlutterQjs 限制）
+    regex_patterns = re.findall(r'(/[^/\n]+/[gimsu]*)\s*', content)
+    chinese_in_regex = []
+    for regex in regex_patterns:
+        # 提取正则主体（去掉开头的 / 和结尾的 flags）
+        regex_body = regex[1:]
+        if '/' in regex_body:
+            regex_body = regex_body[:regex_body.rfind('/')]
+        
+        # 检查是否包含中文
+        has_chinese = any('\u4e00' <= c <= '\u9fff' for c in regex_body)
+        if has_chinese:
+            chinese_in_regex.append(regex)
+    
+    if chinese_in_regex:
+        issues.append(f"❌ 正则表达式中包含中文，FlutterQjs 不支持。请改用字符串方法。发现 {len(chinese_in_regex)} 处")
+        for regex in chinese_in_regex[:3]:
+            issues.append(f"   - {regex}")
+    else:
+        info.append("✅ 正则表达式中未包含中文")
+    
     # 输出结果
     print("=" * 60)
     print(f"漫画源检查报告: {filepath}")

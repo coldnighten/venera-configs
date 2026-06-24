@@ -5,6 +5,8 @@
 | 错误信息 | 原因 | 修复方法 |
 |---------|------|---------|
 | `ReferenceError: Document is not defined` | 使用了未定义的 Document | 改为 `new HtmlDocument(res.body)` |
+| `SyntaxError: invalid regular expression flags` | **正则表达式中包含中文**（FlutterQjs限制） | 改用 `indexOf()`、`substring()`、`charAt()` 等字符串方法 |
+| `SyntaxError: expecting ';'` | **loadInfo/loadEp 没有包装在 comic 对象中**（FlutterQjs限制） | 将方法放入 `comic = { loadInfo, loadEp, onImageLoad }` |
 | `type 'List<dynamic>' is not a subtype of type 'Map<dynamic, dynamic>'` | chapters 是数组不是Map | 改为 `new Map()` 用 `.set(id, title)` |
 | `type '_Map<String, dynamic>' is not a subtype of type 'List<dynamic>'` | 探索页返回对象不是数组 | multiPartPage 返回 `[{title, comics}, ...]` |
 | 标题不统一 | 探索页/分类页标题与name不同 | 全部改为与 name 一致 |

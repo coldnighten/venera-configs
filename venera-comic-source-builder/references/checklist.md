@@ -9,6 +9,8 @@
 - [ ] 使用 `.attributes['xxx']` 而不是 `.getAttribute('xxx')`
 - [ ] 网络请求检查状态码 `res.status !== 200`
 - [ ] 解析完成后调用 `document.dispose()`
+- [ ] **正则表达式中不包含中文或 Unicode 转义序列**（FlutterQjs 限制）
+- [ ] **loadInfo、loadEp、onImageLoad 包装在 `comic = { ... }` 对象中**
 
 ## 探索页检查
 
