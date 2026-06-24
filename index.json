@@ -200,18 +200,5 @@
         "fileName": "mhua5.js",
         "key": "mhua5",
         "version": "1.0.0"
-    },
-    {
-        "name": "动漫屋",
-        "fileName": "dm5.js",
-        "key": "dm5",
-        "version": "1.0.0",
-        "description": "动漫屋dm5.com漫画源"
-    },
-    {
-        "name": "奈斯漫画",
-        "fileName": "nicemh.js",
-        "key": "nicemh",
-        "version": "1.0.0"
     }
 ]
