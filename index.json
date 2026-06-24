@@ -175,7 +175,7 @@
         "fileName": "hot_manga.js",
         "key": "hot_manga",
         "version": "1.0.0"
-	},
+    },
     {
         "name": "Kavita",
         "fileName": "kavita.js",
@@ -200,5 +200,12 @@
         "fileName": "mhua5.js",
         "key": "mhua5",
         "version": "1.0.0"
+    },
+    {
+        "name": "动漫屋",
+        "fileName": "dm5.js",
+        "key": "dm5",
+        "version": "1.0.0",
+        "description": "动漫屋dm5.com漫画源"
     }
 ]
