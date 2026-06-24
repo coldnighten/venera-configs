@@ -133,6 +133,23 @@ def check_source_file(filepath):
     else:
         warnings.append("⚠️ 未设置 onImageLoad（图片可能需要 Referer）")
     
+    # 14. 检查章节API获取（高级特性）
+    if re.search(r'Network\.post.*chapter|fetchChapters', content, re.DOTALL):
+        info.append("✅ 使用了 POST API 获取章节")
+    else:
+        if re.search(r'chapters\.size|chapters\.length', content):
+            warnings.append("⚠️ 未发现章节API获取（可能只获取到部分章节）")
+    
+    # 15. 检查章节反转（高级特性）
+    if 'reverse()' in content or 'i--' in content:
+        info.append("✅ 章节列表已反转（确保正序）")
+    
+    # 16. 检查标签提取方式
+    if re.search(r'\.startsWith\(["\']作者|startsWith\("作者', content):
+        info.append("✅ 使用了文本前缀区分方式提取标签")
+    else:
+        warnings.append("⚠️ 未使用文本前缀区分（可能提取到标签名而非值）")
+    
     # 输出结果
     print("=" * 60)
     print(f"漫画源检查报告: {filepath}")

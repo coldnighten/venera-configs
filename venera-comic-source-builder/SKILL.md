@@ -175,66 +175,196 @@ search = {
 
 ## 阶段5：详情页开发（最容易出错！）
 
-**目标**：实现漫画详情页功能
+**目标**：实现漫画详情页功能，正确提取所有信息
+
+### ⚠️ 常见陷阱
+
+1. **标签提取错误** - 提取到"作者/标签/更新"文字，而不是实际值
+2. **章节只有部分** - 页面初始只渲染24章，需要API获取完整列表
+3. **章节倒序** - API返回的章节是倒序，最新章节在前
 
 ### TDD 步骤1：分析详情页结构
 
-1. 让用户提供一个具体的漫画详情页URL
-2. 分析以下元素：
-   - 漫画标题
-   - 封面图片
-   - 作者信息
-   - 简介/描述
-   - 标签/分类
-   - 章节列表（容器、每项结构）
-   - 更新时间
+**必须检查以下所有元素**：
+
+#### 1. 基本信息提取位置
+- 漫画标题：`h1`、`.title`、`.comic-title`
+- 封面图片：`.cover img`、`.comic-cover`
+- 简介：`p.intro`、`.description`
+
+#### 2. 标签/作者提取（容易出错！）
+
+**常见HTML结构模式**：
+
+| 模式 | HTML结构 | 正确提取方式 |
+|------|---------|-------------|
+| **模式A** | `<div class="author"><a>作者名</a></div>` | 直接取 `<a>` 标签文本 |
+| **模式B** | `<div class="author">作者：作者名</div>` | 根据文本前缀 `"作者："` 提取 |
+| **模式C** | `<div class="tag">热血</div>` | 直接取文本 |
+| **模式D** | `<div><span>标签：</span><a>热血</a></div>` | 取 `<a>` 标签文本 |
+
+**W漫画特殊结构示例**：
+```html
+<div class="author">作者：千亮</div>
+<div class="author">标签：<a href="/sort?tag=27">热血</a><a href="/sort?tag=5">冒险</a></div>
+<div class="author">更新：<a href="/chapter/...">第385话</a></div>
+```
+
+**正确提取策略**：
+```javascript
+// 遍历所有 .author div，根据文本前缀区分
+let authorDivs = document.querySelectorAll(".author")
+for (let div of authorDivs) {
+    let text = div.text.trim()
+    if (text.startsWith("作者")) {
+        author = text.replace(/^作者[：:]\s*/, "")
+    } else if (text.startsWith("标签")) {
+        let tagLinks = div.querySelectorAll("a")
+        for (let link of tagLinks) {
+            tags.push(link.text.trim())
+        }
+    } else if (text.startsWith("更新")) {
+        updateTime = text.replace(/^更新[：:]\s*/, "")
+    }
+}
+```
+
+#### 3. 章节列表提取（必须检查！）
+
+**检查清单**：
+- [ ] 章节列表是否只有部分（如24章）？
+- [ ] 是否有「加载更多」按钮？
+- [ ] 页面源码中是否有 `fetch()` 或 `XMLHttpRequest` 获取章节？
+- [ ] 是否需要 POST 请求获取完整章节？
+
+**常见结构模式**：
+
+| 模式 | 特征 | 提取方式 |
+|------|------|---------|
+| **API获取** | JS fetch POST `/comic/{id}` | POST请求获取JSON |
+| **DOM渲染** | 章节在 `.chapter-list` 内 | 直接DOM解析 |
+| **懒加载** | 需要滚动触发加载 | 模拟滚动或API |
 
 ### TDD 步骤2：编写测试验证
 
 **重点测试项**：
 
-1. ✅ 标题提取正确
-2. ✅ 封面URL正确
-3. ✅ 作者提取正确
-4. ✅ 简介提取正确
-5. ✅ 标签提取正确
-6. ✅ **章节格式：Map<string, string>**（最易错！）
-7. ✅ **tags 格式：对象格式** `{作者: [...], 标签: [...]}`
-8. ✅ 章节ID能从链接中正确提取
+1. ✅ 标题提取正确（非空）
+2. ✅ 封面URL正确（完整URL）
+3. ✅ **作者提取正确**（不是"作者："文字，而是作者名）
+4. ✅ **标签提取正确**（不是"标签："文字，而是实际标签值）
+5. ✅ **章节数量完整**（不是只有24章）
+6. ✅ **章节顺序正确**（第1话在前，不是最新的）
+7. ✅ **tags 格式**：对象 `{作者: [...], 标签: [...]}`
+8. ✅ **chapters 格式**：Map
 
 ### TDD 步骤3：实现代码
 
-**严格遵守以下格式**：
+#### 完整标签提取模板
 
 ```javascript
-comic = {
-    loadInfo: async (id) => {
-        let document = new HtmlDocument(res.body)
-        
-        // 提取信息...
-        
-        // 章节必须是 Map！
-        let chapters = new Map()
-        for (let item of chapterItems) {
-            let chId = ...
-            let chTitle = ...
-            chapters.set(chId, chTitle)
+// 方法1: 根据文本前缀区分（适用于 .author 包含 "作者：" 格式）
+let authorDivs = document.querySelectorAll(".author")
+for (let div of authorDivs) {
+    let text = div.text.trim()
+    if (text.startsWith("作者")) {
+        author = text.replace(/^作者[：:]\s*/, "").trim()
+    } else if (text.startsWith("标签")) {
+        let tagLinks = div.querySelectorAll("a")
+        for (let link of tagLinks) {
+            tags.push(link.text.trim())
         }
-        
-        document.dispose()
-        
-        return new ComicDetails({
-            title: title,
-            cover: cover,
-            description: description,
-            tags: {           // 对象格式！
-                作者: [author],
-                标签: tags,
-            },
-            chapters: chapters,  // Map格式！
-            updateTime: updateTime,
-        })
+    } else if (text.startsWith("更新")) {
+        updateTime = text.replace(/^更新[：:]\s*/, "").trim()
     }
+}
+
+// 方法2: 直接选择器（适用于结构清晰的页面）
+let author = document.querySelector(".author a")?.text.trim() || ""
+let tagLinks = document.querySelectorAll(".tags a")
+for (let link of tagLinks) {
+    tags.push(link.text.trim())
+}
+```
+
+#### 三级降级章节提取策略
+
+| 优先级 | 提取方式 | 说明 |
+|--------|---------|------|
+| 1（主） | POST API 获取完整章节 | 获取JSON，确保完整且可正序 |
+| 2（降级） | 从 DOM 提取 `.chapter-list a` | 直接解析章节链接 |
+| 3（兜底） | 全页面正则匹配 `/chapter/{id}` | 遍历所有链接 |
+
+**API获取章节模板**：
+
+```javascript
+// ===== 方法1: POST API 获取完整章节 (推荐) =====
+async function fetchChaptersFromApi(id) {
+    let chapters = new Map()
+    
+    try {
+        let apiUrl = `${this.baseUrl}/comic/${id}`
+        let headers = {
+            "Content-Type": "application/json",
+        }
+        let res = await Network.post(apiUrl, headers, JSON.stringify({}))
+        
+        if (res.status === 200) {
+            let data = JSON.parse(res.body)
+            // 根据实际API响应格式调整
+            if (data.code === 0 && data.data && data.data.chapters) {
+                let chapterList = data.data.chapters
+                // 反转顺序 → 正序（第1话在前）
+                for (let i = chapterList.length - 1; i >= 0; i--) {
+                    let ch = chapterList[i]
+                    let chId = ch.contentId ? `${ch.contentId}-${ch.id}` : String(ch.id)
+                    chapters.set(chId, ch.chapterName || ch.title)
+                }
+                return chapters
+            }
+        }
+    } catch (e) {
+        console.warn("API获取章节失败:", e)
+    }
+    return null
+}
+
+// ===== 方法2: DOM提取 (降级) =====
+function fetchChaptersFromDom(document) {
+    let chapters = new Map()
+    let items = document.querySelectorAll(".chapter-list a")
+    for (let item of items) {
+        let href = item.attributes["href"] || ""
+        let chId = ""
+        if (href.includes("/chapter/")) {
+            chId = href.split("/chapter/")[1].replace(".html", "")
+        }
+        let title = item.text.trim()
+        if (chId && title) {
+            chapters.set(chId, title)
+        }
+    }
+    return chapters
+}
+
+// ===== 在 loadInfo 中使用 =====
+async loadInfo(id) {
+    // ... 基础信息提取 ...
+    
+    // 尝试API获取（优先）
+    let chapters = await fetchChaptersFromApi(id)
+    
+    // 降级到DOM提取
+    if (!chapters || chapters.size === 0) {
+        chapters = fetchChaptersFromDom(document)
+    }
+    
+    // 确保有章节
+    if (chapters.size === 0) {
+        throw "未能获取章节列表"
+    }
+    
+    return new ComicDetails({ ... chapters })
 }
 ```
 
@@ -476,6 +606,13 @@ python3 scripts/validate_source.py <源文件路径>
 - [ ] dispose() 调用正确
 - [ ] 错误处理完善
 
+**详情页专项检查**：
+- [ ] 作者/标签提取正确（不是"作者："文字，而是作者名）
+- [ ] 章节数量完整（不是只有24章或部分章节）
+- [ ] 章节顺序正确（第1话在前，不是最新的）
+- [ ] 章节是否为API获取？已实现POST请求获取完整列表？
+- [ ] 章节数组是否反转以实现正序？
+
 **章节图片专项检查**：
 - [ ] loadEp 返回的 images 数组不为空
 - [ ] 图片是否为 JS 动态生成？已检查源码中的 JS 变量？
@@ -529,6 +666,9 @@ python3 scripts/validate_source.py <源文件路径>
 | `Invalid argument(s): 1` at `int.clamp` | **loadEp 返回空数组**，阅读器 clamp(1, 1, 0) 报错 | 检查图片提取逻辑；确认是否为JS动态生成；过滤广告导致列表为空；添加空数组检查 |
 | 图片加载403 | 防盗链，缺少 Referer | 设置 `onImageLoad` 返回 headers |
 | 图片数量异常（只有1-2张） | 提取到广告图而非漫画图 | 检查域名过滤；使用JS变量提取方式 |
+| 章节只有24章 | 页面初始只渲染部分章节 | 通过 POST API 获取完整列表 |
+| 章节倒序显示 | API 返回的章节是倒序排列 | 反转数组后存入 Map |
+| 标签提取到"作者/标签/更新" | 用错选择器，提取到了标签名而非值 | 遍历父容器，根据文本前缀区分类型 |
 
 ---
 
