@@ -1,16 +1,23 @@
 class WManhuaSource extends ComicSource {
     name = "W漫画"
     key = "wmanhua"
-    version = "1.0.0"
+    version = "1.0.1"
     minAppVersion = "1.6.0"
     url = "https://www.wmanhua.com/"
+
+    init() {
+        this.headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "Referer": this.url
+        }
+    }
 
     explore = [
         {
             title: "W漫画",
             type: "multiPartPage",
             load: async (page) => {
-                let res = await Network.get(this.url)
+                let res = await Network.get(this.url, this.headers)
                 if (res.status !== 200) {
                     throw `Invalid status code: ${res.status}`
                 }
@@ -108,7 +115,7 @@ class WManhuaSource extends ComicSource {
                 url = url + `&page=${page}`
             }
 
-            let res = await Network.get(url)
+            let res = await Network.get(url, this.headers)
             if (res.status !== 200) {
                 throw `Invalid status code: ${res.status}`
             }
@@ -177,7 +184,7 @@ class WManhuaSource extends ComicSource {
                 url = url + `&page=${page}`
             }
 
-            let res = await Network.get(url)
+            let res = await Network.get(url, this.headers)
             if (res.status !== 200) {
                 throw `Invalid status code: ${res.status}`
             }
@@ -242,7 +249,7 @@ class WManhuaSource extends ComicSource {
     comic = {
         loadInfo: async (id) => {
             let url = `${this.url}comic/${id}.html`
-            let res = await Network.get(url)
+            let res = await Network.get(url, this.headers)
             if (res.status !== 200) {
                 throw `Invalid status code: ${res.status}`
             }
@@ -252,7 +259,7 @@ class WManhuaSource extends ComicSource {
             let titleElem = document.querySelector("h1")
             let title = titleElem ? titleElem.text.trim() : ""
 
-            let coverImg = document.querySelector("img[alt*='封面'], .cover img, img[src*='cover']")
+            let coverImg = document.querySelector("img[alt*='封面'], .cover img, img[src*='cover'], .comic-cover img, .info img")
             let cover = ""
             if (coverImg) {
                 cover = coverImg.attributes["src"] || coverImg.attributes["data-src"] || ""
@@ -260,24 +267,35 @@ class WManhuaSource extends ComicSource {
             if (!cover) {
                 let allImgs = document.querySelectorAll("img")
                 for (let img of allImgs) {
-                    let src = img.attributes["src"] || ""
-                    if (src.indexOf("cover") >= 0) {
+                    let src = img.attributes["src"] || img.attributes["data-src"] || ""
+                    if (src.indexOf("cover") >= 0 || src.indexOf("/comic/") >= 0) {
                         cover = src
                         break
                     }
                 }
             }
+            if (cover && !cover.startsWith("http")) {
+                if (cover.startsWith("//")) {
+                    cover = "https:" + cover
+                } else {
+                    cover = this.url.replace(/\/$/, "") + cover
+                }
+            }
 
             let description = ""
-            let descElem = document.querySelector(".comic-desc, .description, .intro, .comic-info p")
+            let descElem = document.querySelector(".comic-desc, .description, .intro, .comic-info p, .detail-info p, .content")
             if (descElem) {
                 description = descElem.text.trim()
             }
 
             let author = ""
+            let authorElem = document.querySelector(".author a, .comic-author a, [class*='author'] a")
+            if (authorElem) {
+                author = authorElem.text.trim()
+            }
 
             let tags = []
-            let breadcrumbLinks = document.querySelectorAll(".breadcrumb a, .nav a")
+            let breadcrumbLinks = document.querySelectorAll(".breadcrumb a, .nav a, .tag-list a, .tags a")
             for (let link of breadcrumbLinks) {
                 let text = link.text.trim()
                 let href = link.attributes["href"] || ""
@@ -287,20 +305,41 @@ class WManhuaSource extends ComicSource {
             }
 
             let chapters = new Map()
-            let allLinks = document.querySelectorAll("a")
-            for (let link of allLinks) {
-                let href = link.attributes["href"] || ""
-                let chMatch = href.match(/\/chapter\/(\d+-\d+)\.html/)
-                if (chMatch) {
-                    let chId = chMatch[1]
-                    let chTitle = link.text.trim()
-                    if (chId && chTitle && !chapters.has(chId)) {
-                        chapters.set(chId, chTitle)
+            let chapterContainer = document.querySelector(".chapter-list, .list-chapter, .chapter-box, .chater-list, [class*='chapter'] ul")
+            if (chapterContainer) {
+                let chapterLinks = chapterContainer.querySelectorAll("a")
+                for (let link of chapterLinks) {
+                    let href = link.attributes["href"] || ""
+                    let chMatch = href.match(/\/chapter\/(\d+(?:-\d+)*)\.html/)
+                    if (chMatch) {
+                        let chId = chMatch[1]
+                        let chTitle = link.text.trim()
+                        if (chId && chTitle && !chapters.has(chId)) {
+                            chapters.set(chId, chTitle)
+                        }
+                    }
+                }
+            }
+            if (chapters.size === 0) {
+                let allLinks = document.querySelectorAll("a")
+                for (let link of allLinks) {
+                    let href = link.attributes["href"] || ""
+                    let chMatch = href.match(/\/chapter\/(\d+(?:-\d+)*)\.html/)
+                    if (chMatch) {
+                        let chId = chMatch[1]
+                        let chTitle = link.text.trim()
+                        if (chId && chTitle && !chapters.has(chId)) {
+                            chapters.set(chId, chTitle)
+                        }
                     }
                 }
             }
 
             let updateTime = ""
+            let updateElem = document.querySelector(".update-time, .comic-update, [class*='update']")
+            if (updateElem) {
+                updateTime = updateElem.text.trim().replace(/更新[于时间]*[:：]?\s*/, "")
+            }
 
             document.dispose()
 
@@ -319,7 +358,7 @@ class WManhuaSource extends ComicSource {
 
         loadEp: async (comicId, epId) => {
             let url = `${this.url}chapter/${epId}.html`
-            let res = await Network.get(url)
+            let res = await Network.get(url, this.headers)
             if (res.status !== 200) {
                 throw `Invalid status code: ${res.status}`
             }
@@ -327,29 +366,55 @@ class WManhuaSource extends ComicSource {
             let document = new HtmlDocument(res.body)
             let images = []
 
-            let imgContainer = document.querySelector(".images")
+            let imgContainer = document.querySelector(".images, .comic-images, .chapter-content, .content, #images, [class*='image']")
             if (imgContainer) {
                 let imgs = imgContainer.querySelectorAll("img")
                 for (let img of imgs) {
-                    let src = img.attributes["data-src"] || img.attributes["src"] || ""
-                    if (src && src.indexOf("wmanhua.com") >= 0 &&
-                        src.indexOf(".webp") >= 0 &&
-                        src.indexOf("loading") === -1 &&
-                        src.indexOf("/cover") === -1 &&
-                        images.indexOf(src) === -1) {
+                    let src = img.attributes["data-src"] || img.attributes["src"] || img.attributes["data-original"] || ""
+                    if (src && src.indexOf("loading") === -1 && src.indexOf("/cover") === -1 && images.indexOf(src) === -1) {
+                        if (!src.startsWith("http")) {
+                            if (src.startsWith("//")) {
+                                src = "https:" + src
+                            } else if (src.startsWith("/")) {
+                                src = this.url.replace(/\/$/, "") + src
+                            }
+                        }
                         images.push(src)
                     }
                 }
             }
 
             if (images.length === 0) {
+                let allImgs = document.querySelectorAll("img")
+                for (let img of allImgs) {
+                    let src = img.attributes["data-src"] || img.attributes["src"] || img.attributes["data-original"] || ""
+                    if (src && src.indexOf("loading") === -1 && src.indexOf("/cover") === -1 && src.indexOf("avatar") === -1 && src.indexOf("logo") === -1 && images.indexOf(src) === -1) {
+                        if (src.match(/\.(webp|jpg|jpeg|png|bmp|gif)/i)) {
+                            if (!src.startsWith("http")) {
+                                if (src.startsWith("//")) {
+                                    src = "https:" + src
+                                } else if (src.startsWith("/")) {
+                                    src = this.url.replace(/\/$/, "") + src
+                                }
+                            }
+                            images.push(src)
+                        }
+                    }
+                }
+            }
+
+            if (images.length === 0) {
                 let html = res.body
-                let pattern = /https?:\/\/image\d*\.wmanhua\.com[^\s"'<>]+\.(webp|jpg|png|jpeg)[^\s"'<>]*/gi
+                let pattern = /https?:\/\/[^\s"'<>]+\.(webp|jpg|jpeg|png|bmp|gif)(\?[^\s"'<>]*)?/gi
                 let matches = html.match(pattern)
                 if (matches) {
                     for (let m of matches) {
                         if (m.indexOf("/cover") === -1 &&
                             m.indexOf("loading") === -1 &&
+                            m.indexOf("avatar") === -1 &&
+                            m.indexOf("logo") === -1 &&
+                            m.indexOf("icon") === -1 &&
+                            m.indexOf("banner") === -1 &&
                             images.indexOf(m) === -1) {
                             images.push(m)
                         }
@@ -361,6 +426,15 @@ class WManhuaSource extends ComicSource {
             return {
                 images: images
             }
-        }
+        },
+
+        onImageLoad: (url, comicId, epId) => {
+            return {
+                headers: {
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                    "Referer": this.url
+                }
+            }
+        },
     }
 }
