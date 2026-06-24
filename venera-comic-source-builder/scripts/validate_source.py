@@ -104,6 +104,35 @@ def check_source_file(filepath):
     else:
         warnings.append("⚠️ 缺少状态码检查")
     
+    # 12. 检查 loadEp 函数
+    loadep_match = re.search(r'loadEp\s*:\s*async.*?return\s*\{.*?images.*?\}', content, re.DOTALL)
+    if loadep_match:
+        info.append("✅ 存在 loadEp 函数")
+        
+        # 检查是否有空数组检查
+        if 'images.length === 0' in content or 'if (!images.length)' in content or 'if (images.length == 0)' in content:
+            info.append("✅ loadEp 有空数组检查")
+        else:
+            warnings.append("⚠️ loadEp 缺少空数组检查（可能导致 clamp 报错）")
+        
+        # 检查是否提取了JS变量（高级）
+        if 'var' in content and ('num' in content or 'pasd' in content or 'path' in content):
+            if re.search(r'html\.match.*?var.*?(num|pasd|path)', content, re.DOTALL):
+                info.append("✅ loadEp 使用了 JS 变量提取方式")
+        
+        # 检查是否有广告过滤
+        if 'ad' in content.lower() or 'ads' in content.lower():
+            if re.search(r'(cdnweb\.win|ads\.|advertisement)', content):
+                info.append("✅ loadEp 有广告域名过滤")
+    else:
+        warnings.append("⚠️ 未找到 loadEp 函数")
+    
+    # 13. 检查 onImageLoad（防盗链）
+    if 'onImageLoad' in content:
+        info.append("✅ 设置了 onImageLoad（处理防盗链）")
+    else:
+        warnings.append("⚠️ 未设置 onImageLoad（图片可能需要 Referer）")
+    
     # 输出结果
     print("=" * 60)
     print(f"漫画源检查报告: {filepath}")

@@ -249,34 +249,204 @@ comic = {
 
 ---
 
-## 阶段6：章节图片开发
+## 阶段6：章节图片开发（最容易遗漏！）
 
-**目标**：实现章节图片加载功能
+**目标**：实现章节图片加载功能，确保返回非空图片列表
 
-### TDD 步骤1：分析章节页结构
+### ⚠️ 常见陷阱：图片列表为空导致阅读器崩溃
 
-1. 让用户提供一个具体的章节页URL
-2. 分析图片加载方式：
-   - 直接 img 标签
-   - JS 动态加载
-   - 加密/混淆的图片地址
-   - 需要特殊请求头
+**错误表现**：
+```
+Invalid argument(s): 1
+#0      int.clamp (dart:core-patch/integers.dart:280)
+```
+
+**原因**：`loadEp` 返回空数组，阅读器调用 `1.clamp(1, 0)` 抛异常
+
+### TDD 步骤1：分析章节页图片加载方式（关键！）
+
+**必须先查看页面源码，不要只看 DOM 结构！**
+
+#### 检查顺序：
+
+1. **首先检查是否为 JS 动态生成**
+   - 搜索页面源码中的 JS 变量：
+     - `var num = ...` / `var total = ...` / `var pageCount = ...`（总张数）
+     - `var path = ...` / `var pasd = ...` / `var imgPath = ...`（路径前缀）
+     - `var images = [...]`（图片数组）
+   - 如果存在这些变量，图片是 JS 动态生成的，初始 HTML 中没有完整列表
+
+2. **其次检查 DOM 结构**
+   - 图片容器选择器（如 `.images`、`.chapter-images`）
+   - 图片元素选择器（如 `img.comic-image`）
+   - 懒加载属性（`data-src`、`data-original`）
+
+3. **最后检查特殊需求**
+   - 是否需要 Referer 头（防盗链）
+   - 是否需要 Cookie
+   - 图片 URL 是否需要补全（相对路径、`//` 开头）
+
+#### 广告图识别（必须过滤）：
+
+| 特征 | 广告图 | 漫画图 |
+|------|--------|--------|
+| 域名 | `cdnweb.win`、`ads.xxx.com` | `image*.wmanhua.com`、漫画站域名 |
+| 类名 | `.ad-img`、`.ads img` | `.comic-image`、`.chapter-img` |
+| 格式 | `.gif`（动图广告） | `.webp`、`.jpg`、`.png` |
+| 容器 | `.ads`、`.advertisement` | `.images`、`.chapter-content` |
 
 ### TDD 步骤2：编写测试验证
 
-测试内容：
-1. 能否提取所有图片URL
-2. 图片URL是否完整可用
-3. 图片数量是否合理
-4. 是否过滤了非漫画图片（logo、广告等）
+**必须验证的测试点**：
+
+1. ✅ 图片数量 > 0（**最重要！**）
+2. ✅ 图片数量是否合理（通常 10-200 张）
+3. ✅ 图片 URL 是否完整可用（能直接访问）
+4. ✅ 没有广告图混入（检查域名）
+5. ✅ 图片 URL 格式正确（有协议头或可补全）
 
 ### TDD 步骤3：实现代码
 
+#### 三级降级提取策略：
+
+| 优先级 | 提取方式 | 适用场景 | 准确率 |
+|--------|---------|---------|--------|
+| 1（主） | 从 JS 变量提取 `num` + `path`，循环生成 | 页面用 JS 动态生成图片 | ⭐⭐⭐⭐⭐ |
+| 2（降级） | 从 DOM 容器提取图片元素 | 没有 JS 变量但有 DOM | ⭐⭐⭐ |
+| 3（兜底） | 全页面正则匹配 + 域名过滤 | 结构完全未知的页面 | ⭐⭐ |
+
+#### 标准模板代码：
+
 ```javascript
 loadEp: async (comicId, epId) => {
-    // 获取章节页面
-    // 提取图片URL列表
-    return { images: [...] }
+    let url = `${this.baseUrl}/chapter/${epId}`
+    let res = await Network.get(url, this.headers)
+    if (res.status !== 200) throw `Invalid status code: ${res.status}`
+    
+    let html = res.body
+    let images = []
+
+    // ===== 方法1: 从JS变量提取 (最高优先级) =====
+    // 匹配 var num = eval("111") 或 var num = 111
+    let numPatterns = [
+        /var\s+num\s*=\s*eval\s*\(\s*["'](\d+)["']\s*\)/,
+        /var\s+totalPages?\s*=\s*(\d+)/,
+        /var\s+pageCount\s*=\s*(\d+)/,
+        /["']?totalImages["']?\s*[:=]\s*(\d+)/,
+    ]
+    // 匹配 var pasd = "https://..." 或 var imgPath = "..."
+    let pathPatterns = [
+        /var\s+pasd\s*=\s*["']([^"']+)["']/,
+        /var\s+imgPath\s*=\s*["']([^"']+)["']/,
+        /var\s+path\s*=\s*["']([^"']+)["']/,
+        /["']?imagePath["']?\s*[:=]\s*["']([^"']+)["']/,
+    ]
+
+    let num = null
+    for (let p of numPatterns) {
+        let m = html.match(p)
+        if (m) { num = parseInt(m[1]); break }
+    }
+    let pathPrefix = null
+    for (let p of pathPatterns) {
+        let m = html.match(p)
+        if (m) { pathPrefix = m[1]; break }
+    }
+
+    if (num && pathPrefix) {
+        // 循环生成图片URL
+        for (let i = 1; i <= num; i++) {
+            images.push(pathPrefix + i + ".webp")
+        }
+    }
+
+    // ===== 方法2: 从DOM提取 (降级) =====
+    if (images.length === 0) {
+        let document = new HtmlDocument(html)
+        let imgs = document.querySelectorAll(".images img.comic-image")
+        
+        for (let img of imgs) {
+            let src = img.attributes["data-src"] || 
+                      img.attributes["data-original"] || 
+                      img.attributes["src"]
+            if (src && !isAdImage(src)) {
+                images.push(completeUrl(src))
+            }
+        }
+        document.dispose()
+    }
+
+    // ===== 方法3: 正则匹配 (兜底) =====
+    if (images.length === 0) {
+        let pattern = /https?:\/\/[^\s"'<>]+\.(jpg|png|webp)/gi
+        let matches = html.match(pattern)
+        if (matches) {
+            for (let url of matches) {
+                if (!isAdImage(url)) {
+                    images.push(url)
+                }
+            }
+        }
+    }
+
+    // ===== 最终检查 =====
+    if (images.length === 0) {
+        throw "未能提取任何图片，请检查页面结构"
+    }
+
+    return { images: images }
+}
+
+// 辅助函数：判断是否为广告图
+function isAdImage(url) {
+    let adDomains = ["cdnweb.win", "ads.", "advertisement"]
+    for (let d of adDomains) {
+        if (url.includes(d)) return true
+    }
+    return false
+}
+
+// 辅助函数：补全URL
+function completeUrl(url) {
+    if (url.startsWith("//")) return "https:" + url
+    if (url.startsWith("/")) return this.baseUrl + url
+    return url
+}
+```
+
+### 常见图片加载模式速查表
+
+| 模式 | 特征 | 提取方法 |
+|------|------|---------|
+| **JS动态生成** | `var num=...` + `var path=...` | 正则提取变量 + 循环生成 |
+| **懒加载** | `data-src` / `data-original` | 取 data-* 属性 |
+| **直接img** | `<img src="...">` | 取 src 属性 |
+| **加密/混淆** | Base64编码、JS解密函数 | 分析解密逻辑 |
+| **需要Referer** | 防盗链 | 设置 `onImageLoad` |
+
+### 设置请求头（防盗链）
+
+如果图片需要 Referer，添加：
+
+```javascript
+// 在 init() 中设置请求头
+init() {
+    this.headers = {
+        "User-Agent": "Mozilla/5.0...",
+        "Referer": this.baseUrl,
+    }
+}
+
+// 为图片加载设置头
+comic = {
+    ...
+    onImageLoad: (url, comicId, epId) => {
+        return {
+            headers: {
+                "Referer": this.baseUrl,
+            }
+        }
+    }
 }
 ```
 
@@ -296,6 +466,7 @@ python3 scripts/validate_source.py <源文件路径>
 
 ### 手动检查项
 
+**基础检查**：
 - [ ] 所有标题与 name 一致
 - [ ] 所有 HtmlDocument 使用正确
 - [ ] chapters 是 Map 格式
@@ -304,6 +475,14 @@ python3 scripts/validate_source.py <源文件路径>
 - [ ] 状态码检查完整
 - [ ] dispose() 调用正确
 - [ ] 错误处理完善
+
+**章节图片专项检查**：
+- [ ] loadEp 返回的 images 数组不为空
+- [ ] 图片是否为 JS 动态生成？已检查源码中的 JS 变量？
+- [ ] 是否正确过滤了广告图（检查域名）
+- [ ] 图片 URL 是否完整（有协议头）
+- [ ] 图片是否需要 Referer？已设置 onImageLoad？
+- [ ] 添加了空数组检查（避免 clamp 报错）
 
 ### 输出最终文件
 
@@ -347,6 +526,9 @@ python3 scripts/validate_source.py <源文件路径>
 | `type '_Map<String, dynamic>' is not a subtype of type 'List<dynamic>'` | 探索页返回对象不是数组 | multiPartPage 返回 `[{title, comics}, ...]` |
 | 标题不统一 | 探索页/分类页标题与name不同 | 全部改为与 name 一致 |
 | 详情页加载失败 | ComicDetails参数错误 | 只传有效参数：title, cover, description, tags, chapters, updateTime |
+| `Invalid argument(s): 1` at `int.clamp` | **loadEp 返回空数组**，阅读器 clamp(1, 1, 0) 报错 | 检查图片提取逻辑；确认是否为JS动态生成；过滤广告导致列表为空；添加空数组检查 |
+| 图片加载403 | 防盗链，缺少 Referer | 设置 `onImageLoad` 返回 headers |
+| 图片数量异常（只有1-2张） | 提取到广告图而非漫画图 | 检查域名过滤；使用JS变量提取方式 |
 
 ---
 
