@@ -194,5 +194,11 @@
         "fileName": "wmanhua.js",
         "key": "wmanhua",
         "version": "1.0.3"
+    },
+    {
+        "name": "漫画屋",
+        "fileName": "mhua5.js",
+        "key": "mhua5",
+        "version": "1.0.0"
     }
 ]
