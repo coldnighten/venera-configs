@@ -1,7 +1,7 @@
 class WManhuaSource extends ComicSource {
     name = "W漫画"
     key = "wmanhua"
-    version = "1.0.1"
+    version = "1.0.2"
     minAppVersion = "1.6.0"
     url = "https://www.wmanhua.com/"
 
@@ -366,30 +366,28 @@ class WManhuaSource extends ComicSource {
             let document = new HtmlDocument(res.body)
             let images = []
 
-            let imgContainer = document.querySelector(".images, .comic-images, .chapter-content, .content, #images, [class*='image']")
-            if (imgContainer) {
-                let imgs = imgContainer.querySelectorAll("img")
-                for (let img of imgs) {
-                    let src = img.attributes["data-src"] || img.attributes["src"] || img.attributes["data-original"] || ""
-                    if (src && src.indexOf("loading") === -1 && src.indexOf("/cover") === -1 && images.indexOf(src) === -1) {
-                        if (!src.startsWith("http")) {
-                            if (src.startsWith("//")) {
-                                src = "https:" + src
-                            } else if (src.startsWith("/")) {
-                                src = this.url.replace(/\/$/, "") + src
-                            }
-                        }
-                        images.push(src)
+            let html = res.body
+
+            let numMatch = html.match(/var\s+num\s*=\s*eval\s*\(\s*["'](\d+)["']\s*\)/)
+            let pasdMatch = html.match(/var\s+pasd\s*=\s*["']([^"']+)["']/)
+
+            if (numMatch && pasdMatch) {
+                let num = parseInt(numMatch[1])
+                let pasd = pasdMatch[1]
+                if (num > 0 && pasd) {
+                    for (let i = 1; i <= num; i++) {
+                        images.push(pasd + i + ".webp")
                     }
                 }
             }
 
             if (images.length === 0) {
-                let allImgs = document.querySelectorAll("img")
-                for (let img of allImgs) {
-                    let src = img.attributes["data-src"] || img.attributes["src"] || img.attributes["data-original"] || ""
-                    if (src && src.indexOf("loading") === -1 && src.indexOf("/cover") === -1 && src.indexOf("avatar") === -1 && src.indexOf("logo") === -1 && images.indexOf(src) === -1) {
-                        if (src.match(/\.(webp|jpg|jpeg|png|bmp|gif)/i)) {
+                let imgContainer = document.querySelector(".images")
+                if (imgContainer) {
+                    let imgs = imgContainer.querySelectorAll("img.comic-image")
+                    for (let img of imgs) {
+                        let src = img.attributes["data-src"] || img.attributes["src"] || ""
+                        if (src && src.indexOf("loading") === -1 && src.indexOf("/cover") === -1 && images.indexOf(src) === -1) {
                             if (!src.startsWith("http")) {
                                 if (src.startsWith("//")) {
                                     src = "https:" + src
@@ -404,19 +402,26 @@ class WManhuaSource extends ComicSource {
             }
 
             if (images.length === 0) {
-                let html = res.body
-                let pattern = /https?:\/\/[^\s"'<>]+\.(webp|jpg|jpeg|png|bmp|gif)(\?[^\s"'<>]*)?/gi
-                let matches = html.match(pattern)
-                if (matches) {
-                    for (let m of matches) {
-                        if (m.indexOf("/cover") === -1 &&
-                            m.indexOf("loading") === -1 &&
-                            m.indexOf("avatar") === -1 &&
-                            m.indexOf("logo") === -1 &&
-                            m.indexOf("icon") === -1 &&
-                            m.indexOf("banner") === -1 &&
-                            images.indexOf(m) === -1) {
-                            images.push(m)
+                let allImgs = document.querySelectorAll("img")
+                for (let img of allImgs) {
+                    let src = img.attributes["data-src"] || img.attributes["src"] || img.attributes["data-original"] || ""
+                    if (src && 
+                        src.indexOf("loading") === -1 && 
+                        src.indexOf("/cover") === -1 && 
+                        src.indexOf("avatar") === -1 && 
+                        src.indexOf("logo") === -1 &&
+                        src.indexOf("ad") === -1 &&
+                        src.indexOf("cdnweb") === -1 &&
+                        images.indexOf(src) === -1) {
+                        if (src.match(/\.(webp|jpg|jpeg|png|bmp|gif)/i) && src.indexOf("wmanhua.com") >= 0) {
+                            if (!src.startsWith("http")) {
+                                if (src.startsWith("//")) {
+                                    src = "https:" + src
+                                } else if (src.startsWith("/")) {
+                                    src = this.url.replace(/\/$/, "") + src
+                                }
+                            }
+                            images.push(src)
                         }
                     }
                 }
