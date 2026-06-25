@@ -18,18 +18,29 @@ class RoumSource extends ComicSource {
 
             let id = idMatch[1]
             if (seen.has(id)) continue
+
+            // 过滤掉 banner 图片（ID 小的是 banner）
+            let numId = parseInt(id)
+            if (isNaN(numId) || numId < 10000) continue
+
             seen.add(id)
 
             let img = link.querySelector('img')
             if (!img) continue
 
-            let cover = img.attributes["data-original"] || img.attributes["data-src"] || img.attributes["src"] || ""
-            let title = img.attributes["alt"] || img.attributes["title"] || ""
+            let cover = img.attributes["src"] || img.attributes["data-original"] || img.attributes["data-src"] || ""
+            if (!cover) continue
 
+            // 标题从 h3 标签获取，而不是 img.alt
+            let title = ""
+            let h3 = link.querySelector('h3')
+            if (h3) {
+                title = h3.text.trim()
+            }
             if (!title) {
-                let titleEl = link.querySelector('.title, .name')
-                if (titleEl) {
-                    title = titleEl.text.trim()
+                let p = link.querySelector('p')
+                if (p) {
+                    title = p.text.trim()
                 }
             }
 
@@ -94,13 +105,25 @@ class RoumSource extends ComicSource {
 
                         let id = idMatch[1]
                         if (seen.has(id)) continue
+
+                        // 过滤 banner
+                        let numId = parseInt(id)
+                        if (isNaN(numId) || numId < 10000) continue
+
                         seen.add(id)
 
                         let img = link.querySelector('img')
                         if (!img) continue
 
-                        let cover = img.attributes["data-original"] || img.attributes["data-src"] || img.attributes["src"] || ""
-                        let title = img.attributes["alt"] || img.attributes["title"] || ""
+                        let cover = img.attributes["src"] || img.attributes["data-original"] || img.attributes["data-src"] || ""
+                        if (!cover) continue
+
+                        // 标题从 h3 获取
+                        let title = ""
+                        let h3 = link.querySelector('h3')
+                        if (h3) {
+                            title = h3.text.trim()
+                        }
 
                         if (cover.startsWith('//')) {
                             cover = 'https:' + cover
