@@ -31,11 +31,17 @@ class RoumSource extends ComicSource {
             let cover = img.attributes["src"] || img.attributes["data-original"] || img.attributes["data-src"] || ""
             if (!cover) continue
 
-            // 标题从 h3 标签获取，而不是 img.alt
+            // 标题从 h3 或 h2 标签获取
             let title = ""
             let h3 = link.querySelector('h3')
             if (h3) {
                 title = h3.text.trim()
+            }
+            if (!title) {
+                let h2 = link.querySelector('h2')
+                if (h2) {
+                    title = h2.text.trim()
+                }
             }
             if (!title) {
                 let p = link.querySelector('p')
@@ -175,8 +181,8 @@ class RoumSource extends ComicSource {
             {
                 name: "分类",
                 type: "fixed",
-                categories: ["全部", "剧情", "恋爱", "恐怖", "都市", "异能", "福利", "言情", "悬疑", "伦理", "少年", "玄幻", "校园", "青春", "韩漫"],
-                categoryParams: ["all", "juqing", "lianai", "kongbu", "dushi", "yineng", "fuli", "yanqing", "xuanyi", "lunli", "shaonian", "xuanhuan", "xiaoyuan", "qingchun", "hanman"],
+                categories: ["全部"],
+                categoryParams: [""],
                 itemType: "category",
             }
         ],
@@ -185,15 +191,7 @@ class RoumSource extends ComicSource {
 
     categoryComics = {
         load: async (category, param, options, page) => {
-            let url
-            if (param === "all" || param === "") {
-                url = this.url + "waplist"
-            } else if (param === "new" || param === "hot" || param === "end") {
-                url = this.url + "waplist/" + param
-            } else {
-                url = this.url + "waplist/" + param
-            }
-
+            let url = this.url + "waplist"
             if (page > 1) {
                 url += "/" + page
             }
@@ -215,9 +213,9 @@ class RoumSource extends ComicSource {
 
     search = {
         load: async (keyword, options, page) => {
-            let url = this.url + "wapsearch?keyword=" + encodeURIComponent(keyword)
+            let url = this.url + "wapsearch/" + encodeURIComponent(keyword)
             if (page > 1) {
-                url += "&page=" + page
+                url += "/" + page
             }
 
             let res = await Network.get(url)
