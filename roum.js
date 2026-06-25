@@ -28,7 +28,7 @@ class RoumSource extends ComicSource {
             let img = link.querySelector('img')
             if (!img) continue
 
-            let cover = img.attributes["src"] || img.attributes["data-original"] || img.attributes["data-src"] || ""
+            let cover = img.attributes["data-original"] || img.attributes["data-src"] || img.attributes["src"] || ""
             if (!cover) continue
 
             // 标题优先用 h2（漫画名），其次 h3（可能是作者），最后 p
@@ -121,7 +121,7 @@ class RoumSource extends ComicSource {
                         let img = link.querySelector('img')
                         if (!img) continue
 
-                        let cover = img.attributes["src"] || img.attributes["data-original"] || img.attributes["data-src"] || ""
+                        let cover = img.attributes["data-original"] || img.attributes["data-src"] || img.attributes["src"] || ""
                         if (!cover) continue
 
                         // 标题优先用 h2，其次 h3
@@ -240,6 +240,13 @@ class RoumSource extends ComicSource {
     }
 
     comic = {
+        onThumbnailLoad: (url) => {
+            return {
+                headers: {
+                    "Referer": "https://m.roumanhua.net/"
+                }
+            }
+        },
         loadInfo: async (id) => {
             let url = this.url + "catalog/" + id
             let res = await Network.get(url)
@@ -369,53 +376,37 @@ class RoumSource extends ComicSource {
             let images = []
             let seen = new Set()
 
-            let dataImgs = html.match(/data-[a-z]+="([^"]+\.(jpg|png|webp))"/g) || []
-            for (let i = 0; i < dataImgs.length; i++) {
-                let match = dataImgs[i].match(/data-[a-z]+="([^"]+\.(jpg|png|webp))"/)
-                if (match) {
-                    let imgUrl = match[1]
-                    if (seen.has(imgUrl)) continue
-                    if (imgUrl.indexOf('default.jpg') >= 0) continue
-                    if (imgUrl.indexOf('banner') >= 0) continue
+            let document = new HtmlDocument(html)
+            let imgs = document.querySelectorAll('img')
+            for (let img of imgs) {
+                let dataOriginal = img.attributes["data-original"] || ""
+                let dataSrc = img.attributes["data-src"] || ""
+                let src = img.attributes["src"] || ""
+                let realSrc = dataOriginal || dataSrc || src
 
-                    if (imgUrl.startsWith('//')) {
-                        imgUrl = 'https:' + imgUrl
-                    } else if (imgUrl.startsWith('/')) {
-                        imgUrl = this.url.replace(/\/$/, '') + imgUrl
-                    }
+                if (!realSrc) continue
+                if (seen.has(realSrc)) continue
 
-                    seen.add(imgUrl)
-                    images.push(imgUrl)
+                if (realSrc.indexOf('default.jpg') >= 0) continue
+                if (realSrc.indexOf('defaults.jpg') >= 0) continue
+                if (realSrc.indexOf('banner') >= 0) continue
+                if (realSrc.indexOf('wapsearch') >= 0) continue
+                if (realSrc.indexOf('logo') >= 0) continue
+                if (realSrc.indexOf('static/images') >= 0) continue
+                if (realSrc.indexOf('classify.png') >= 0) continue
+
+                if (realSrc.indexOf('pic.roumh') < 0 && realSrc.indexOf('roum') < 0) continue
+
+                if (realSrc.startsWith('//')) {
+                    realSrc = 'https:' + realSrc
+                } else if (realSrc.startsWith('/')) {
+                    realSrc = this.url.replace(/\/$/, '') + realSrc
                 }
+
+                seen.add(realSrc)
+                images.push(realSrc)
             }
-
-            if (images.length === 0) {
-                let document = new HtmlDocument(html)
-                let imgs = document.querySelectorAll('img')
-                for (let img of imgs) {
-                    let dataSrc = img.attributes["data-original"] || img.attributes["data-src"] || ""
-                    let src = img.attributes["src"] || ""
-                    let realSrc = dataSrc || src
-
-                    if (!realSrc || seen.has(realSrc)) continue
-                    if (realSrc.indexOf('default.jpg') >= 0) continue
-                    if (realSrc.indexOf('banner') >= 0) continue
-                    if (realSrc.indexOf('wapsearch') >= 0) continue
-                    if (realSrc.indexOf('logo') >= 0) continue
-
-                    if (realSrc.startsWith('//')) {
-                        realSrc = 'https:' + realSrc
-                    } else if (realSrc.startsWith('/')) {
-                        realSrc = this.url.replace(/\/$/, '') + realSrc
-                    }
-
-                    if (realSrc.indexOf('pic.roumh') >= 0 || realSrc.indexOf('roum') >= 0) {
-                        seen.add(realSrc)
-                        images.push(realSrc)
-                    }
-                }
-                document.dispose()
-            }
+            document.dispose()
 
             return {
                 images: images
