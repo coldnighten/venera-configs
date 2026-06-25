@@ -15,6 +15,56 @@ class Manhua5Source extends ComicSource {
         return this.loadData("mhua5_cookie") || ""
     }
 
+    get numericIdMap() {
+        return this.loadData("mhua5_id_map") || {}
+    }
+
+    cacheNumericId(slug, numericId) {
+        let map = this.numericIdMap
+        map[slug] = numericId
+        map[numericId] = slug
+        this.saveData("mhua5_id_map", map)
+    }
+
+    getNumericId(comicId) {
+        if (/^\d+$/.test(comicId)) {
+            return comicId
+        }
+        let map = this.numericIdMap
+        if (map[comicId]) {
+            return map[comicId]
+        }
+        return null
+    }
+
+    async ensureNumericId(comicId) {
+        let numericId = this.getNumericId(comicId)
+        if (numericId) {
+            return numericId
+        }
+
+        let url = `https://www.mhua5.com/index.php/comic/${comicId}`
+        let res = await Network.get(url)
+        if (res.status !== 200) {
+            throw `Invalid status code: ${res.status}`
+        }
+
+        let soup = new HtmlDocument(res.body)
+        let collectBtn = soup.querySelector('a.j-user-collect')
+        if (collectBtn) {
+            numericId = collectBtn.attributes['data-id'] || ''
+        }
+
+        soup.dispose()
+
+        if (numericId && /^\d+$/.test(numericId)) {
+            this.cacheNumericId(comicId, numericId)
+            return numericId
+        }
+
+        throw "无法获取漫画ID"
+    }
+
     async apiGet(url) {
         let headers = {}
         if (this.isLogged) {
@@ -78,6 +128,22 @@ class Manhua5Source extends ComicSource {
         },
 
         registerWebsite: "https://www.mhua5.com/index.php/user/login/reg"
+    }
+
+    onImageLoad = (url) => {
+        return {
+            headers: {
+                "Referer": "https://www.mhua5.com/",
+            }
+        }
+    }
+
+    onThumbnailLoad = (url) => {
+        return {
+            headers: {
+                "Referer": "https://www.mhua5.com/",
+            }
+        }
     }
 
     explore = [
@@ -357,7 +423,8 @@ class Manhua5Source extends ComicSource {
         multiFolder: false,
 
         addOrDelFavorite: async (comicId, folderId, isAdding, favoriteId) => {
-            let url = `https://www.mhua5.com/index.php/api/rend/favadd?did=${comicId}`
+            let numericId = await this.ensureNumericId(comicId)
+            let url = `https://www.mhua5.com/index.php/api/rend/favadd?did=${numericId}`
             let res = await this.apiGet(url)
             let json = JSON.parse(res)
             if (json.code !== 1) {
@@ -382,13 +449,20 @@ class Manhua5Source extends ComicSource {
 
             let comics = []
             for (let item of json.data) {
-                let id = item.id ? item.id.toString() : ''
+                let numericId = item.id ? item.id.toString() : ''
+                let slug = item.yname || ''
                 let title = item.name || ''
                 let cover = item.pic || ''
 
-                if (id && title) {
+                let comicId = slug || numericId
+
+                if (comicId && title) {
+                    if (slug && numericId) {
+                        this.cacheNumericId(slug, numericId)
+                    }
+
                     comics.push(new Comic({
-                        id: id,
+                        id: comicId,
                         title: title,
                         cover: cover,
                     }))
@@ -412,6 +486,15 @@ class Manhua5Source extends ComicSource {
             }
 
             let soup = new HtmlDocument(res.body)
+
+            let numericId = ''
+            let collectBtn = soup.querySelector('a.j-user-collect')
+            if (collectBtn) {
+                numericId = collectBtn.attributes['data-id'] || ''
+                if (numericId && /^\d+$/.test(numericId)) {
+                    this.cacheNumericId(id, numericId)
+                }
+            }
 
             let coverImg = soup.querySelector('div.de-info__cover img')
             let cover = coverImg ? (coverImg.attributes['src'] || coverImg.attributes['data-original']) : ''
