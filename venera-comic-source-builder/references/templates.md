@@ -1,5 +1,197 @@
 # 代码模板参考
 
+## 登录功能模板
+
+```javascript
+// 登录状态检查
+get isLogged() {
+    return this.loadData("source_cookie") !== null
+}
+
+get cookie() {
+    return this.loadData("source_cookie") || ""
+}
+
+// 账号相关
+account = {
+    login: async (username, password) => {
+        let url = `https://example.com/api/login?name=${encodeURIComponent(username)}&pass=${encodeURIComponent(password)}`
+        let res = await Network.get(url)
+
+        if (res.status !== 200) {
+            throw `Invalid status code: ${res.status}`
+        }
+
+        let json = JSON.parse(res.body)
+        if (json.code !== 1) {
+            throw json.msg || "Login failed"
+        }
+
+        // 提取并保存 cookies
+        let cookies = []
+        let setCookieHeader = res.headers['set-cookie']
+        if (setCookieHeader) {
+            let cookieArr = Array.isArray(setCookieHeader) ? setCookieHeader : [setCookieHeader]
+            for (let cookie of cookieArr) {
+                let match = cookie.match(/^([^;]+)/)
+                if (match) {
+                    cookies.push(match[1])
+                }
+            }
+        }
+
+        if (cookies.length > 0) {
+            this.saveData("source_cookie", cookies.join("; "))
+        }
+
+        return "ok"
+    },
+
+    logout: () => {
+        this.deleteData("source_cookie")
+    },
+
+    registerWebsite: "https://example.com/register"
+}
+```
+
+## 收藏功能模板（单文件夹）
+
+```javascript
+// ID 缓存机制（处理双重 ID 问题）
+get numericIdMap() {
+    return this.loadData("source_id_map") || {}
+}
+
+cacheNumericId(slug, numericId) {
+    let map = this.numericIdMap
+    map[slug] = numericId
+    map[numericId] = slug
+    this.saveData("source_id_map", map)
+}
+
+async ensureNumericId(comicId) {
+    // 如果已经是数字，直接返回
+    if (/^\d+$/.test(comicId)) {
+        return comicId
+    }
+
+    // 检查缓存
+    let map = this.numericIdMap
+    if (map[comicId]) {
+        return map[comicId]
+    }
+
+    // 缓存没有，请求详情页获取
+    let url = `https://example.com/comic/${comicId}`
+    let res = await Network.get(url)
+    let soup = new HtmlDocument(res.body)
+
+    // 从收藏按钮提取数字 ID
+    let collectBtn = soup.querySelector('a.j-user-collect')
+    let numericId = collectBtn ? collectBtn.attributes['data-id'] || '' : ''
+
+    soup.dispose()
+
+    if (numericId && /^\d+$/.test(numericId)) {
+        this.cacheNumericId(comicId, numericId)
+        return numericId
+    }
+
+    throw "无法获取漫画ID"
+}
+
+// 带登录态的 API 请求
+async apiGet(url) {
+    let headers = {}
+    if (this.isLogged) {
+        headers["Cookie"] = this.cookie
+    }
+    let res = await Network.get(url, headers)
+    if (res.status !== 200) {
+        throw `Invalid status code: ${res.status}`
+    }
+    return res.body
+}
+
+// 收藏功能
+favorites = {
+    multiFolder: false,
+
+    addOrDelFavorite: async (comicId, folderId, isAdding, favoriteId) => {
+        let numericId = await this.ensureNumericId(comicId)
+        let url = `https://example.com/api/favadd?did=${numericId}`
+        let res = await this.apiGet(url)
+        let json = JSON.parse(res)
+
+        if (json.code !== 1) {
+            if (json.msg && json.msg.includes("登陆超时")) {
+                throw "Login expired"
+            }
+            throw json.msg || "操作失败"
+        }
+    },
+
+    loadComics: async (page, folder) => {
+        let url = `https://example.com/api/fav`
+        let res = await this.apiGet(url)
+        let json = JSON.parse(res)
+
+        if (!json.data || !Array.isArray(json.data)) {
+            return { comics: [], maxPage: 1 }
+        }
+
+        let comics = []
+        for (let item of json.data) {
+            let numericId = item.id ? item.id.toString() : ''
+            let slug = item.yname || ''  // API 返回的字符串 slug
+            let title = item.name || ''
+            let cover = item.pic || ''
+
+            // 优先使用 slug（与其他页面保持一致）
+            let comicId = slug || numericId
+
+            if (comicId && title) {
+                // 缓存 ID 映射
+                if (slug && numericId) {
+                    this.cacheNumericId(slug, numericId)
+                }
+
+                comics.push(new Comic({
+                    id: comicId,
+                    title: title,
+                    cover: cover,
+                }))
+            }
+        }
+
+        return { comics: comics, maxPage: 1 }
+    },
+}
+```
+
+## 防盗链设置模板
+
+```javascript
+// 章节图片防盗链
+onImageLoad = (url) => {
+    return {
+        headers: {
+            "Referer": this.url,
+        }
+    }
+}
+
+// 封面图片防盗链
+onThumbnailLoad = (url) => {
+    return {
+        headers: {
+            "Referer": this.url,
+        }
+    }
+}
+```
+
 ## 探索页模板
 
 ```javascript

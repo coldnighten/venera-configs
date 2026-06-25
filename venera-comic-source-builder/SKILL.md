@@ -196,6 +196,154 @@ onImageLoad: (url, comicId, epId) => {
 
 ---
 
+## 阶段8：登录、注册、收藏功能（可选）
+
+### 是否需要添加？
+
+**需要添加登录/收藏功能的场景**：
+- 网站有用户系统
+- 有收藏/追漫功能
+- 需要登录才能访问某些内容
+
+**不需要添加的场景**：
+- 网站完全匿名，无用户系统
+- 只有简单的浏览功能
+
+### 登录功能分析
+
+#### 1. 发现登录 API
+
+**方法1：分析登录页面 HTML**
+```bash
+curl -s "https://m.example.com/user/login" | grep -E 'form|input|login|password|submit'
+```
+
+**方法2：检查页面 JS 文件**
+```bash
+curl -s "https://m.example.com/user/login" | grep -o 'src="[^"]*\.js"'
+```
+
+**方法3：在 JS 中搜索登录相关代码**
+```bash
+curl -s "https://m.example.com/packs/mccms/base.js" | grep -E 'login|password|submit|ajax'
+```
+
+**方法4：测试可能的 API 端点**
+```bash
+curl -s "https://example.com/api/user/login?name=xxx&pass=xxx"
+```
+
+#### 2. 登录 API 特征
+
+常见的登录 API 格式：
+- `POST /api/login` + body: `name=xxx&pass=xxx`
+- `GET /api/login?name=xxx&pass=xxx`
+- `POST /api/user/login` + JSON body
+
+#### 3. Cookies 处理
+
+登录成功后，服务器通过 `Set-Cookie` 头设置 cookies：
+```javascript
+let setCookieHeader = res.headers['set-cookie']
+// 提取 cookie 值并保存
+this.saveData("source_cookie", cookies.join("; "))
+```
+
+### 收藏功能分析
+
+#### 1. 发现收藏 API
+
+**方法1：在 JS 中搜索**
+```bash
+curl -s "https://m.example.com/packs/mccms/base.js" | grep -E 'fav|collect|addFav|delFav'
+```
+
+**方法2：测试可能的 API**
+```bash
+# 检查是否收藏
+curl -s "https://example.com/api/rend/isfav?did=123"
+
+# 添加收藏
+curl -s "https://example.com/api/rend/favadd?did=123"
+
+# 收藏列表
+curl -s "https://example.com/api/rend/fav"
+```
+
+#### 2. ⚠️ 双重 ID 问题
+
+**重要**：很多漫画网站存在双重 ID 机制：
+
+| ID 类型 | 示例 | 用途 |
+|---------|------|------|
+| 字符串 slug | `yirenzhixia` | URL 路径、列表显示 |
+| 数字 ID | `43501` | API 调用、数据库存储 |
+
+**问题表现**：
+- 列表页 URL：`/comic/yirenzhixia`（slug）
+- 收藏 API 参数：`did=43501`（数字 ID）
+- 直接用 slug 会返回 "ID不能为空"
+
+**解决方案**：实现 ID 缓存机制
+```javascript
+// 在 loadInfo 中提取并缓存数字 ID
+let collectBtn = soup.querySelector('a.j-user-collect')
+if (collectBtn) {
+    let numericId = collectBtn.attributes['data-id'] || ''
+    if (numericId && /^\d+$/.test(numericId)) {
+        this.cacheNumericId(id, numericId)
+    }
+}
+
+// 在 addOrDelFavorite 中转换 ID
+async ensureNumericId(comicId) {
+    // 先检查缓存
+    // 缓存没有则请求详情页获取
+    // 返回数字 ID
+}
+```
+
+### 防盗链设置
+
+如果图片加载失败（403/空白图），需要设置 Referer 头：
+```javascript
+onImageLoad = (url) => {
+    return {
+        headers: {
+            "Referer": this.url,
+        }
+    }
+}
+
+onThumbnailLoad = (url) => {
+    return {
+        headers: {
+            "Referer": this.url,
+        }
+    }
+}
+```
+
+### 验证标准
+
+**登录功能**：
+- ✅ `account.login` 返回 "ok"
+- ✅ Cookies 正确保存
+- ✅ `account.logout` 正确清除
+- ✅ `account.registerWebsite` 提供注册链接
+
+**收藏功能**：
+- ✅ `addOrDelFavorite` 参数正确
+- ✅ 双重 ID 处理正确
+- ✅ 未登录时抛出 "Login expired"
+
+详细模板和规范见：
+- [references/auth_and_favorites.md](references/auth_and_favorites.md) - 完整规范文档
+- [references/templates.md](references/templates.md) - 代码模板
+- [references/checklist.md](references/checklist.md) - 检查清单
+
+---
+
 ## 阶段7：整合与最终验证
 
 ### 使用脚本自动检查
