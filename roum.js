@@ -31,16 +31,16 @@ class RoumSource extends ComicSource {
             let cover = img.attributes["src"] || img.attributes["data-original"] || img.attributes["data-src"] || ""
             if (!cover) continue
 
-            // 标题从 h3 或 h2 标签获取
+            // 标题优先用 h2（漫画名），其次 h3（可能是作者），最后 p
             let title = ""
-            let h3 = link.querySelector('h3')
-            if (h3) {
-                title = h3.text.trim()
+            let h2 = link.querySelector('h2')
+            if (h2) {
+                title = h2.text.trim()
             }
             if (!title) {
-                let h2 = link.querySelector('h2')
-                if (h2) {
-                    title = h2.text.trim()
+                let h3 = link.querySelector('h3')
+                if (h3) {
+                    title = h3.text.trim()
                 }
             }
             if (!title) {
@@ -124,11 +124,17 @@ class RoumSource extends ComicSource {
                         let cover = img.attributes["src"] || img.attributes["data-original"] || img.attributes["data-src"] || ""
                         if (!cover) continue
 
-                        // 标题从 h3 获取
+                        // 标题优先用 h2，其次 h3
                         let title = ""
-                        let h3 = link.querySelector('h3')
-                        if (h3) {
-                            title = h3.text.trim()
+                        let h2 = link.querySelector('h2')
+                        if (h2) {
+                            title = h2.text.trim()
+                        }
+                        if (!title) {
+                            let h3 = link.querySelector('h3')
+                            if (h3) {
+                                title = h3.text.trim()
+                            }
                         }
 
                         if (cover.startsWith('//')) {
