@@ -9,8 +9,6 @@
 - [ ] 使用 `.attributes['xxx']` 而不是 `.getAttribute('xxx')`
 - [ ] 网络请求检查状态码 `res.status !== 200`
 - [ ] 解析完成后调用 `document.dispose()`
-- [ ] **正则表达式中不包含中文或 Unicode 转义序列**（FlutterQjs 限制）
-- [ ] **loadInfo、loadEp、onImageLoad 包装在 `comic = { ... }` 对象中**
 
 ## 探索页检查
 
@@ -19,11 +17,6 @@
 - [ ] `singlePageWithMultiPart` 类型返回对象格式：`{section1: [...], section2: [...]}`
 - [ ] 每个漫画项使用 `new Comic({id, title, cover})`
 - [ ] 漫画ID从链接中正确提取
-- [ ] **有"更多"按钮的区块是否添加了 viewMore**
-- [ ] **viewMore 格式正确**：对象格式 `{ page: "category|search", attributes: {...} }`
-- [ ] **viewMore.page 合法**：只能是 "category" 或 "search"
-- [ ] **跳转到分类页时 attributes 包含 category 和 param**
-- [ ] **跳转到搜索页时 attributes 包含 keyword**
 
 ## 分类页检查
 
@@ -65,6 +58,37 @@
 - [ ] 图片URL完整（包含协议头）
 - [ ] 支持多种图片格式：jpg, png, webp 等
 - [ ] 过滤非漫画图片（logo、图标等）
+
+## 登录功能检查
+
+- [ ] `account.login` 函数存在且返回 "ok"
+- [ ] 登录 API 正确调用，参数正确编码
+- [ ] 响应验证正确（检查 code 字段）
+- [ ] Cookies 正确提取并保存
+- [ ] `account.logout` 正确清除 cookies
+- [ ] `account.registerWebsite` 提供注册页面 URL
+- [ ] `isLogged` 属性正确检查登录状态
+
+## 收藏功能检查
+
+- [ ] `favorites.multiFolder` 设置正确（false=单文件夹, true=多文件夹）
+- [ ] `addOrDelFavorite` 参数使用正确：
+  - comicId：漫画 ID（可能是 slug 或数字 ID）
+  - isAdding：true=添加, false=删除
+- [ ] **双重 ID 处理**：
+  - 如果网站使用 slug 作为 URL 但 API 需要数字 ID
+  - 必须实现 ID 缓存机制
+  - 在 `loadInfo` 中提取并缓存数字 ID
+  - 在 `addOrDelFavorite` 中调用 `ensureNumericId()` 转换 ID
+- [ ] `loadComics` 返回格式：`{comics: [...], maxPage: number}`
+- [ ] 收藏列表中的漫画正确缓存 ID 映射
+- [ ] 未登录时抛出 "Login expired"
+
+## 图片防盗链检查
+
+- [ ] 设置了 `onImageLoad`（章节图片防盗链）
+- [ ] 设置了 `onThumbnailLoad`（封面图片防盗链）
+- [ ] Referer 设置为网站根 URL
 
 ## 命名规范
 

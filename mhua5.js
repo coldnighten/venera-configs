@@ -7,6 +7,145 @@ class Manhua5Source extends ComicSource {
     minAppVersion = "1.6.0"
     url = "https://www.mhua5.com/"
 
+    get isLogged() {
+        return this.loadData("mhua5_cookie") !== null
+    }
+
+    get cookie() {
+        return this.loadData("mhua5_cookie") || ""
+    }
+
+    get numericIdMap() {
+        return this.loadData("mhua5_id_map") || {}
+    }
+
+    cacheNumericId(slug, numericId) {
+        let map = this.numericIdMap
+        map[slug] = numericId
+        map[numericId] = slug
+        this.saveData("mhua5_id_map", map)
+    }
+
+    getNumericId(comicId) {
+        if (/^\d+$/.test(comicId)) {
+            return comicId
+        }
+        let map = this.numericIdMap
+        if (map[comicId]) {
+            return map[comicId]
+        }
+        return null
+    }
+
+    async ensureNumericId(comicId) {
+        let numericId = this.getNumericId(comicId)
+        if (numericId) {
+            return numericId
+        }
+
+        let url = `https://www.mhua5.com/index.php/comic/${comicId}`
+        let res = await Network.get(url)
+        if (res.status !== 200) {
+            throw `Invalid status code: ${res.status}`
+        }
+
+        let soup = new HtmlDocument(res.body)
+        let collectBtn = soup.querySelector('a.j-user-collect')
+        if (collectBtn) {
+            numericId = collectBtn.attributes['data-id'] || ''
+        }
+
+        soup.dispose()
+
+        if (numericId && /^\d+$/.test(numericId)) {
+            this.cacheNumericId(comicId, numericId)
+            return numericId
+        }
+
+        throw "无法获取漫画ID"
+    }
+
+    async apiGet(url) {
+        let headers = {}
+        if (this.isLogged) {
+            headers["Cookie"] = this.cookie
+        }
+        let res = await Network.get(url, headers)
+        if (res.status !== 200) {
+            throw `Invalid status code: ${res.status}`
+        }
+        return res.body
+    }
+
+    async apiPost(url, body) {
+        let headers = {
+            "Content-Type": "application/x-www-form-urlencoded"
+        }
+        if (this.isLogged) {
+            headers["Cookie"] = this.cookie
+        }
+        let res = await Network.post(url, headers, body)
+        if (res.status !== 200) {
+            throw `Invalid status code: ${res.status}`
+        }
+        return res.body
+    }
+
+    account = {
+        login: async (username, password) => {
+            let url = `https://www.mhua5.com/index.php/api/user/login?name=${encodeURIComponent(username)}&pass=${encodeURIComponent(password)}`
+            let res = await Network.get(url)
+            if (res.status !== 200) {
+                throw `Invalid status code: ${res.status}`
+            }
+
+            let json = JSON.parse(res.body)
+            if (json.code !== 1) {
+                throw json.msg || "Login failed"
+            }
+
+            let cookies = []
+            let setCookieHeader = res.headers['set-cookie']
+            if (setCookieHeader) {
+                let cookieArr = Array.isArray(setCookieHeader) ? setCookieHeader : [setCookieHeader]
+                for (let cookie of cookieArr) {
+                    let match = cookie.match(/^([^;]+)/)
+                    if (match) {
+                        cookies.push(match[1])
+                    }
+                }
+            }
+
+            if (cookies.length > 0) {
+                this.saveData("mhua5_cookie", cookies.join("; "))
+            }
+
+            return "ok"
+        },
+
+        logout: () => {
+            this.deleteData("mhua5_cookie")
+        },
+
+        registerWebsite: "https://www.mhua5.com/index.php/user/login/reg"
+    }
+
+    onImageLoad = (url) => {
+        return {
+            headers: {
+                "Referer": "https://www.mhua5.com/",
+            }
+        }
+    }
+
+    onThumbnailLoad = (url) => {
+        return {
+            headers: {
+                "Referer": "https://www.mhua5.com/",
+            }
+        }
+    }
+
     explore = [
         {
             title: "漫画屋",
@@ -76,34 +215,7 @@ class Manhua5Source extends ComicSource {
                     }
 
                     if (comics.length > 0) {
-                        let part = { title: sectionTitle, comics: comics }
-
-                        let moreLink = sec.querySelector('a.more')
-                        if (moreLink) {
-                            let href = moreLink.attributes['href'] || ''
-                            
-                            if (href.startsWith('/index.php/custom/')) {
-                                let param = href.replace('/index.php/custom/', '')
-                                part.viewMore = {
-                                    page: "category",
-                                    attributes: {
-                                        category: sectionTitle,
-                                        param: "custom/" + param,
-                                    }
-                                }
-                            } else if (href.startsWith('/index.php/category/')) {
-                                let param = href.replace('/index.php/category/', '')
-                                part.viewMore = {
-                                    page: "category",
-                                    attributes: {
-                                        category: sectionTitle,
-                                        param: param,
-                                    }
-                                }
-                            }
-                        }
-
-                        result.push(part)
+                        result.push({title: sectionTitle, comics: comics})
                     }
                 }
 
@@ -166,17 +278,14 @@ class Manhua5Source extends ComicSource {
 
     categoryComics = {
         load: async (category, param, options, page) => {
+            let baseUrl = "https://www.mhua5.com/index.php/category/"
             let url = ""
 
             if (param && param.length > 0) {
-                if (param.startsWith("custom/")) {
-                    url = "https://www.mhua5.com/index.php/" + param + "/"
-                } else {
-                    url = "https://www.mhua5.com/index.php/category/" + param + "/"
-                }
+                url = baseUrl + param + "/"
             } else {
                 let order = options && options[0] ? options[0] : "hits"
-                url = "https://www.mhua5.com/index.php/category/order/" + order + "/"
+                url = baseUrl + "order/" + order + "/"
             }
 
             if (page > 1) {
@@ -310,6 +419,63 @@ class Manhua5Source extends ComicSource {
         enableTagsSuggestions: false,
     }
 
+    favorites = {
+        multiFolder: false,
+
+        addOrDelFavorite: async (comicId, folderId, isAdding, favoriteId) => {
+            let numericId = await this.ensureNumericId(comicId)
+            let url = `https://www.mhua5.com/index.php/api/rend/favadd?did=${numericId}`
+            let res = await this.apiGet(url)
+            let json = JSON.parse(res)
+            if (json.code !== 1) {
+                if (json.msg && json.msg.includes("登陆超时")) {
+                    throw "Login expired"
+                }
+                throw json.msg || "操作失败"
+            }
+        },
+
+        loadComics: async (page, folder) => {
+            let url = `https://www.mhua5.com/index.php/api/rend/fav`
+            let res = await this.apiGet(url)
+            let json = JSON.parse(res)
+
+            if (!json.data || !Array.isArray(json.data)) {
+                return {
+                    comics: [],
+                    maxPage: 1
+                }
+            }
+
+            let comics = []
+            for (let item of json.data) {
+                let numericId = item.id ? item.id.toString() : ''
+                let slug = item.yname || ''
+                let title = item.name || ''
+                let cover = item.pic || ''
+
+                let comicId = slug || numericId
+
+                if (comicId && title) {
+                    if (slug && numericId) {
+                        this.cacheNumericId(slug, numericId)
+                    }
+
+                    comics.push(new Comic({
+                        id: comicId,
+                        title: title,
+                        cover: cover,
+                    }))
+                }
+            }
+
+            return {
+                comics: comics,
+                maxPage: 1
+            }
+        },
+    }
+
     comic = {
         loadInfo: async (id) => {
             let url = `https://www.mhua5.com/index.php/comic/${id}`
@@ -320,6 +486,15 @@ class Manhua5Source extends ComicSource {
             }
 
             let soup = new HtmlDocument(res.body)
+
+            let numericId = ''
+            let collectBtn = soup.querySelector('a.j-user-collect')
+            if (collectBtn) {
+                numericId = collectBtn.attributes['data-id'] || ''
+                if (numericId && /^\d+$/.test(numericId)) {
+                    this.cacheNumericId(id, numericId)
+                }
+            }
 
             let coverImg = soup.querySelector('div.de-info__cover img')
             let cover = coverImg ? (coverImg.attributes['src'] || coverImg.attributes['data-original']) : ''

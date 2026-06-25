@@ -1,55 +1,196 @@
 # 代码模板参考
 
----
+## 登录功能模板
 
-## ⚠️ FlutterQjs 引擎限制（重要）
-
-由于 Venera 使用 FlutterQjs 引擎执行漫画源脚本，存在以下限制：
-
-### 1. 正则表达式不能包含中文
-
-**错误写法：**
 ```javascript
-// ❌ 错误 - 正则中包含中文
-let match = html.match(/<title>(.*?第.*?)</title>/)
-if (/^第/.test(title)) { ... }
-```
+// 登录状态检查
+get isLogged() {
+    return this.loadData("source_cookie") !== null
+}
 
-**正确写法：**
-```javascript
-// ✅ 正确 - 使用字符串方法
-let startIdx = html.indexOf("<title>")
-let endIdx = html.indexOf("</title>")
-let title = html.substring(startIdx + 7, endIdx)
+get cookie() {
+    return this.loadData("source_cookie") || ""
+}
 
-// 判断是否以"第"开头
-if (title.charAt(0) === '\u7B2C') { ... }
-```
+// 账号相关
+account = {
+    login: async (username, password) => {
+        let url = `https://example.com/api/login?name=${encodeURIComponent(username)}&pass=${encodeURIComponent(password)}`
+        let res = await Network.get(url)
 
-### 2. 方法必须包装在对象中
+        if (res.status !== 200) {
+            throw `Invalid status code: ${res.status}`
+        }
 
-**错误写法：**
-```javascript
-// ❌ 错误 - 直接在类中定义
-class MySource extends ComicSource {
-    loadInfo: async (id) => { ... }  // 语法错误！
-    loadEp: async (comicId, epId) => { ... }  // 语法错误！
+        let json = JSON.parse(res.body)
+        if (json.code !== 1) {
+            throw json.msg || "Login failed"
+        }
+
+        // 提取并保存 cookies
+        let cookies = []
+        let setCookieHeader = res.headers['set-cookie']
+        if (setCookieHeader) {
+            let cookieArr = Array.isArray(setCookieHeader) ? setCookieHeader : [setCookieHeader]
+            for (let cookie of cookieArr) {
+                let match = cookie.match(/^([^;]+)/)
+                if (match) {
+                    cookies.push(match[1])
+                }
+            }
+        }
+
+        if (cookies.length > 0) {
+            this.saveData("source_cookie", cookies.join("; "))
+        }
+
+        return "ok"
+    },
+
+    logout: () => {
+        this.deleteData("source_cookie")
+    },
+
+    registerWebsite: "https://example.com/register"
 }
 ```
 
-**正确写法：**
+## 收藏功能模板（单文件夹）
+
 ```javascript
-// ✅ 正确 - 包装在 comic 对象中
-class MySource extends ComicSource {
-    comic = {
-        loadInfo: async (id) => { ... },
-        loadEp: async (comicId, epId) => { ... },
-        onImageLoad: (url, comicId, epId) => { ... }
+// ID 缓存机制（处理双重 ID 问题）
+get numericIdMap() {
+    return this.loadData("source_id_map") || {}
+}
+
+cacheNumericId(slug, numericId) {
+    let map = this.numericIdMap
+    map[slug] = numericId
+    map[numericId] = slug
+    this.saveData("source_id_map", map)
+}
+
+async ensureNumericId(comicId) {
+    // 如果已经是数字，直接返回
+    if (/^\d+$/.test(comicId)) {
+        return comicId
+    }
+
+    // 检查缓存
+    let map = this.numericIdMap
+    if (map[comicId]) {
+        return map[comicId]
+    }
+
+    // 缓存没有，请求详情页获取
+    let url = `https://example.com/comic/${comicId}`
+    let res = await Network.get(url)
+    let soup = new HtmlDocument(res.body)
+
+    // 从收藏按钮提取数字 ID
+    let collectBtn = soup.querySelector('a.j-user-collect')
+    let numericId = collectBtn ? collectBtn.attributes['data-id'] || '' : ''
+
+    soup.dispose()
+
+    if (numericId && /^\d+$/.test(numericId)) {
+        this.cacheNumericId(comicId, numericId)
+        return numericId
+    }
+
+    throw "无法获取漫画ID"
+}
+
+// 带登录态的 API 请求
+async apiGet(url) {
+    let headers = {}
+    if (this.isLogged) {
+        headers["Cookie"] = this.cookie
+    }
+    let res = await Network.get(url, headers)
+    if (res.status !== 200) {
+        throw `Invalid status code: ${res.status}`
+    }
+    return res.body
+}
+
+// 收藏功能
+favorites = {
+    multiFolder: false,
+
+    addOrDelFavorite: async (comicId, folderId, isAdding, favoriteId) => {
+        let numericId = await this.ensureNumericId(comicId)
+        let url = `https://example.com/api/favadd?did=${numericId}`
+        let res = await this.apiGet(url)
+        let json = JSON.parse(res)
+
+        if (json.code !== 1) {
+            if (json.msg && json.msg.includes("登陆超时")) {
+                throw "Login expired"
+            }
+            throw json.msg || "操作失败"
+        }
+    },
+
+    loadComics: async (page, folder) => {
+        let url = `https://example.com/api/fav`
+        let res = await this.apiGet(url)
+        let json = JSON.parse(res)
+
+        if (!json.data || !Array.isArray(json.data)) {
+            return { comics: [], maxPage: 1 }
+        }
+
+        let comics = []
+        for (let item of json.data) {
+            let numericId = item.id ? item.id.toString() : ''
+            let slug = item.yname || ''  // API 返回的字符串 slug
+            let title = item.name || ''
+            let cover = item.pic || ''
+
+            // 优先使用 slug（与其他页面保持一致）
+            let comicId = slug || numericId
+
+            if (comicId && title) {
+                // 缓存 ID 映射
+                if (slug && numericId) {
+                    this.cacheNumericId(slug, numericId)
+                }
+
+                comics.push(new Comic({
+                    id: comicId,
+                    title: title,
+                    cover: cover,
+                }))
+            }
+        }
+
+        return { comics: comics, maxPage: 1 }
+    },
+}
+```
+
+## 防盗链设置模板
+
+```javascript
+// 章节图片防盗链
+onImageLoad = (url) => {
+    return {
+        headers: {
+            "Referer": this.url,
+        }
+    }
+}
+
+// 封面图片防盗链
+onThumbnailLoad = (url) => {
+    return {
+        headers: {
+            "Referer": this.url,
+        }
     }
 }
 ```
-
----
 
 ## 探索页模板
 
@@ -99,160 +240,6 @@ explore = [
                 if (comics.length > 0) {
                     result.push({ title: sectionTitle, comics: comics })
                 }
-            }
-
-            document.dispose()
-            return result
-        }
-    }
-]
-```
-
-## viewMore 模板
-
-`viewMore` 是探索页每个区块的可选字段，类型为 `PageJumpTarget`，用于点击"更多"按钮时跳转到指定页面。
-
-### 标准格式（推荐）
-
-```javascript
-viewMore: {
-    page: "category",  // 或 "search"
-    attributes: {
-        category: "分类名称",
-        param: "传递给 categoryComics.load 的参数",
-    }
-}
-```
-
-### 6种常见模式
-
-#### 1. 跳转到分类页（tag 筛选）
-最常见的模式，点击"更多"跳转到对应分类页。
-
-```javascript
-// 场景：首页区块"热血漫画"的更多按钮指向 /category/rexue
-viewMore: {
-    page: "category",
-    attributes: {
-        category: "热血",
-        param: "rexue",  // 对应 categoryParams 中的值
-    }
-}
-```
-
-#### 2. 跳转到专题页（theme/id）
-某些网站使用专题/主题 ID 而非 tag 名称。
-
-```javascript
-// 场景：首页区块"校园青春"的更多按钮指向 /theme?id=xxx
-// 需在 categoryComics.load 中支持 theme: 前缀的 param
-viewMore: {
-    page: "category",
-    attributes: {
-        category: "校园青春",
-        param: "theme:cmigxicdg0008dsopt2563ct3",
-    }
-}
-```
-
-#### 3. 纯排序模式
-"抢先更新"、"热门漫画"这类区块，更多按钮是全部漫画按指定排序展示。
-
-```javascript
-// 场景："热门漫画"更多按钮指向全部漫画按热度排序
-// 需在 categoryComics.load 中支持 sort: 前缀的 param
-viewMore: {
-    page: "category",
-    attributes: {
-        category: "全部",
-        param: "sort:total",  // sort:latest 或 sort:total
-    }
-}
-```
-
-#### 4. 跳转到搜索结果页
-某些"更多"按钮实际是搜索某个关键词。
-
-```javascript
-// 场景："3D漫画"更多按钮是搜索 3D 关键词
-viewMore: {
-    page: "search",
-    attributes: {
-        keyword: "3D",
-    }
-}
-```
-
-#### 5. 分类 + 指定排序
-跳转到某个分类，同时指定排序方式。
-
-```javascript
-// 场景："最新日漫"更多按钮指向日漫分类按最新排序
-viewMore: {
-    page: "category",
-    attributes: {
-        category: "日漫",
-        param: "japanese",
-    }
-}
-// 注：排序由 optionList 控制，如需要固定排序，可在 param 中携带排序信息
-```
-
-#### 6. 字符串格式（兼容旧版）
-部分旧源码使用字符串格式 `category:名称@param`，新代码不推荐使用。
-
-```javascript
-// 旧格式，仅作兼容参考
-viewMore: `category:热血@rexue`
-```
-
-### 完整示例
-
-```javascript
-explore = [
-    {
-        title: "漫画源名称",
-        type: "multiPartPage",
-        load: async (page) => {
-            let res = await Network.get(this.url)
-            // ... 解析页面 ...
-
-            let sections = document.querySelectorAll(".section")
-            for (let sec of sections) {
-                let title = sec.querySelector(".section-title").text.trim()
-                let comics = []
-                // ... 解析漫画列表 ...
-
-                // 查找"更多"按钮
-                let moreLink = sec.querySelector(".more-btn")
-                let viewMore = null
-                if (moreLink) {
-                    let href = moreLink.attributes["href"] || ""
-                    // 根据 href 判断类型，构造 viewMore
-                    if (href.includes("/category/")) {
-                        let tag = href.split("/category/").pop().replace("/", "")
-                        viewMore = {
-                            page: "category",
-                            attributes: {
-                                category: title,
-                                param: tag,
-                            }
-                        }
-                    } else if (href.includes("/theme?id=")) {
-                        let themeId = href.split("id=").pop()
-                        viewMore = {
-                            page: "category",
-                            attributes: {
-                                category: title,
-                                param: "theme:" + themeId,
-                            }
-                        }
-                    }
-                }
-
-                let part = { title: title, comics: comics }
-                if (viewMore) part.viewMore = viewMore
-                result.push(part)
             }
 
             document.dispose()

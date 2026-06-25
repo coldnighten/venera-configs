@@ -4,7 +4,7 @@ class ShenQiManHua extends ComicSource {
 
   key = "shenqimanhua";
 
-  version = "1.1.0";
+  version = "1.0.0";
 
   minAppVersion = "1.6.0";
 
@@ -80,19 +80,6 @@ class ShenQiManHua extends ComicSource {
           }
         }
 
-        // 区块对应的 viewMore 配置
-        // 格式: { sort: "latest|total", tag: "标签名", theme: "theme ID" }
-        let blockConfigs = [
-          { sort: "latest", tag: "", theme: "" },  // 抢先更新
-          { sort: "total", tag: "", theme: "" },   // 热门漫画
-          { tag: "热血", theme: "cmigxh0xk0004dsopw3n53al1" },  // 热血冒险
-          { tag: "宫廷", theme: "cmj2d34jy0000b4ovobi8kx7w" },  // 宫廷穿越
-          { tag: "3d", theme: "cmj2dz7ie0001b4ovpz014eq4" },     // 3d漫画
-          { tag: "奇幻", theme: "cmigxhd5l0005dsop2l6axogz" },  // 奇幻魔法
-          { tag: "治愈", theme: "cmigxhtri0006dsopb97ti6zn" },   // 轻松治愈
-          { tag: "校园", theme: "cmigxicdg0008dsopt2563ct3" },   // 校园青春
-        ];
-
         for (let i = 0; i < grids.length; i++) {
           let grid = grids[i];
           let title = headingTexts[i] || ("区块 " + (i + 1));
@@ -108,33 +95,7 @@ class ShenQiManHua extends ComicSource {
           }
 
           if (comics.length > 0) {
-            let part = { title: title, comics: comics };
-
-            // 添加 viewMore
-            let config = blockConfigs[i];
-            if (config) {
-              if (config.sort) {
-                // 纯排序模式：全部漫画 + 指定排序
-                part.viewMore = {
-                  page: "category",
-                  attributes: {
-                    category: "全部",
-                    param: "sort:" + config.sort,
-                  },
-                };
-              } else if (config.theme) {
-                // 专题模式：跳转到专题页
-                part.viewMore = {
-                  page: "category",
-                  attributes: {
-                    category: title,
-                    param: "theme:" + config.theme,
-                  },
-                };
-              }
-            }
-
-            parts.push(part);
+            parts.push({ title: title, comics: comics });
           }
         }
 
@@ -171,33 +132,9 @@ class ShenQiManHua extends ComicSource {
 
   categoryComics = {
     load: async (category, param, options, page) => {
+      let tag = param || "全部";
       let sort = options[0] || "total";
-      let url = "";
-      let isThemePage = false;
-
-      // param 有三种格式：
-      // 1. sort:xxx - 纯排序模式，显示全部漫画 + 指定排序
-      // 2. theme:xxx - 专题模式，跳转到专题页
-      // 3. 其他 - 普通分类模式，按 tag 筛选
-
-      if (param && param.startsWith("sort:")) {
-        // sort 模式
-        let sortValue = param.replace("sort:", "");
-        url = `${this.baseUrl}/comics?sort=${sortValue}&page=${page}`;
-      } else if (param && param.startsWith("theme:")) {
-        // theme 模式
-        let themeId = param.replace("theme:", "");
-        url = `${this.baseUrl}/theme?id=${themeId}&page=${page}`;
-        isThemePage = true;
-      } else {
-        // 普通分类模式
-        let tag = param || "";
-        if (tag) {
-          url = `${this.baseUrl}/comics?tag=${encodeURIComponent(tag)}&sort=${sort}&page=${page}`;
-        } else {
-          url = `${this.baseUrl}/comics?sort=${sort}&page=${page}`;
-        }
-      }
+      let url = `${this.baseUrl}/comics?tag=${encodeURIComponent(tag)}&sort=${sort}&page=${page}`;
 
       let document = await this.getHtml(url);
 
@@ -222,24 +159,6 @@ class ShenQiManHua extends ComicSource {
           let num = parseInt(match[1]);
           if (num > maxPage) {
             maxPage = num;
-          }
-        }
-      }
-
-      // 如果是专题页，尝试从 URL 或标题中获取更多分页信息
-      if (isThemePage && maxPage === 1) {
-        // 检查是否有其他分页模式
-        let pagination = document.querySelectorAll("button[disabled], button");
-        for (let btn of pagination) {
-          let text = btn.text.trim();
-          if (text && /\d+/.test(text)) {
-            let nums = text.match(/\d+/g);
-            if (nums && nums.length > 0) {
-              let max = Math.max(...nums.map(n => parseInt(n)));
-              if (max > maxPage) {
-                maxPage = max;
-              }
-            }
           }
         }
       }
