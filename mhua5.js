@@ -3,9 +3,82 @@
 class Manhua5Source extends ComicSource {
     name = "漫画屋"
     key = "mhua5"
-    version = "1.0.0"
+    version = "1.1.0"
     minAppVersion = "1.6.0"
     url = "https://www.mhua5.com/"
+
+    get isLogged() {
+        return this.loadData("mhua5_cookie") !== null
+    }
+
+    get cookie() {
+        return this.loadData("mhua5_cookie") || ""
+    }
+
+    async apiGet(url) {
+        let headers = {}
+        if (this.isLogged) {
+            headers["Cookie"] = this.cookie
+        }
+        let res = await Network.get(url, headers)
+        if (res.status !== 200) {
+            throw `Invalid status code: ${res.status}`
+        }
+        return res.body
+    }
+
+    async apiPost(url, body) {
+        let headers = {
+            "Content-Type": "application/x-www-form-urlencoded"
+        }
+        if (this.isLogged) {
+            headers["Cookie"] = this.cookie
+        }
+        let res = await Network.post(url, headers, body)
+        if (res.status !== 200) {
+            throw `Invalid status code: ${res.status}`
+        }
+        return res.body
+    }
+
+    account = {
+        login: async (username, password) => {
+            let url = `https://www.mhua5.com/index.php/api/user/login?name=${encodeURIComponent(username)}&pass=${encodeURIComponent(password)}`
+            let res = await Network.get(url)
+            if (res.status !== 200) {
+                throw `Invalid status code: ${res.status}`
+            }
+
+            let json = JSON.parse(res.body)
+            if (json.code !== 1) {
+                throw json.msg || "Login failed"
+            }
+
+            let cookies = []
+            let setCookieHeader = res.headers['set-cookie']
+            if (setCookieHeader) {
+                let cookieArr = Array.isArray(setCookieHeader) ? setCookieHeader : [setCookieHeader]
+                for (let cookie of cookieArr) {
+                    let match = cookie.match(/^([^;]+)/)
+                    if (match) {
+                        cookies.push(match[1])
+                    }
+                }
+            }
+
+            if (cookies.length > 0) {
+                this.saveData("mhua5_cookie", cookies.join("; "))
+            }
+
+            return "ok"
+        },
+
+        logout: () => {
+            this.deleteData("mhua5_cookie")
+        },
+
+        registerWebsite: "https://www.mhua5.com/index.php/user/login/reg"
+    }
 
     explore = [
         {
@@ -278,6 +351,55 @@ class Manhua5Source extends ComicSource {
             }
         },
         enableTagsSuggestions: false,
+    }
+
+    favorites = {
+        multiFolder: false,
+
+        addOrDelFavorite: async (comicId, folderId, isAdding, favoriteId) => {
+            let url = `https://www.mhua5.com/index.php/api/rend/favadd?did=${comicId}`
+            let res = await this.apiGet(url)
+            let json = JSON.parse(res)
+            if (json.code !== 1) {
+                if (json.msg && json.msg.includes("登陆超时")) {
+                    throw "Login expired"
+                }
+                throw json.msg || "操作失败"
+            }
+        },
+
+        loadComics: async (page, folder) => {
+            let url = `https://www.mhua5.com/index.php/api/rend/fav`
+            let res = await this.apiGet(url)
+            let json = JSON.parse(res)
+
+            if (!json.data || !Array.isArray(json.data)) {
+                return {
+                    comics: [],
+                    maxPage: 1
+                }
+            }
+
+            let comics = []
+            for (let item of json.data) {
+                let id = item.id ? item.id.toString() : ''
+                let title = item.name || ''
+                let cover = item.pic || ''
+
+                if (id && title) {
+                    comics.push(new Comic({
+                        id: id,
+                        title: title,
+                        cover: cover,
+                    }))
+                }
+            }
+
+            return {
+                comics: comics,
+                maxPage: 1
+            }
+        },
     }
 
     comic = {
