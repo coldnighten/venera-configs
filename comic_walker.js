@@ -8,7 +8,7 @@ class ComicWalker extends ComicSource {
 
   api_key = "ytBrdQ2ZYdRQguqEusVLxQVUgakNnVht";
 
-  latestVersion = "1.4.13";
+  latestVersion = "1.6.0";
 
   api_base = "https://mobileapp.comic-walker.com";
 
