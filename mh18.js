@@ -13,7 +13,7 @@ class MH18 extends ComicSource {
   minAppVersion = "1.4.0"
 
   // update url
-  url = "https://cdn.jsdelivr.net/gh/venera-app/venera-configs@main/mh18.js"
+  url = "https://cdn.jsdelivr.net/gh/coldnighten/venera-configs@main/mh18.js"
 
   settings = {
     domains: {

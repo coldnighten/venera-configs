@@ -16,7 +16,7 @@ class JM extends ComicSource {
     static jmPkgName = "com.example.app"
 
     // update url
-    url = "https://cdn.jsdelivr.net/gh/venera-app/venera-configs@main/jm.js"
+    url = "https://cdn.jsdelivr.net/gh/coldnighten/venera-configs@main/jm.js"
 
     dailyCheckInInProgress = false
 

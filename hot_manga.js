@@ -14,7 +14,7 @@ class HotManga extends ComicSource {
 
     minAppVersion = "1.6.0"
 
-    url = "https://cdn.jsdelivr.net/gh/venera-app/venera-configs@main/hot_manga.js";
+    url = "https://cdn.jsdelivr.net/gh/coldnighten/venera-configs@main/hot_manga.js";
 
     static defaultImageQuality = "1500"
 

@@ -10,7 +10,7 @@ class HComic extends ComicSource {
     minAppVersion = "1.6.0"
 
     // Update url
-    url = "https://cdn.jsdelivr.net/gh/venera-app/venera-configs@main/hcomic.js"
+    url = "https://cdn.jsdelivr.net/gh/coldnighten/venera-configs@main/hcomic.js"
 
     baseUrl = "https://h-comic.com"
 

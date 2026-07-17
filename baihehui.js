@@ -13,7 +13,7 @@ class Baihehui extends ComicSource {
     minAppVersion = "1.4.0"
 
     // update url
-    url = "https://cdn.jsdelivr.net/gh/venera-app/venera-configs@main/baihehui.js"
+    url = "https://cdn.jsdelivr.net/gh/coldnighten/venera-configs@main/baihehui.js"
 
     settings = {
         domains: {

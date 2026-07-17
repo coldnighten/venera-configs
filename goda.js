@@ -13,7 +13,7 @@ class Goda extends ComicSource {
   minAppVersion = "1.4.0"
 
   // update url
-  url = "https://cdn.jsdelivr.net/gh/venera-app/venera-configs@main/goda.js"
+  url = "https://cdn.jsdelivr.net/gh/coldnighten/venera-configs@main/goda.js"
 
   settings = {
     domains: {
