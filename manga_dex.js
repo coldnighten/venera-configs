@@ -175,7 +175,7 @@ class MangaDex extends ComicSource {
         {
             // title of the page.
             // title is used to identify the page, it should be unique
-            title: "Manga Dex",
+            title: "MangaDex",
 
             /// multiPartPage or multiPageComicList or mixed
             type: "multiPartPage",
@@ -575,7 +575,6 @@ class MangaDex extends ComicSource {
             let stats = res[2]
 
             return new ComicDetails({
-                id: comic.id,
                 title: comic.title,
                 subtitle: comic.subtitle,
                 cover: comic.cover,
@@ -588,7 +587,6 @@ class MangaDex extends ComicSource {
                 description: comic.description,
                 updateTime: comic.updateTime,
                 uploadTime: comic.createTime,
-                status: comic.status,
                 chapters: chapters,
                 stars: (stats.rating || 0) / 2,
                 url: `https://mangadex.org/title/${comic.id}`,
@@ -622,13 +620,14 @@ class MangaDex extends ComicSource {
             let data = await res.json()
             let images = []
             let image_quality = this.loadSetting('image_quality')
+            let baseUrl = data['baseUrl'] || 'https://uploads.mangadex.org'
             if (image_quality == "Original"){
                 for (let image of data['chapter']['data']) {
-                    images.push(`https://uploads.mangadex.org/data/${data['chapter']['hash']}/${image}`)
+                    images.push(`${baseUrl}/data/${data['chapter']['hash']}/${image}`)
                 }          
             }else{
                 for (let image of data['chapter']['dataSaver']) {
-                    images.push(`https://uploads.mangadex.org/data-saver/${data['chapter']['hash']}/${image}`)
+                    images.push(`${baseUrl}/data-saver/${data['chapter']['hash']}/${image}`)
                 }
             }
             return {
@@ -812,6 +811,13 @@ class MangaDex extends ComicSource {
                 }
                 let match = url.match(/\/(title|manga)\/([a-f0-9-]{36})/i); 
                 return match ? match[2] : null;
+            }
+        },
+        onImageLoad: (url) => {
+            return {
+                headers: {
+                    "Referer": "https://mangadex.org/"
+                }
             }
         },
     }
