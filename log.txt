@@ -1,46 +1,5 @@
 Logs
 
-error ComicSourcePage 2026-08-17 16:26:07.021279 
-Failed to build a setting
-Bad state: No element
-#0      ListBase.firstWhere (dart:collection/list.dart:132)
-#1      _SliverComicSourceState.buildSourceSettings (package:venera/pages/comic_source_page.dart:921)
-#2      _SyncStarIterator.moveNext (dart:async-patch/async_patch.dart:595)
-#3      new _GrowableList._ofOther (dart:core-patch/growable_array.dart:207)
-#4      new _GrowableList.of (dart:core-patch/growable_array.dart:156)
-#5      new List.of (dart:core-patch/array_patch.dart:39)
-#6      Iterable.toList (dart:core/iterable.dart:517)
-#7      _SliverComicSourceState.build (package:venera/pages/comic_source_page.dart:892)
-#8      StatefulElement.build (package:flutter/src/widgets/framework.dart:5931)
-#9      ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5817)
-#10     StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982)
-#11     Element.rebuild (package:flutter/src/widgets/framework.dart:5529)
-#12     ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799)
-#13     StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973)
-#14     ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793)
-#15     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587)
-#16     MultiChildRenderObjectElement.inflateWidget (package:flutter/src/widgets/framework.dart:7264)
-#17     MultiChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7279)
-#18     _ViewportElement.mount (package:flutter/src/widgets/viewport.dart:254)
-#19     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587)
-#20     Element.updateChild (package:flutter/src/widgets/framework.dart:4059)
-#21     SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115)
-#22     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587)
-#23     Element.updateChild (package:flutter/src/widgets/framework.dart:4059)
-#24     SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115)
-#25     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587)
-#26     Element.updateChild (package:flutter/src/widgets/framework.dart:4059)
-#27     SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115)
-#28     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587)
-#29     Element.updateChild (package:flutter/src/widgets/framework.dart:4059)
-#30     SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115)
-#31     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587)
-#32     Element.updateChild (package:flutter/src/widgets/framework.dart:4059)
-#33     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841)
-#34     StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982)
-#35     Element.rebuild (package:flutter/src/widgets/framework.dart:5529)
-#3...
-
 error Failed to handle message: {method: load_setting, key: Komiic, setting_key: domains}
 Null check operator used on a null value
 #0      JsEngine._messageReceiver (package:venera/foundation/js_engine.dart:168)
@@ -61,10 +20,10 @@ Null check operator used on a null value
 <asynchronous suspension>
 #14     _BodyState._selectFile (package:venera/pages/comic_source_page.dart:278)
 <asynchronous suspension>
- 2026-08-17 16:26:08.728050 
+ 2026-08-17 16:30:16.027419 
 JsEngine
 
-error Add comic source 2026-08-17 16:26:08.728954 
+error Add comic source 2026-08-17 16:30:16.028554 
 Null check operator used on a null value
 #0      JsEngine._messageReceiver (package:venera/foundation/js_engine.dart:168)
 #1      Function._apply (dart:core-patch/function_patch.dart:11)

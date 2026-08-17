@@ -194,7 +194,9 @@ class Komiic extends ComicSource {
             this.deleteData('token')
         },
 
-        registerWebsite: `${this.baseUrl}register`
+        get registerWebsite() {
+            return `${this.baseUrl}register`
+        }
     }
 
     /// 探索页面
