@@ -6,17 +6,77 @@ class Komiic extends ComicSource {
     // 唯一标识符
     key = "Komiic"
 
-    version = "1.0.3"
+    version = "1.1.0"
 
     minAppVersion = "1.0.0"
 
     // 更新链接
     url = "https://cdn.jsdelivr.net/gh/coldnighten/venera-configs@main/komiic.js"
 
+    settings = {
+        // 自定义域名
+        domains: {
+            title: "自定义域名",
+            type: "input",
+            default: "komiic.cc"
+        },
+        // 永久域名提示
+        permanentDomain: {
+            title: "永久域名",
+            type: "callback",
+            buttonText: "查看",
+            callback: () => {
+                UI.showMessage("永久域名：komiic.com");
+            }
+        },
+        // 域名检测
+        domainCheck: {
+            title: "检测当前域名",
+            type: "callback",
+            buttonText: "检测",
+            callback: () => {
+                const currentDomain = this.loadSetting("domains");
+                const testUrl = `https://${currentDomain}/`;
+                const startTime = Date.now();
+                let isCompleted = false;
+
+                const loadingId = UI.showLoading(() => {
+                    UI.showMessage("检测已取消");
+                    isCompleted = true;
+                });
+
+                setTimeout(() => {
+                    if (!isCompleted) {
+                        UI.cancelLoading(loadingId);
+                        UI.showMessage("❌ 连接超时，可能需要 🚀");
+                        isCompleted = true;
+                    }
+                }, 10000);
+
+                Network.get(testUrl).then(res => {
+                    if (isCompleted) return;
+                    const delay = Date.now() - startTime;
+                    UI.cancelLoading(loadingId);
+                    UI.showMessage(`✅ 连接正常，延迟: ${delay}ms`);
+                    isCompleted = true;
+                }).catch(() => {
+                    if (isCompleted) return;
+                    UI.cancelLoading(loadingId);
+                    UI.showMessage("❌ 连接失败，可能需要 🚀");
+                    isCompleted = true;
+                });
+            }
+        }
+    }
+
+    get baseUrl() {
+        return `https://${this.loadSetting("domains")}/`;
+    }
+
     get headers() {
         let token = this.loadData('token')
         let headers = {
-            'Referer': 'https://komiic.com/',
+            'Referer': this.baseUrl,
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
             'Content-Type': 'application/json'
         }
@@ -28,7 +88,7 @@ class Komiic extends ComicSource {
 
     async queryJson(query) {
         let res = await Network.post(
-            'https://komiic.com/api/query',
+            `${this.baseUrl}api/query`,
             this.headers,
             query
         )
@@ -113,7 +173,7 @@ class Komiic extends ComicSource {
         /// 返回任意值表示登录成功
         login: async (account, pwd) => {
             let res = await Network.post(
-                'https://komiic.com/api/login',
+                `${this.baseUrl}api/login`,
                 this.headers,
                 {
                     email: account,
@@ -134,7 +194,7 @@ class Komiic extends ComicSource {
             this.deleteData('token')
         },
 
-        registerWebsite: "https://komiic.com/register"
+        registerWebsite: `${this.baseUrl}register`
     }
 
     /// 探索页面
@@ -428,7 +488,7 @@ class Komiic extends ComicSource {
             let json = await this.queryJson({ "operationName": "imagesByChapterId", "variables": { "chapterId": epId }, "query": "query imagesByChapterId($chapterId: ID!) {\n  imagesByChapterId(chapterId: $chapterId) {\n    id\n    kid\n    height\n    width\n    __typename\n  }\n}" })
             return {
                 images: json.data.imagesByChapterId.map((i) => {
-                    return `https://komiic.com/api/image/${i.kid}`
+                    return `${this.baseUrl}api/image/${i.kid}`
                 })
             }
         },
@@ -437,7 +497,7 @@ class Komiic extends ComicSource {
             return {
                 headers: {
                     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
-                    'referer': `https://komiic.com/comic/${comicId}/chapter/${epId}/images/all`
+                    'referer': `${this.baseUrl}comic/${comicId}/chapter/${epId}/images/all`
                 }
             }
         },
