@@ -26,7 +26,7 @@ class Roum27Source extends ComicSource {
             type: "callback",
             buttonText: "检测",
             callback: () => {
-                const currentDomain = this.loadSetting("domains");
+                const currentDomain = this.loadSetting("domains") || this.settings.domains.default;
                 const testUrl = `https://${currentDomain}/`;
                 const startTime = Date.now();
                 let isCompleted = false;
@@ -61,7 +61,7 @@ class Roum27Source extends ComicSource {
     }
 
     get baseUrl() {
-        return `https://${this.loadSetting("domains")}/`;
+        return `https://${this.loadSetting("domains") || this.settings.domains.default}/`;
     }
 
     parseComicFromLink(linkEl) {

@@ -35,7 +35,7 @@ class Komiic extends ComicSource {
             type: "callback",
             buttonText: "检测",
             callback: () => {
-                const currentDomain = this.loadSetting("domains");
+                const currentDomain = this.loadSetting("domains") || this.settings.domains.default;
                 const testUrl = `https://${currentDomain}/`;
                 const startTime = Date.now();
                 let isCompleted = false;
@@ -70,7 +70,7 @@ class Komiic extends ComicSource {
     }
 
     get baseUrl() {
-        return `https://${this.loadSetting("domains")}/`;
+        return `https://${this.loadSetting("domains") || this.settings.domains.default}/`;
     }
 
     get headers() {

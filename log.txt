@@ -1,78 +1,98 @@
 Logs
 
-error Unhandled Exception 2026-08-17 11:00:26.140623 
-Invalid argument(s): Category name is required
-#0      PageJumpTarget.jump.<anonymous closure> (package:venera/foundation/comic_source/models.dart:552)
-#1      Navigation.to.<anonymous closure> (package:venera/foundation/context.dart:19)
-#2      AppPageRoute.buildContent (package:venera/foundation/app_page_route.dart:38)
-#3      _AppRouteTransitionMixin.buildPage (package:venera/foundation/app_page_route.dart:91)
-#4      _ModalScopeState.build.<anonymous closure>.<anonymous closure> (package:flutter/src/widgets/routes.dart:1235)
-#5      _WidgetStatePropertyWith.resolve (package:flutter/src/widgets/widget_state.dart:928)
-#6      StatelessElement.build (package:flutter/src/widgets/framework.dart:5889)
-#7      ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5817)
-#8      Element.rebuild (package:flutter/src/widgets/framework.dart:5529)
-#9      ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799)
-#10     ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793)
-#11     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587)
-#12     Element.updateChild (package:flutter/src/widgets/framework.dart:4059)
-#13     SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115)
-#14     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587)
-#15     Element.updateChild (package:flutter/src/widgets/framework.dart:4059)
-#16     SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115)
-#17     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587)
-#18     Element.updateChild (package:flutter/src/widgets/framework.dart:4059)
-#19     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841)
-#20     StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982)
-#21     Element.rebuild (package:flutter/src/widgets/framework.dart:5529)
-#22     ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799)
-#23     StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973)
-#24     ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793)
+error ComicSourcePage 2026-08-17 16:26:07.021279 
+Failed to build a setting
+Bad state: No element
+#0      ListBase.firstWhere (dart:collection/list.dart:132)
+#1      _SliverComicSourceState.buildSourceSettings (package:venera/pages/comic_source_page.dart:921)
+#2      _SyncStarIterator.moveNext (dart:async-patch/async_patch.dart:595)
+#3      new _GrowableList._ofOther (dart:core-patch/growable_array.dart:207)
+#4      new _GrowableList.of (dart:core-patch/growable_array.dart:156)
+#5      new List.of (dart:core-patch/array_patch.dart:39)
+#6      Iterable.toList (dart:core/iterable.dart:517)
+#7      _SliverComicSourceState.build (package:venera/pages/comic_source_page.dart:892)
+#8      StatefulElement.build (package:flutter/src/widgets/framework.dart:5931)
+#9      ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5817)
+#10     StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982)
+#11     Element.rebuild (package:flutter/src/widgets/framework.dart:5529)
+#12     ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799)
+#13     StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973)
+#14     ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793)
+#15     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587)
+#16     MultiChildRenderObjectElement.inflateWidget (package:flutter/src/widgets/framework.dart:7264)
+#17     MultiChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7279)
+#18     _ViewportElement.mount (package:flutter/src/widgets/viewport.dart:254)
+#19     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587)
+#20     Element.updateChild (package:flutter/src/widgets/framework.dart:4059)
+#21     SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115)
+#22     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587)
+#23     Element.updateChild (package:flutter/src/widgets/framework.dart:4059)
+#24     SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115)
 #25     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587)
 #26     Element.updateChild (package:flutter/src/widgets/framework.dart:4059)
 #27     SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115)
 #28     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587)
 #29     Element.updateChild (package:flutter/src/widgets/framework.dart:4059)
-#30     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841)
-#31     StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982)
-#32     Element.rebuild (package:flutter/src/widgets/framework.dart:5529)
-#33     ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799)
-#34     StatefulElement._firstBuild (...
+#30     SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115)
+#31     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587)
+#32     Element.updateChild (package:flutter/src/widgets/framework.dart:4059)
+#33     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841)
+#34     StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982)
+#35     Element.rebuild (package:flutter/src/widgets/framework.dart:5529)
+#3...
 
-error Unhandled Exception 2026-08-17 11:00:26.141828 
-Invalid argument(s): Category name is required
-#0      PageJumpTarget.jump.<anonymous closure> (package:venera/foundation/comic_source/models.dart:552)
-#1      Navigation.to.<anonymous closure> (package:venera/foundation/context.dart:19)
-#2      AppPageRoute.buildContent (package:venera/foundation/app_page_route.dart:38)
-#3      _AppRouteTransitionMixin.buildPage (package:venera/foundation/app_page_route.dart:91)
-#4      _ModalScopeState.build.<anonymous closure>.<anonymous closure> (package:flutter/src/widgets/routes.dart:1235)
-#5      _WidgetStatePropertyWith.resolve (package:flutter/src/widgets/widget_state.dart:928)
-#6      StatelessElement.build (package:flutter/src/widgets/framework.dart:5889)
-#7      ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5817)
-#8      Element.rebuild (package:flutter/src/widgets/framework.dart:5529)
-#9      ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799)
-#10     ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793)
-#11     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587)
-#12     Element.updateChild (package:flutter/src/widgets/framework.dart:4059)
-#13     SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115)
-#14     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587)
-#15     Element.updateChild (package:flutter/src/widgets/framework.dart:4059)
-#16     SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115)
-#17     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587)
-#18     Element.updateChild (package:flutter/src/widgets/framework.dart:4059)
-#19     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841)
-#20     StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982)
-#21     Element.rebuild (package:flutter/src/widgets/framework.dart:5529)
-#22     ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799)
-#23     StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973)
-#24     ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793)
-#25     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587)
-#26     Element.updateChild (package:flutter/src/widgets/framework.dart:4059)
-#27     SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115)
-#28     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587)
-#29     Element.updateChild (package:flutter/src/widgets/framework.dart:4059)
-#30     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841)
-#31     StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982)
-#32     Element.rebuild (package:flutter/src/widgets/framework.dart:5529)
-#33     ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799)
-#34     StatefulElement._firstBuild (...
+error Failed to handle message: {method: load_setting, key: Komiic, setting_key: domains}
+Null check operator used on a null value
+#0      JsEngine._messageReceiver (package:venera/foundation/js_engine.dart:168)
+#1      Function._apply (dart:core-patch/function_patch.dart:11)
+#2      Function.apply (dart:core-patch/function_patch.dart:38)
+#3      _DartFunction.invoke (package:flutter_qjs/src/object.dart:35)
+#4      FlutterQjs._ensureEngine.<anonymous closure> (package:flutter_qjs/src/engine.dart:70)
+#5      channelDispacher (package:flutter_qjs/src/ffi.dart:205)
+#6      _FfiCallbackchannelDispacher (dart:ffi)
+#7      _jsEval.#ffiClosure11 (package:flutter_qjs/src/ffi.dart)
+#8      jsEval (package:flutter_qjs/src/ffi.dart:365)
+#9      FlutterQjs.evaluate (package:flutter_qjs/src/engine.dart:168)
+#10     JsEngine.runCode (package:venera/foundation/js_engine.dart:275)
+#11     ComicSourceParser.parse (package:venera/foundation/comic_source/parser.dart:98)
+#12     ComicSourceParser.createAndParse (package:venera/foundation/comic_source/parser.dart:79)
+<asynchronous suspension>
+#13     _BodyState.addSource (package:venera/pages/comic_source_page.dart:323)
+<asynchronous suspension>
+#14     _BodyState._selectFile (package:venera/pages/comic_source_page.dart:278)
+<asynchronous suspension>
+ 2026-08-17 16:26:08.728050 
+JsEngine
+
+error Add comic source 2026-08-17 16:26:08.728954 
+Null check operator used on a null value
+#0      JsEngine._messageReceiver (package:venera/foundation/js_engine.dart:168)
+#1      Function._apply (dart:core-patch/function_patch.dart:11)
+#2      Function.apply (dart:core-patch/function_patch.dart:38)
+#3      _DartFunction.invoke (package:flutter_qjs/src/object.dart:35)
+#4      FlutterQjs._ensureEngine.<anonymous closure> (package:flutter_qjs/src/engine.dart:70)
+#5      channelDispacher (package:flutter_qjs/src/ffi.dart:205)
+#6      _FfiCallbackchannelDispacher (dart:ffi)
+#7      _jsEval.#ffiClosure11 (package:flutter_qjs/src/ffi.dart)
+#8      jsEval (package:flutter_qjs/src/ffi.dart:365)
+#9      FlutterQjs.evaluate (package:flutter_qjs/src/engine.dart:168)
+#10     JsEngine.runCode (package:venera/foundation/js_engine.dart:275)
+#11     ComicSourceParser.parse (package:venera/foundation/comic_source/parser.dart:98)
+#12     ComicSourceParser.createAndParse (package:venera/foundation/comic_source/parser.dart:79)
+<asynchronous suspension>
+#13     _BodyState.addSource (package:venera/pages/comic_source_page.dart:323)
+<asynchronous suspension>
+#14     _BodyState._selectFile (package:venera/pages/comic_source_page.dart:278)
+<asynchronous suspension>
+
+#0      FlutterQjs.evaluate (package:flutter_qjs/src/engine.dart:176)
+#1      JsEngine.runCode (package:venera/foundation/js_engine.dart:275)
+#2      ComicSourceParser.parse (package:venera/foundation/comic_source/parser.dart:98)
+#3      ComicSourceParser.createAndParse (package:venera/foundation/comic_source/parser.dart:79)
+<asynchronous suspension>
+#4      _BodyState.addSource (package:venera/pages/comic_source_page.dart:323)
+<asynchronous suspension>
+#5      _BodyState._selectFile (package:venera/pages/comic_source_page.dart:278)
+<asynchronous suspension>
+
 
