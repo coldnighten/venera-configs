@@ -3,9 +3,66 @@
 class Roum27Source extends ComicSource {
     name = "肉漫屋"
     key = "roum27"
-    version = "1.0.2"
+    version = "1.1.0"
     minAppVersion = "1.6.0"
-    url = "https://roum27.xyz/"
+    url = "https://cdn.jsdelivr.net/gh/coldnighten/venera-configs@main/roum27.js"
+
+    settings = {
+        domains: {
+            title: "自定义域名",
+            type: "input",
+            default: "rouman28.xyz"
+        },
+        permanentDomain: {
+            title: "永久域名",
+            type: "callback",
+            buttonText: "查看",
+            callback: () => {
+                UI.showMessage("永久域名：rouman5.com");
+            }
+        },
+        domainCheck: {
+            title: "检测当前域名",
+            type: "callback",
+            buttonText: "检测",
+            callback: () => {
+                const currentDomain = this.loadSetting("domains");
+                const testUrl = `https://${currentDomain}/`;
+                const startTime = Date.now();
+                let isCompleted = false;
+
+                const loadingId = UI.showLoading(() => {
+                    UI.showMessage("检测已取消");
+                    isCompleted = true;
+                });
+
+                setTimeout(() => {
+                    if (!isCompleted) {
+                        UI.cancelLoading(loadingId);
+                        UI.showMessage("❌ 连接超时，可能需要 🚀");
+                        isCompleted = true;
+                    }
+                }, 10000);
+
+                Network.get(testUrl).then(res => {
+                    if (isCompleted) return;
+                    const delay = Date.now() - startTime;
+                    UI.cancelLoading(loadingId);
+                    UI.showMessage(`✅ 连接正常，延迟: ${delay}ms`);
+                    isCompleted = true;
+                }).catch(() => {
+                    if (isCompleted) return;
+                    UI.cancelLoading(loadingId);
+                    UI.showMessage("❌ 连接失败，可能需要 🚀");
+                    isCompleted = true;
+                });
+            }
+        }
+    }
+
+    get baseUrl() {
+        return `https://${this.loadSetting("domains")}/`;
+    }
 
     parseComicFromLink(linkEl) {
         let href = linkEl.attributes["href"] || ""
@@ -80,7 +137,7 @@ class Roum27Source extends ComicSource {
             title: "肉漫屋",
             type: "multiPartPage",
             load: async (page) => {
-                let res = await Network.get(this.url + "home")
+                let res = await Network.get(this.baseUrl + "home")
                 if (res.status !== 200) {
                     throw `Invalid status code: ${res.status}`
                 }
@@ -156,7 +213,7 @@ class Roum27Source extends ComicSource {
 
     categoryComics = {
         load: async (category, param, options, page) => {
-            let url = this.url + "books"
+            let url = this.baseUrl + "books"
             let params = []
             if (param) {
                 params.push("lang=" + param)
@@ -191,7 +248,7 @@ class Roum27Source extends ComicSource {
 
     search = {
         load: async (keyword, options, page) => {
-            let url = this.url + "search?keyword=" + encodeURIComponent(keyword)
+            let url = this.baseUrl + "search?keyword=" + encodeURIComponent(keyword)
             if (page > 1) {
                 url += "&page=" + page
             }
@@ -215,7 +272,7 @@ class Roum27Source extends ComicSource {
 
     comic = {
         loadInfo: async (id) => {
-            let url = this.url + "books/" + id
+            let url = this.baseUrl + "books/" + id
             let res = await Network.get(url)
             if (res.status !== 200) {
                 throw `Invalid status code: ${res.status}`
@@ -299,7 +356,7 @@ class Roum27Source extends ComicSource {
         },
 
         loadEp: async (comicId, epId) => {
-            let url = this.url + "books/" + comicId + "/" + epId
+            let url = this.baseUrl + "books/" + comicId + "/" + epId
             let res = await Network.get(url)
             if (res.status !== 200) {
                 throw `Invalid status code: ${res.status}`
@@ -341,7 +398,7 @@ class Roum27Source extends ComicSource {
         onImageLoad: (url, comicId, epId) => {
             return {
                 headers: {
-                    "Referer": "https://roum27.xyz/"
+                    "Referer": this.baseUrl
                 }
             }
         },
