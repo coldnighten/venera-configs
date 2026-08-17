@@ -71,6 +71,9 @@ class ShenQiManHua extends ComicSource {
         let isSectionTitle = (text) => {
           if (!text) return false;
           if (text === "热议") return false;
+          if (text === "抢先更新") return false;
+          if (text === "高能榜单") return false;
+          if (text === "热门动漫") return false;
           if (/^《.+》$/.test(text)) return false;
           return true;
         };
@@ -79,6 +82,14 @@ class ShenQiManHua extends ComicSource {
           if (!el) return false;
           let name = el.localName;
           return name === "h1" || name === "h2" || name === "h3";
+        };
+
+        let viewMoreMap = {
+          "热门漫画": "sort:total",
+          "新漫尝鲜": "sort:latest",
+          "热血冒险": "theme:cmigxh0xk0004dsopw3n53al1",
+          "3D漫画": "theme:cmj2dz7ie0001b4ovpz014eq4",
+          "AI漫画": "theme:cmscw87m100frnme20nfehxrd",
         };
 
         let elements = document.querySelectorAll("h1, h2, h3, .grid");
@@ -94,7 +105,6 @@ class ShenQiManHua extends ComicSource {
           }
 
           if (!currentTitle) continue;
-          if (currentTitle === "热门动漫") continue;
 
           let links = el.querySelectorAll("a[href*='/comic/']");
           let comics = [];
@@ -118,7 +128,14 @@ class ShenQiManHua extends ComicSource {
 
         let parts = [];
         for (let title of order) {
-          parts.push({ title: title, comics: partsMap.get(title) });
+          let part = { title: title, comics: partsMap.get(title) };
+          if (viewMoreMap[title]) {
+            part.viewMore = {
+              page: "category",
+              attributes: { param: viewMoreMap[title] },
+            };
+          }
+          parts.push(part);
         }
 
         document.dispose();
@@ -154,15 +171,27 @@ class ShenQiManHua extends ComicSource {
 
   categoryComics = {
     load: async (category, param, options, page) => {
-      let tag = param || "全部";
-      let sort = options[0] || "total";
-      let url = `${this.baseUrl}/comics?tag=${encodeURIComponent(tag)}&sort=${sort}&page=${page}`;
+      let url;
+      let hasPagination = true;
+
+      if (param && param.startsWith("sort:")) {
+        let sort = param.split(":")[1];
+        url = `${this.baseUrl}/comics?sort=${sort}&page=${page}`;
+      } else if (param && param.startsWith("theme:")) {
+        let themeId = param.split(":")[1];
+        url = `${this.baseUrl}/theme?id=${themeId}`;
+        hasPagination = false;
+      } else {
+        let tag = param || "全部";
+        let sort = options[0] || "total";
+        url = `${this.baseUrl}/comics?tag=${encodeURIComponent(tag)}&sort=${sort}&page=${page}`;
+      }
 
       let document = await this.getHtml(url);
 
       let comics = [];
-      let grid = document.querySelector(".grid.grid-cols-3");
-      if (grid) {
+      let grids = document.querySelectorAll(".grid");
+      for (let grid of grids) {
         let links = grid.querySelectorAll("a[href*='/comic/']");
         for (let link of links) {
           let comic = this.parseComicCard(link);
@@ -173,14 +202,16 @@ class ShenQiManHua extends ComicSource {
       }
 
       let maxPage = 1;
-      let pageLinks = document.querySelectorAll("a[href*='page=']");
-      for (let link of pageLinks) {
-        let href = link.attributes["href"] || "";
-        let match = href.match(/page=(\d+)/);
-        if (match) {
-          let num = parseInt(match[1]);
-          if (num > maxPage) {
-            maxPage = num;
+      if (hasPagination) {
+        let pageLinks = document.querySelectorAll("a[href*='page=']");
+        for (let link of pageLinks) {
+          let href = link.attributes["href"] || "";
+          let match = href.match(/page=(\d+)/);
+          if (match) {
+            let num = parseInt(match[1]);
+            if (num > maxPage) {
+              maxPage = num;
+            }
           }
         }
       }
