@@ -1,497 +1,78 @@
 Logs
 
-info Network 2026-08-17 10:50:01.329467 
-GET 
-headers:
-{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
-data:
-null
-
-info Network 2026-08-17 10:50:01.329632 
-GET 
-headers:
-{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
-data:
-null
-
-info Network 2026-08-17 10:50:01.329708 
-GET 
-headers:
-{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
-data:
-null
-
-info Network 2026-08-17 10:50:01.329788 
-GET 
-headers:
-{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
-data:
-null
-
-info Network 2026-08-17 10:50:01.329857 
-GET 
-headers:
-{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
-data:
-null
-
-info Network 2026-08-17 10:50:01.329920 
-GET 
-headers:
-{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
-data:
-null
-
-error Network 2026-08-17 10:50:01.351107 
-GET 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-null
-
-error Network 2026-08-17 10:50:01.353687 
-GET 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-null
-
-error Network 2026-08-17 10:50:01.355067 
-GET 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-null
-
-error Network 2026-08-17 10:50:01.355774 
-GET 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-null
-
-error Network 2026-08-17 10:50:01.356463 
-GET 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-null
-
-error Network 2026-08-17 10:50:01.357156 
-GET 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-null
-
-error Page Jump 2026-08-17 10:50:02.080086 
-Unknown page: Invalid Data
-
-info Network 2026-08-17 10:50:03.357947 
-GET 
-headers:
-{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
-data:
-null
-
-info Network 2026-08-17 10:50:03.366856 
-GET 
-headers:
-{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
-data:
-null
-
-info Network 2026-08-17 10:50:03.371671 
-GET 
-headers:
-{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
-data:
-null
-
-info Network 2026-08-17 10:50:03.377705 
-GET 
-headers:
-{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
-data:
-null
-
-info Network 2026-08-17 10:50:03.378918 
-GET 
-headers:
-{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
-data:
-null
-
-info Network 2026-08-17 10:50:03.379357 
-GET 
-headers:
-{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
-data:
-null
-
-error Network 2026-08-17 10:50:03.392193 
-GET 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-null
-
-error Network 2026-08-17 10:50:03.398047 
-GET 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-null
-
-error Network 2026-08-17 10:50:03.400775 
-GET 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-null
-
-error Network 2026-08-17 10:50:03.404128 
-GET 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-null
-
-error Network 2026-08-17 10:50:03.405506 
-GET 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-null
-
-error Network 2026-08-17 10:50:03.406788 
-GET 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-null
-
-info Network 2026-08-17 10:50:07.395342 
-GET 
-headers:
-{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
-data:
-null
-
-error Network 2026-08-17 10:50:07.397794 
-GET 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-null
-
-info Network 2026-08-17 10:50:07.400925 
-GET 
-headers:
-{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
-data:
-null
-
-error Network 2026-08-17 10:50:07.402700 
-GET 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-null
-
-info Network 2026-08-17 10:50:07.403980 
-GET 
-headers:
-{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
-data:
-null
-
-error Network 2026-08-17 10:50:07.406399 
-GET 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-null
-
-info Network 2026-08-17 10:50:07.407535 
-GET 
-headers:
-{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
-data:
-null
-
-info Network 2026-08-17 10:50:07.409364 
-GET 
-headers:
-{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
-data:
-null
-
-error Network 2026-08-17 10:50:07.410435 
-GET 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-null
-
-info Network 2026-08-17 10:50:07.410692 
-GET 
-headers:
-{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
-data:
-null
-
-error Network 2026-08-17 10:50:07.412480 
-GET 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-null
-
-error Network 2026-08-17 10:50:07.413052 
-GET 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-null
-
-info Network 2026-08-17 10:50:15.400112 
-GET 
-headers:
-{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
-data:
-null
-
-error Network 2026-08-17 10:50:15.402499 
-GET 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-null
-
-error Image Loading 2026-08-17 10:50:15.402922 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-#0      DioMixin.fetch (package:dio/src/dio_mixin.dart:523)
-<asynchronous suspension>
-#1      ImageDownloader.loadThumbnail (package:venera/network/images.dart:59)
-<asynchronous suspension>
-#2      CachedImageProvider.load (package:venera/foundation/image_provider/cached_image.dart:50)
-<asynchronous suspension>
-#3      BaseImageProvider._loadBufferAsync (package:venera/foundation/image_provider/base_image_provider.dart:70)
-<asynchronous suspension>
-#4      MultiFrameImageStreamCompleter._handleCodecReady (package:flutter/src/painting/image_stream.dart:1021)
-<asynchronous suspension>
-
-
-error Unhandled Exception 2026-08-17 10:50:15.403116 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-#0      DioMixin.fetch (package:dio/src/dio_mixin.dart:523)
-<asynchronous suspension>
-#1      ImageDownloader.loadThumbnail (package:venera/network/images.dart:59)
-<asynchronous suspension>
-#2      CachedImageProvider.load (package:venera/foundation/image_provider/cached_image.dart:50)
-<asynchronous suspension>
-#3      BaseImageProvider._loadBufferAsync (package:venera/foundation/image_provider/base_image_provider.dart:70)
-<asynchronous suspension>
-#4      MultiFrameImageStreamCompleter._handleCodecReady (package:flutter/src/painting/image_stream.dart:1021)
-<asynchronous suspension>
-
-
-info Network 2026-08-17 10:50:15.404649 
-GET 
-headers:
-{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
-data:
-null
-
-error Network 2026-08-17 10:50:15.406317 
-GET 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-null
-
-error Image Loading 2026-08-17 10:50:15.406668 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-#0      DioMixin.fetch (package:dio/src/dio_mixin.dart:523)
-<asynchronous suspension>
-#1      ImageDownloader.loadThumbnail (package:venera/network/images.dart:59)
-<asynchronous suspension>
-#2      CachedImageProvider.load (package:venera/foundation/image_provider/cached_image.dart:50)
-<asynchronous suspension>
-#3      BaseImageProvider._loadBufferAsync (package:venera/foundation/image_provider/base_image_provider.dart:70)
-<asynchronous suspension>
-#4      MultiFrameImageStreamCompleter._handleCodecReady (package:flutter/src/painting/image_stream.dart:1021)
-<asynchronous suspension>
-
-
-error Unhandled Exception 2026-08-17 10:50:15.406852 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-#0      DioMixin.fetch (package:dio/src/dio_mixin.dart:523)
-<asynchronous suspension>
-#1      ImageDownloader.loadThumbnail (package:venera/network/images.dart:59)
-<asynchronous suspension>
-#2      CachedImageProvider.load (package:venera/foundation/image_provider/cached_image.dart:50)
-<asynchronous suspension>
-#3      BaseImageProvider._loadBufferAsync (package:venera/foundation/image_provider/base_image_provider.dart:70)
-<asynchronous suspension>
-#4      MultiFrameImageStreamCompleter._handleCodecReady (package:flutter/src/painting/image_stream.dart:1021)
-<asynchronous suspension>
-
-
-info Network 2026-08-17 10:50:15.408042 
-GET 
-headers:
-{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
-data:
-null
-
-error Network 2026-08-17 10:50:15.409567 
-GET 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-null
-
-error Image Loading 2026-08-17 10:50:15.409894 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-#0      DioMixin.fetch (package:dio/src/dio_mixin.dart:523)
-<asynchronous suspension>
-#1      ImageDownloader.loadThumbnail (package:venera/network/images.dart:59)
-<asynchronous suspension>
-#2      CachedImageProvider.load (package:venera/foundation/image_provider/cached_image.dart:50)
-<asynchronous suspension>
-#3      BaseImageProvider._loadBufferAsync (package:venera/foundation/image_provider/base_image_provider.dart:70)
-<asynchronous suspension>
-#4      MultiFrameImageStreamCompleter._handleCodecReady (package:flutter/src/painting/image_stream.dart:1021)
-<asynchronous suspension>
-
-
-error Unhandled Exception 2026-08-17 10:50:15.410050 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-#0      DioMixin.fetch (package:dio/src/dio_mixin.dart:523)
-<asynchronous suspension>
-#1      ImageDownloader.loadThumbnail (package:venera/network/images.dart:59)
-<asynchronous suspension>
-#2      CachedImageProvider.load (package:venera/foundation/image_provider/cached_image.dart:50)
-<asynchronous suspension>
-#3      BaseImageProvider._loadBufferAsync (package:venera/foundation/image_provider/base_image_provider.dart:70)
-<asynchronous suspension>
-#4      MultiFrameImageStreamCompleter._handleCodecReady (package:flutter/src/painting/image_stream.dart:1021)
-<asynchronous suspension>
-
-
-info Network 2026-08-17 10:50:15.411861 
-GET 
-headers:
-{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
-data:
-null
-
-error Network 2026-08-17 10:50:15.413686 
-GET 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-null
-
-error Image Loading 2026-08-17 10:50:15.414073 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-#0      DioMixin.fetch (package:dio/src/dio_mixin.dart:523)
-<asynchronous suspension>
-#1      ImageDownloader.loadThumbnail (package:venera/network/images.dart:59)
-<asynchronous suspension>
-#2      CachedImageProvider.load (package:venera/foundation/image_provider/cached_image.dart:50)
-<asynchronous suspension>
-#3      BaseImageProvider._loadBufferAsync (package:venera/foundation/image_provider/base_image_provider.dart:70)
-<asynchronous suspension>
-#4      MultiFrameImageStreamCompleter._handleCodecReady (package:flutter/src/painting/image_stream.dart:1021)
-<asynchronous suspension>
-
-
-error Unhandled Exception 2026-08-17 10:50:15.414247 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-#0      DioMixin.fetch (package:dio/src/dio_mixin.dart:523)
-<asynchronous suspension>
-#1      ImageDownloader.loadThumbnail (package:venera/network/images.dart:59)
-<asynchronous suspension>
-#2      CachedImageProvider.load (package:venera/foundation/image_provider/cached_image.dart:50)
-<asynchronous suspension>
-#3      BaseImageProvider._loadBufferAsync (package:venera/foundation/image_provider/base_image_provider.dart:70)
-<asynchronous suspension>
-#4      MultiFrameImageStreamCompleter._handleCodecReady (package:flutter/src/painting/image_stream.dart:1021)
-<asynchronous suspension>
-
-
-info Network 2026-08-17 10:50:15.416121 
-GET 
-headers:
-{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
-data:
-null
-
-info Network 2026-08-17 10:50:15.416276 
-GET 
-headers:
-{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
-data:
-null
-
-error Network 2026-08-17 10:50:15.419239 
-GET 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-null
-
-error Image Loading 2026-08-17 10:50:15.419682 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-#0      DioMixin.fetch (package:dio/src/dio_mixin.dart:523)
-<asynchronous suspension>
-#1      ImageDownloader.loadThumbnail (package:venera/network/images.dart:59)
-<asynchronous suspension>
-#2      CachedImageProvider.load (package:venera/foundation/image_provider/cached_image.dart:50)
-<asynchronous suspension>
-#3      BaseImageProvider._loadBufferAsync (package:venera/foundation/image_provider/base_image_provider.dart:70)
-<asynchronous suspension>
-#4      MultiFrameImageStreamCompleter._handleCodecReady (package:flutter/src/painting/image_stream.dart:1021)
-<asynchronous suspension>
-
-
-error Unhandled Exception 2026-08-17 10:50:15.419879 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-#0      DioMixin.fetch (package:dio/src/dio_mixin.dart:523)
-<asynchronous suspension>
-#1      ImageDownloader.loadThumbnail (package:venera/network/images.dart:59)
-<asynchronous suspension>
-#2      CachedImageProvider.load (package:venera/foundation/image_provider/cached_image.dart:50)
-<asynchronous suspension>
-#3      BaseImageProvider._loadBufferAsync (package:venera/foundation/image_provider/base_image_provider.dart:70)
-<asynchronous suspension>
-#4      MultiFrameImageStreamCompleter._handleCodecReady (package:flutter/src/painting/image_stream.dart:1021)
-<asynchronous suspension>
-
-
-error Network 2026-08-17 10:50:15.420038 
-GET 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-null
-
-error Image Loading 2026-08-17 10:50:15.420306 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-#0      DioMixin.fetch (package:dio/src/dio_mixin.dart:523)
-<asynchronous suspension>
-#1      ImageDownloader.loadThumbnail (package:venera/network/images.dart:59)
-<asynchronous suspension>
-#2      CachedImageProvider.load (package:venera/foundation/image_provider/cached_image.dart:50)
-<asynchronous suspension>
-#3      BaseImageProvider._loadBufferAsync (package:venera/foundation/image_provider/base_image_provider.dart:70)
-<asynchronous suspension>
-#4      MultiFrameImageStreamCompleter._handleCodecReady (package:flutter/src/painting/image_stream.dart:1021)
-<asynchronous suspension>
-
-
-error Unhandled Exception 2026-08-17 10:50:15.420484 
-DioException [unknown]: null
-Error: [RhttpUnknownException] relative URL without a base
-#0      DioMixin.fetch (package:dio/src/dio_mixin.dart:523)
-<asynchronous suspension>
-#1      ImageDownloader.loadThumbnail (package:venera/network/images.dart:59)
-<asynchronous suspension>
-#2      CachedImageProvider.load (package:venera/foundation/image_provider/cached_image.dart:50)
-<asynchronous suspension>
-#3      BaseImageProvider._loadBufferAsync (package:venera/foundation/image_provider/base_image_provider.dart:70)
-<asynchronous suspension>
-#4      MultiFrameImageStreamCompleter._handleCodecReady (package:flutter/src/painting/image_stream.dart:1021)
-<asynchronous suspension>
-
+error Unhandled Exception 2026-08-17 11:00:26.140623 
+Invalid argument(s): Category name is required
+#0      PageJumpTarget.jump.<anonymous closure> (package:venera/foundation/comic_source/models.dart:552)
+#1      Navigation.to.<anonymous closure> (package:venera/foundation/context.dart:19)
+#2      AppPageRoute.buildContent (package:venera/foundation/app_page_route.dart:38)
+#3      _AppRouteTransitionMixin.buildPage (package:venera/foundation/app_page_route.dart:91)
+#4      _ModalScopeState.build.<anonymous closure>.<anonymous closure> (package:flutter/src/widgets/routes.dart:1235)
+#5      _WidgetStatePropertyWith.resolve (package:flutter/src/widgets/widget_state.dart:928)
+#6      StatelessElement.build (package:flutter/src/widgets/framework.dart:5889)
+#7      ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5817)
+#8      Element.rebuild (package:flutter/src/widgets/framework.dart:5529)
+#9      ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799)
+#10     ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793)
+#11     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587)
+#12     Element.updateChild (package:flutter/src/widgets/framework.dart:4059)
+#13     SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115)
+#14     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587)
+#15     Element.updateChild (package:flutter/src/widgets/framework.dart:4059)
+#16     SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115)
+#17     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587)
+#18     Element.updateChild (package:flutter/src/widgets/framework.dart:4059)
+#19     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841)
+#20     StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982)
+#21     Element.rebuild (package:flutter/src/widgets/framework.dart:5529)
+#22     ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799)
+#23     StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973)
+#24     ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793)
+#25     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587)
+#26     Element.updateChild (package:flutter/src/widgets/framework.dart:4059)
+#27     SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115)
+#28     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587)
+#29     Element.updateChild (package:flutter/src/widgets/framework.dart:4059)
+#30     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841)
+#31     StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982)
+#32     Element.rebuild (package:flutter/src/widgets/framework.dart:5529)
+#33     ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799)
+#34     StatefulElement._firstBuild (...
+
+error Unhandled Exception 2026-08-17 11:00:26.141828 
+Invalid argument(s): Category name is required
+#0      PageJumpTarget.jump.<anonymous closure> (package:venera/foundation/comic_source/models.dart:552)
+#1      Navigation.to.<anonymous closure> (package:venera/foundation/context.dart:19)
+#2      AppPageRoute.buildContent (package:venera/foundation/app_page_route.dart:38)
+#3      _AppRouteTransitionMixin.buildPage (package:venera/foundation/app_page_route.dart:91)
+#4      _ModalScopeState.build.<anonymous closure>.<anonymous closure> (package:flutter/src/widgets/routes.dart:1235)
+#5      _WidgetStatePropertyWith.resolve (package:flutter/src/widgets/widget_state.dart:928)
+#6      StatelessElement.build (package:flutter/src/widgets/framework.dart:5889)
+#7      ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5817)
+#8      Element.rebuild (package:flutter/src/widgets/framework.dart:5529)
+#9      ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799)
+#10     ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793)
+#11     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587)
+#12     Element.updateChild (package:flutter/src/widgets/framework.dart:4059)
+#13     SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115)
+#14     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587)
+#15     Element.updateChild (package:flutter/src/widgets/framework.dart:4059)
+#16     SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115)
+#17     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587)
+#18     Element.updateChild (package:flutter/src/widgets/framework.dart:4059)
+#19     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841)
+#20     StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982)
+#21     Element.rebuild (package:flutter/src/widgets/framework.dart:5529)
+#22     ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799)
+#23     StatefulElement._firstBuild (package:flutter/src/widgets/framework.dart:5973)
+#24     ComponentElement.mount (package:flutter/src/widgets/framework.dart:5793)
+#25     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587)
+#26     Element.updateChild (package:flutter/src/widgets/framework.dart:4059)
+#27     SingleChildRenderObjectElement.mount (package:flutter/src/widgets/framework.dart:7115)
+#28     Element.inflateWidget (package:flutter/src/widgets/framework.dart:4587)
+#29     Element.updateChild (package:flutter/src/widgets/framework.dart:4059)
+#30     ComponentElement.performRebuild (package:flutter/src/widgets/framework.dart:5841)
+#31     StatefulElement.performRebuild (package:flutter/src/widgets/framework.dart:5982)
+#32     Element.rebuild (package:flutter/src/widgets/framework.dart:5529)
+#33     ComponentElement._firstBuild (package:flutter/src/widgets/framework.dart:5799)
+#34     StatefulElement._firstBuild (...
 
