@@ -235,7 +235,7 @@ class ShenQiManHua extends ComicSource {
   search = {
     load: async (keyword, options, page) => {
       let encodedKeyword = encodeURIComponent(keyword);
-      let url = `${this.baseUrl}/search?q=${encodedKeyword}&page=${page}`;
+      let url = `${this.baseUrl}/search?query=${encodedKeyword}&page=${page}`;
 
       let document = await this.getHtml(url);
 
