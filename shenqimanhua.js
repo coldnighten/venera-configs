@@ -298,6 +298,17 @@ class ShenQiManHua extends ComicSource {
         title = titleElement.text.trim();
       }
 
+      let statusLabels = document.querySelectorAll("span.text-gray-600");
+      for (let span of statusLabels) {
+        if (span.text.trim() === "状态：") {
+          let statusValue = span.nextElementSibling;
+          if (statusValue) {
+            updateTime = statusValue.text.trim();
+          }
+          break;
+        }
+      }
+
       let ogImage = document.querySelector("meta[property='og:image']");
       if (ogImage) {
         cover = ogImage.attributes["content"] || "";
