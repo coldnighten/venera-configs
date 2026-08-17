@@ -75,50 +75,28 @@ class ShenQiManHua extends ComicSource {
           return true;
         };
 
-        let findPrevSectionTitle = (gridEl) => {
-          let cur = gridEl.previousSibling;
-          while (cur) {
-            if (
-              cur.tagName === "H1" ||
-              cur.tagName === "H2" ||
-              cur.tagName === "H3"
-            ) {
-              let text = (cur.text || "").trim();
-              if (isSectionTitle(text)) {
-                return text;
-              }
-            }
-            if (cur.children && cur.children.length > 0) {
-              for (let i = cur.children.length - 1; i >= 0; i--) {
-                let c = cur.children[i];
-                if (
-                  c.tagName === "H1" ||
-                  c.tagName === "H2" ||
-                  c.tagName === "H3"
-                ) {
-                  let text = (c.text || "").trim();
-                  if (isSectionTitle(text)) {
-                    return text;
-                  }
-                }
-              }
-            }
-            cur = cur.previousSibling;
-          }
-          return null;
+        let isHeading = (el) => {
+          if (!el) return false;
+          let name = el.localName;
+          return name === "h1" || name === "h2" || name === "h3";
         };
 
-        let grids = document.querySelectorAll(".grid");
+        let elements = document.querySelectorAll("h1, h2, h3, .grid");
+        let currentTitle = null;
         let partsMap = new Map();
         let order = [];
 
-        for (let i = 0; i < grids.length; i++) {
-          let grid = grids[i];
-          let sectionTitle = findPrevSectionTitle(grid);
-          if (!sectionTitle) continue;
-          if (sectionTitle === "热门动漫") continue;
+        for (let el of elements) {
+          if (isHeading(el)) {
+            let text = (el.text || "").trim();
+            currentTitle = isSectionTitle(text) ? text : null;
+            continue;
+          }
 
-          let links = grid.querySelectorAll("a[href*='/comic/']");
+          if (!currentTitle) continue;
+          if (currentTitle === "热门动漫") continue;
+
+          let links = el.querySelectorAll("a[href*='/comic/']");
           let comics = [];
           for (let link of links) {
             let comic = this.parseComicCard(link);
@@ -128,11 +106,11 @@ class ShenQiManHua extends ComicSource {
           }
           if (comics.length === 0) continue;
 
-          if (!partsMap.has(sectionTitle)) {
-            partsMap.set(sectionTitle, []);
-            order.push(sectionTitle);
+          if (!partsMap.has(currentTitle)) {
+            partsMap.set(currentTitle, []);
+            order.push(currentTitle);
           }
-          let arr = partsMap.get(sectionTitle);
+          let arr = partsMap.get(currentTitle);
           for (let c of comics) {
             arr.push(c);
           }
