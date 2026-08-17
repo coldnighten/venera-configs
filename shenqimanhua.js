@@ -67,36 +67,80 @@ class ShenQiManHua extends ComicSource {
       type: "multiPartPage",
       load: async (page) => {
         let document = await this.getHtml(this.baseUrl + "/");
-        let parts = [];
 
-        let grids = document.querySelectorAll(".grid.grid-cols-3");
-        let headings = document.querySelectorAll("h1, h2");
+        let isSectionTitle = (text) => {
+          if (!text) return false;
+          if (text === "热议") return false;
+          if (/^《.+》$/.test(text)) return false;
+          return true;
+        };
 
-        let headingTexts = [];
-        for (let h of headings) {
-          let text = h.text.trim();
-          if (text) {
-            headingTexts.push(text);
+        let findPrevSectionTitle = (gridEl) => {
+          let cur = gridEl.previousSibling;
+          while (cur) {
+            if (
+              cur.tagName === "H1" ||
+              cur.tagName === "H2" ||
+              cur.tagName === "H3"
+            ) {
+              let text = (cur.text || "").trim();
+              if (isSectionTitle(text)) {
+                return text;
+              }
+            }
+            if (cur.children && cur.children.length > 0) {
+              for (let i = cur.children.length - 1; i >= 0; i--) {
+                let c = cur.children[i];
+                if (
+                  c.tagName === "H1" ||
+                  c.tagName === "H2" ||
+                  c.tagName === "H3"
+                ) {
+                  let text = (c.text || "").trim();
+                  if (isSectionTitle(text)) {
+                    return text;
+                  }
+                }
+              }
+            }
+            cur = cur.previousSibling;
           }
-        }
+          return null;
+        };
+
+        let grids = document.querySelectorAll(".grid");
+        let partsMap = new Map();
+        let order = [];
 
         for (let i = 0; i < grids.length; i++) {
           let grid = grids[i];
-          let title = headingTexts[i] || ("区块 " + (i + 1));
+          let sectionTitle = findPrevSectionTitle(grid);
+          if (!sectionTitle) continue;
+          if (sectionTitle === "热门动漫") continue;
 
           let links = grid.querySelectorAll("a[href*='/comic/']");
           let comics = [];
-
           for (let link of links) {
             let comic = this.parseComicCard(link);
             if (comic) {
               comics.push(comic);
             }
           }
+          if (comics.length === 0) continue;
 
-          if (comics.length > 0) {
-            parts.push({ title: title, comics: comics });
+          if (!partsMap.has(sectionTitle)) {
+            partsMap.set(sectionTitle, []);
+            order.push(sectionTitle);
           }
+          let arr = partsMap.get(sectionTitle);
+          for (let c of comics) {
+            arr.push(c);
+          }
+        }
+
+        let parts = [];
+        for (let title of order) {
+          parts.push({ title: title, comics: partsMap.get(title) });
         }
 
         document.dispose();
