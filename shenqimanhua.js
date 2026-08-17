@@ -132,7 +132,10 @@ class ShenQiManHua extends ComicSource {
           if (viewMoreMap[title]) {
             part.viewMore = {
               page: "category",
-              attributes: { param: viewMoreMap[title] },
+              attributes: {
+                category: title,
+                param: viewMoreMap[title],
+              },
             };
           }
           parts.push(part);
