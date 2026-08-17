@@ -3,12 +3,16 @@ class WManhuaSource extends ComicSource {
     key = "wmanhua"
     version = "1.0.3"
     minAppVersion = "1.6.0"
-    url = "https://www.wmanhua.com/"
+    url = "https://cdn.jsdelivr.net/gh/coldnighten/venera-configs@main/wmanhua.js"
+
+    get baseUrl() {
+        return "https://www.wmanhua.com/";
+    }
 
     init() {
         this.headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "Referer": this.url
+            "Referer": this.baseUrl
         }
     }
 
@@ -17,7 +21,7 @@ class WManhuaSource extends ComicSource {
             title: "W漫画",
             type: "multiPartPage",
             load: async (page) => {
-                let res = await Network.get(this.url, this.headers)
+                let res = await Network.get(this.baseUrl, this.headers)
                 if (res.status !== 200) {
                     throw `Invalid status code: ${res.status}`
                 }
@@ -110,7 +114,7 @@ class WManhuaSource extends ComicSource {
     categoryComics = {
         load: async (category, param, options, page) => {
             let tag = param || "0"
-            let url = `${this.url}sort?category=0&tag=${tag}`
+            let url = `${this.baseUrl}sort?category=0&tag=${tag}`
             if (page > 1) {
                 url = url + `&page=${page}`
             }
@@ -179,7 +183,7 @@ class WManhuaSource extends ComicSource {
 
     search = {
         load: async (keyword, options, page) => {
-            let url = `${this.url}search?query=${encodeURIComponent(keyword)}`
+            let url = `${this.baseUrl}search?query=${encodeURIComponent(keyword)}`
             if (page > 1) {
                 url = url + `&page=${page}`
             }
@@ -248,7 +252,7 @@ class WManhuaSource extends ComicSource {
 
     comic = {
         loadInfo: async (id) => {
-            let url = `${this.url}comic/${id}.html`
+            let url = `${this.baseUrl}comic/${id}.html`
             let res = await Network.get(url, this.headers)
             if (res.status !== 200) {
                 throw `Invalid status code: ${res.status}`
@@ -278,7 +282,7 @@ class WManhuaSource extends ComicSource {
                 if (cover.startsWith("//")) {
                     cover = "https:" + cover
                 } else {
-                    cover = this.url.replace(/\/$/, "") + cover
+                    cover = this.baseUrl.replace(/\/$/, "") + cover
                 }
             }
 
@@ -312,7 +316,7 @@ class WManhuaSource extends ComicSource {
 
             let chapters = new Map()
 
-            let apiUrl = `${this.url}comic/${id}`
+            let apiUrl = `${this.baseUrl}comic/${id}`
             let postHeaders = {}
             for (let k in this.headers) {
                 postHeaders[k] = this.headers[k]
@@ -400,7 +404,7 @@ class WManhuaSource extends ComicSource {
         },
 
         loadEp: async (comicId, epId) => {
-            let url = `${this.url}chapter/${epId}.html`
+            let url = `${this.baseUrl}chapter/${epId}.html`
             let res = await Network.get(url, this.headers)
             if (res.status !== 200) {
                 throw `Invalid status code: ${res.status}`
@@ -435,33 +439,7 @@ class WManhuaSource extends ComicSource {
                                 if (src.startsWith("//")) {
                                     src = "https:" + src
                                 } else if (src.startsWith("/")) {
-                                    src = this.url.replace(/\/$/, "") + src
-                                }
-                            }
-                            images.push(src)
-                        }
-                    }
-                }
-            }
-
-            if (images.length === 0) {
-                let allImgs = document.querySelectorAll("img")
-                for (let img of allImgs) {
-                    let src = img.attributes["data-src"] || img.attributes["src"] || img.attributes["data-original"] || ""
-                    if (src && 
-                        src.indexOf("loading") === -1 && 
-                        src.indexOf("/cover") === -1 && 
-                        src.indexOf("avatar") === -1 && 
-                        src.indexOf("logo") === -1 &&
-                        src.indexOf("ad") === -1 &&
-                        src.indexOf("cdnweb") === -1 &&
-                        images.indexOf(src) === -1) {
-                        if (src.match(/\.(webp|jpg|jpeg|png|bmp|gif)/i) && src.indexOf("wmanhua.com") >= 0) {
-                            if (!src.startsWith("http")) {
-                                if (src.startsWith("//")) {
-                                    src = "https:" + src
-                                } else if (src.startsWith("/")) {
-                                    src = this.url.replace(/\/$/, "") + src
+                                    src = this.baseUrl.replace(/\/$/, "") + src
                                 }
                             }
                             images.push(src)
@@ -480,7 +458,7 @@ class WManhuaSource extends ComicSource {
             return {
                 headers: {
                     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-                    "Referer": this.url
+                    "Referer": this.baseUrl
                 }
             }
         },

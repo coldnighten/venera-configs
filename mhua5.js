@@ -5,7 +5,11 @@ class Manhua5Source extends ComicSource {
     key = "mhua5"
     version = "1.1.0"
     minAppVersion = "1.6.0"
-    url = "https://www.mhua5.com/"
+    url = "https://cdn.jsdelivr.net/gh/coldnighten/venera-configs@main/mhua5.js"
+
+    get baseUrl() {
+        return "https://www.mhua5.com/";
+    }
 
     get isLogged() {
         return this.loadData("mhua5_cookie") !== null
@@ -151,7 +155,7 @@ class Manhua5Source extends ComicSource {
             title: "漫画屋",
             type: "multiPartPage",
             load: async (page) => {
-                let res = await Network.get(this.url)
+                let res = await Network.get(this.baseUrl)
 
                 if (res.status !== 200) {
                     throw `Invalid status code: ${res.status}`

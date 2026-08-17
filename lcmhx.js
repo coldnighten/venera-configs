@@ -5,7 +5,11 @@ class LcmhxSource extends ComicSource {
     key = "lcmhx"
     version = "1.0.0"
     minAppVersion = "1.6.0"
-    url = "https://www.lcmhx.cc/"
+    url = "https://cdn.jsdelivr.net/gh/coldnighten/venera-configs@main/lcmhx.js"
+
+    get baseUrl() {
+        return "https://www.lcmhx.cc/";
+    }
 
     parseComicCard(cardEl) {
         let linkEl = cardEl.querySelector('a[href^="/mc-"]')
@@ -86,7 +90,7 @@ class LcmhxSource extends ComicSource {
             title: "乐成漫画",
             type: "multiPartPage",
             load: async (page) => {
-                let res = await Network.get(this.url)
+                let res = await Network.get(this.baseUrl)
                 if (res.status !== 200) {
                     throw `Invalid status code: ${res.status}`
                 }
@@ -206,12 +210,12 @@ class LcmhxSource extends ComicSource {
         load: async (category, param, options, page) => {
             let url
             if (param) {
-                url = this.url + "mctype/" + param + "/"
+                url = this.baseUrl + "mctype/" + param + "/"
                 if (page > 1) {
                     url += "index-" + page + ".html"
                 }
             } else {
-                url = this.url
+                url = this.baseUrl
             }
 
             let res = await Network.get(url)
@@ -231,7 +235,7 @@ class LcmhxSource extends ComicSource {
 
     search = {
         load: async (keyword, options, page) => {
-            let url = this.url + "index.php?wd=" + encodeURIComponent(keyword)
+            let url = this.baseUrl + "index.php?wd=" + encodeURIComponent(keyword)
             if (page > 1) {
                 url += "&page=" + page
             }
@@ -253,7 +257,7 @@ class LcmhxSource extends ComicSource {
 
     comic = {
         loadInfo: async (id) => {
-            let url = this.url + "mc-" + id + "/"
+            let url = this.baseUrl + "mc-" + id + "/"
             let res = await Network.get(url)
             if (res.status !== 200) {
                 throw `Invalid status code: ${res.status}`
@@ -346,7 +350,7 @@ class LcmhxSource extends ComicSource {
         },
 
         loadEp: async (comicId, epId) => {
-            let url = this.url + "mc-" + comicId + "-" + epId + "/"
+            let url = this.baseUrl + "mc-" + comicId + "-" + epId + "/"
             let res = await Network.get(url)
             if (res.status !== 200) {
                 throw `Invalid status code: ${res.status}`

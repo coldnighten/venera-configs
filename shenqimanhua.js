@@ -8,7 +8,7 @@ class ShenQiManHua extends ComicSource {
 
   minAppVersion = "1.6.0";
 
-  url = "https://shenqimanhua.cc/";
+  url = "https://cdn.jsdelivr.net/gh/coldnighten/venera-configs@main/shenqimanhua.js";
 
   baseUrl = "https://shenqimanhua.cc";
 
