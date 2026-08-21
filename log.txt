@@ -1,57 +1,484 @@
 Logs
 
-error Failed to handle message: {method: load_setting, key: Komiic, setting_key: domains}
-Null check operator used on a null value
-#0      JsEngine._messageReceiver (package:venera/foundation/js_engine.dart:168)
-#1      Function._apply (dart:core-patch/function_patch.dart:11)
-#2      Function.apply (dart:core-patch/function_patch.dart:38)
-#3      _DartFunction.invoke (package:flutter_qjs/src/object.dart:35)
-#4      FlutterQjs._ensureEngine.<anonymous closure> (package:flutter_qjs/src/engine.dart:70)
-#5      channelDispacher (package:flutter_qjs/src/ffi.dart:205)
-#6      _FfiCallbackchannelDispacher (dart:ffi)
-#7      _jsEval.#ffiClosure11 (package:flutter_qjs/src/ffi.dart)
-#8      jsEval (package:flutter_qjs/src/ffi.dart:365)
-#9      FlutterQjs.evaluate (package:flutter_qjs/src/engine.dart:168)
-#10     JsEngine.runCode (package:venera/foundation/js_engine.dart:275)
-#11     ComicSourceParser.parse (package:venera/foundation/comic_source/parser.dart:98)
-#12     ComicSourceParser.createAndParse (package:venera/foundation/comic_source/parser.dart:79)
-<asynchronous suspension>
-#13     _BodyState.addSource (package:venera/pages/comic_source_page.dart:323)
-<asynchronous suspension>
-#14     _BodyState._selectFile (package:venera/pages/comic_source_page.dart:278)
-<asynchronous suspension>
- 2026-08-17 16:30:16.027419 
-JsEngine
+error Network 2026-08-21 09:43:57.261554 
+GET https://public.komiic.com/comics/4c212aca870f55a6cacda83f939dfbf2/cover.jpg
+DioException [unknown]: null
+Error: [RhttpConnectionException] Connection error. URL: https://public.komiic.com/comics/4c212aca870f55a6cacda83f939dfbf2/cover.jpg (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+null
 
-error Add comic source 2026-08-17 16:30:16.028554 
-Null check operator used on a null value
-#0      JsEngine._messageReceiver (package:venera/foundation/js_engine.dart:168)
-#1      Function._apply (dart:core-patch/function_patch.dart:11)
-#2      Function.apply (dart:core-patch/function_patch.dart:38)
-#3      _DartFunction.invoke (package:flutter_qjs/src/object.dart:35)
-#4      FlutterQjs._ensureEngine.<anonymous closure> (package:flutter_qjs/src/engine.dart:70)
-#5      channelDispacher (package:flutter_qjs/src/ffi.dart:205)
-#6      _FfiCallbackchannelDispacher (dart:ffi)
-#7      _jsEval.#ffiClosure11 (package:flutter_qjs/src/ffi.dart)
-#8      jsEval (package:flutter_qjs/src/ffi.dart:365)
-#9      FlutterQjs.evaluate (package:flutter_qjs/src/engine.dart:168)
-#10     JsEngine.runCode (package:venera/foundation/js_engine.dart:275)
-#11     ComicSourceParser.parse (package:venera/foundation/comic_source/parser.dart:98)
-#12     ComicSourceParser.createAndParse (package:venera/foundation/comic_source/parser.dart:79)
+info Network 2026-08-21 09:43:59.072479 
+POST https://komiic.cc/api/query
+headers:
+{Referer: https://komiic.cc/, User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36, Content-Type: application/json}
+data:
+{operationName: recentUpdate, variables: {pagination: {limit: 20, offset: 0, orderBy: DATE_UPDATED, status: , asc: true}}, query: query recentUpdate($pagination: Pagination!) {
+  recentUpdate(pagination: $pagination) {
+    id
+    title
+    status
+    year
+    imageUrl
+    authors {
+      id
+      name
+      __typename
+    }
+    categories {
+      id
+      name
+      __typename
+    }
+    dateUpdated
+    monthViews
+    views
+    favoriteCount
+    lastBookUpdate
+    lastChapterUpdate
+    __typename
+  }
+}}
+
+info Network 2026-08-21 09:43:59.674499 
+GET https://public.komiic.com/comics/b3eb0f58da1a8a3e22fe5bd3c114f830/cover.jpg
+headers:
+{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
+data:
+null
+
+error Network 2026-08-21 09:44:00.789665 
+GET https://public.komiic.com/comics/b3eb0f58da1a8a3e22fe5bd3c114f830/cover.jpg
+DioException [unknown]: null
+Error: [RhttpConnectionException] Connection error. URL: https://public.komiic.com/comics/b3eb0f58da1a8a3e22fe5bd3c114f830/cover.jpg (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+null
+
+error Image Loading 2026-08-21 09:44:00.790908 
+DioException [unknown]: Connection reset by peer: The error is unrelated to app, please check your network.
+Error: [RhttpConnectionException] Connection error. URL: https://public.komiic.com/comics/b3eb0f58da1a8a3e22fe5bd3c114f830/cover.jpg (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+#0      DioMixin.fetch (package:dio/src/dio_mixin.dart:523)
 <asynchronous suspension>
-#13     _BodyState.addSource (package:venera/pages/comic_source_page.dart:323)
+#1      ImageDownloader.loadThumbnail (package:venera/network/images.dart:59)
 <asynchronous suspension>
-#14     _BodyState._selectFile (package:venera/pages/comic_source_page.dart:278)
+#2      HistoryImageProvider.load (package:venera/foundation/image_provider/history_image_provider.dart:35)
+<asynchronous suspension>
+#3      BaseImageProvider._loadBufferAsync (package:venera/foundation/image_provider/base_image_provider.dart:70)
+<asynchronous suspension>
+#4      MultiFrameImageStreamCompleter._handleCodecReady (package:flutter/src/painting/image_stream.dart:1021)
 <asynchronous suspension>
 
-#0      FlutterQjs.evaluate (package:flutter_qjs/src/engine.dart:176)
-#1      JsEngine.runCode (package:venera/foundation/js_engine.dart:275)
-#2      ComicSourceParser.parse (package:venera/foundation/comic_source/parser.dart:98)
-#3      ComicSourceParser.createAndParse (package:venera/foundation/comic_source/parser.dart:79)
+
+error Unhandled Exception 2026-08-21 09:44:00.791393 
+DioException [unknown]: Connection reset by peer: The error is unrelated to app, please check your network.
+Error: [RhttpConnectionException] Connection error. URL: https://public.komiic.com/comics/b3eb0f58da1a8a3e22fe5bd3c114f830/cover.jpg (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+#0      DioMixin.fetch (package:dio/src/dio_mixin.dart:523)
 <asynchronous suspension>
-#4      _BodyState.addSource (package:venera/pages/comic_source_page.dart:323)
+#1      ImageDownloader.loadThumbnail (package:venera/network/images.dart:59)
 <asynchronous suspension>
-#5      _BodyState._selectFile (package:venera/pages/comic_source_page.dart:278)
+#2      HistoryImageProvider.load (package:venera/foundation/image_provider/history_image_provider.dart:35)
+<asynchronous suspension>
+#3      BaseImageProvider._loadBufferAsync (package:venera/foundation/image_provider/base_image_provider.dart:70)
+<asynchronous suspension>
+#4      MultiFrameImageStreamCompleter._handleCodecReady (package:flutter/src/painting/image_stream.dart:1021)
+<asynchronous suspension>
+
+
+info Network 2026-08-21 09:44:01.328445 
+Response https://komiic.cc/api/query 200
+headers:
+{access-control-allow-origin: *, alt-svc: h3=":443"; ma=2592000, cf-cache-status: DYNAMIC, cf-ray: a2e5f3406c2609e4-HKG, www-authenticate: JWT realm=prod zone, content-type: application/json; charset=utf-8, date: Fri, 21 Aug 2026 01:44:01 GMT, nel: {"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}, report-to: {"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=4Mt%2B67IPKEMK4ArgRZO3m9jVPsUyHmowUK8Gf0s9rxyqROSFDVr1oJkKQpwMMH5Hbh9Q1Kj7rEFVjQDHR8EoVjg6CA4%2BY5H1TQe9TJsuaBuQbkUq%2Bh63sISyR0Y%3D"}]}, server: cloudflare, vary: Origin, via: 2.0 Caddy}
+{"data":{"recentUpdate":[{"id":"9619","title":"櫻Trick","status":"ONGOING","year":2011,"imageUrl":"https://public.komiic.com/comics/82701006010e21ab18da62274c51ecf0/cover.webp","authors":[{"id":"4586","name":"タチ","__typename":"Author"}],"categories":[{"id":"1","name":"愛情","__typename":"Category"},{"id":"5","name":"搞笑","__typename":"Category"},{"id":"78","name":"日常","__typename":"Category"},{"id":"4","name":"校園","__typename":"Category"},{"id":"18","name":"百合","__typename":"Category"}],"dateUpdated":"2026-08-20T23:39:41Z","monthViews":267,"views":267,"favoriteCount":20,"lastBookUpdate":"","lastChapterUpdate":"18","__typename":"Comic"},{"id":"9616","title":"魔女的執行人","status":"END","year":2023,"imageUrl":"https://public.komiic.com/comics/c728fef5e123633e312fd1bff126f6af/cover.webp","authors":[{"id":"8404","name":"紅木春","__typename":"Author"}],"categories":[{"id":"8","name":"冒險","__typename":"Category"},{"id":"7","name":"懸疑","__typename":"Category"},{"id":"54","name":"戰鬥","__typename":"Category"},{"id":"11","name":"魔幻","__typename":"Category"},{"id":"12","name":"魔法","__typename":"Category"}],"dateUpdated":"2026-08-20T22:46:32Z","monthViews":192,"views":192,"favoriteCount":4,"lastBookUpdate":"","lastChapterUpdate":"6.2","__typename":"Comic"},{"id":"9617","title":"滾球王","status":"ONGOING","year":1998,"imageUrl":"https://public.komiic.com/comics/75a7489e419a0fb02ad4c6d8942c0e93/cover.webp","authors":[{"id":"8405","name":"任紅","__typename":"Author"}],"categories":[{"id":"21","name":"熱血","__typename":"Category"},{"id":"22","name":"競技","__typename":"Category"},{"id":"40","name":"體育","__typename":"Category"}],"dateUpdated":"2026-08-20T22:00:58Z","monthViews":97,"views":97,"favoriteCount":1,"lastBookUpdate":"24","lastChapterUpdate":"","__typename":"Comic"},{"id":"9618","title":"(C108)我其實、只是想將你妝點","status":"END","year":2026,"imageUrl":"https://public.komiic.com/comics/2db242c6f46cfea0de5545aac3f5c4f2/cover.webp","authors":[{"id":"8406","name":"水草ぱん","__typename":"Author"},{"id":"7893","name":"竹嶋えく","__typename":"Author"}],"categories":[{"id":"1","name":"愛情","__typename":"Category"},{"id":"78","name":"日常","__typename":"Category"},{"id":"18","name":"百合","__typename":"Category"}],"dateUpdated":"2026-08-20T21:35:48Z","monthViews":559,"views":559,"favoriteCount":26,"lastBookUpdate":"","lastChapterUpdate":"00","__typename":"...
+
+error Network 2026-08-21 09:44:01.332260 
+TypeError: cannot read property 'imageBaseUrl' of undefined
+    at parseComic (Komiic:160:39)
+    at map (native)
+    at queryComics (Komiic:168:50)
+
+
+
+info Network 2026-08-21 09:44:02.931178 
+GET https://public.komiic.com/comics/d65563abe3ab879156a32bfdd582fd3f/cover.jpg
+headers:
+{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
+data:
+null
+
+info Network 2026-08-21 09:44:02.933369 
+GET https://public.komiic.com/comics/b86bcfe0ebc30185a9fe26b305d524d0/cover.jpg
+headers:
+{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
+data:
+null
+
+info Network 2026-08-21 09:44:02.940775 
+GET https://public.komiic.com/comics/a11ba863fef13924f6893272bd78ed1b/cover.jpg
+headers:
+{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
+data:
+null
+
+info Network 2026-08-21 09:44:02.942731 
+GET https://public.komiic.com/comics/45847ab339a0767e6d79e8221a967d05/cover.jpg
+headers:
+{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
+data:
+null
+
+info Network 2026-08-21 09:44:02.944275 
+GET https://public.komiic.com/comics/dbd0dee63fad0f43374347cf5bfe4863/cover.jpg
+headers:
+{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
+data:
+null
+
+error Network 2026-08-21 09:44:02.997174 
+GET https://public.komiic.com/comics/45847ab339a0767e6d79e8221a967d05/cover.jpg
+DioException [unknown]: null
+Error: [RhttpConnectionException] Connection error. URL: https://public.komiic.com/comics/45847ab339a0767e6d79e8221a967d05/cover.jpg (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+null
+
+error Image Loading 2026-08-21 09:44:03.000310 
+DioException [unknown]: Connection reset by peer: The error is unrelated to app, please check your network.
+Error: [RhttpConnectionException] Connection error. URL: https://public.komiic.com/comics/45847ab339a0767e6d79e8221a967d05/cover.jpg (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+#0      DioMixin.fetch (package:dio/src/dio_mixin.dart:523)
+<asynchronous suspension>
+#1      ImageDownloader.loadThumbnail (package:venera/network/images.dart:59)
+<asynchronous suspension>
+#2      CachedImageProvider.load (package:venera/foundation/image_provider/cached_image.dart:50)
+<asynchronous suspension>
+#3      BaseImageProvider._loadBufferAsync (package:venera/foundation/image_provider/base_image_provider.dart:70)
+<asynchronous suspension>
+#4      MultiFrameImageStreamCompleter._handleCodecReady (package:flutter/src/painting/image_stream.dart:1021)
+<asynchronous suspension>
+
+
+error Unhandled Exception 2026-08-21 09:44:03.002109 
+DioException [unknown]: Connection reset by peer: The error is unrelated to app, please check your network.
+Error: [RhttpConnectionException] Connection error. URL: https://public.komiic.com/comics/45847ab339a0767e6d79e8221a967d05/cover.jpg (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+#0      DioMixin.fetch (package:dio/src/dio_mixin.dart:523)
+<asynchronous suspension>
+#1      ImageDownloader.loadThumbnail (package:venera/network/images.dart:59)
+<asynchronous suspension>
+#2      CachedImageProvider.load (package:venera/foundation/image_provider/cached_image.dart:50)
+<asynchronous suspension>
+#3      BaseImageProvider._loadBufferAsync (package:venera/foundation/image_provider/base_image_provider.dart:70)
+<asynchronous suspension>
+#4      MultiFrameImageStreamCompleter._handleCodecReady (package:flutter/src/painting/image_stream.dart:1021)
+<asynchronous suspension>
+
+
+error Network 2026-08-21 09:44:03.003508 
+GET https://public.komiic.com/comics/d65563abe3ab879156a32bfdd582fd3f/cover.jpg
+DioException [unknown]: null
+Error: [RhttpConnectionException] Connection error. URL: https://public.komiic.com/comics/d65563abe3ab879156a32bfdd582fd3f/cover.jpg (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+null
+
+error Image Loading 2026-08-21 09:44:03.006248 
+DioException [unknown]: Connection reset by peer: The error is unrelated to app, please check your network.
+Error: [RhttpConnectionException] Connection error. URL: https://public.komiic.com/comics/d65563abe3ab879156a32bfdd582fd3f/cover.jpg (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+#0      DioMixin.fetch (package:dio/src/dio_mixin.dart:523)
+<asynchronous suspension>
+#1      ImageDownloader.loadThumbnail (package:venera/network/images.dart:59)
+<asynchronous suspension>
+#2      CachedImageProvider.load (package:venera/foundation/image_provider/cached_image.dart:50)
+<asynchronous suspension>
+#3      BaseImageProvider._loadBufferAsync (package:venera/foundation/image_provider/base_image_provider.dart:70)
+<asynchronous suspension>
+#4      MultiFrameImageStreamCompleter._handleCodecReady (package:flutter/src/painting/image_stream.dart:1021)
+<asynchronous suspension>
+
+
+error Unhandled Exception 2026-08-21 09:44:03.007771 
+DioException [unknown]: Connection reset by peer: The error is unrelated to app, please check your network.
+Error: [RhttpConnectionException] Connection error. URL: https://public.komiic.com/comics/d65563abe3ab879156a32bfdd582fd3f/cover.jpg (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+#0      DioMixin.fetch (package:dio/src/dio_mixin.dart:523)
+<asynchronous suspension>
+#1      ImageDownloader.loadThumbnail (package:venera/network/images.dart:59)
+<asynchronous suspension>
+#2      CachedImageProvider.load (package:venera/foundation/image_provider/cached_image.dart:50)
+<asynchronous suspension>
+#3      BaseImageProvider._loadBufferAsync (package:venera/foundation/image_provider/base_image_provider.dart:70)
+<asynchronous suspension>
+#4      MultiFrameImageStreamCompleter._handleCodecReady (package:flutter/src/painting/image_stream.dart:1021)
+<asynchronous suspension>
+
+
+error Network 2026-08-21 09:44:03.008672 
+GET https://public.komiic.com/comics/a11ba863fef13924f6893272bd78ed1b/cover.jpg
+DioException [unknown]: null
+Error: [RhttpConnectionException] Connection error. URL: https://public.komiic.com/comics/a11ba863fef13924f6893272bd78ed1b/cover.jpg (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+null
+
+error Image Loading 2026-08-21 09:44:03.010716 
+DioException [unknown]: Connection reset by peer: The error is unrelated to app, please check your network.
+Error: [RhttpConnectionException] Connection error. URL: https://public.komiic.com/comics/a11ba863fef13924f6893272bd78ed1b/cover.jpg (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+#0      DioMixin.fetch (package:dio/src/dio_mixin.dart:523)
+<asynchronous suspension>
+#1      ImageDownloader.loadThumbnail (package:venera/network/images.dart:59)
+<asynchronous suspension>
+#2      CachedImageProvider.load (package:venera/foundation/image_provider/cached_image.dart:50)
+<asynchronous suspension>
+#3      BaseImageProvider._loadBufferAsync (package:venera/foundation/image_provider/base_image_provider.dart:70)
+<asynchronous suspension>
+#4      MultiFrameImageStreamCompleter._handleCodecReady (package:flutter/src/painting/image_stream.dart:1021)
+<asynchronous suspension>
+
+
+error Unhandled Exception 2026-08-21 09:44:03.012810 
+DioException [unknown]: Connection reset by peer: The error is unrelated to app, please check your network.
+Error: [RhttpConnectionException] Connection error. URL: https://public.komiic.com/comics/a11ba863fef13924f6893272bd78ed1b/cover.jpg (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+#0      DioMixin.fetch (package:dio/src/dio_mixin.dart:523)
+<asynchronous suspension>
+#1      ImageDownloader.loadThumbnail (package:venera/network/images.dart:59)
+<asynchronous suspension>
+#2      CachedImageProvider.load (package:venera/foundation/image_provider/cached_image.dart:50)
+<asynchronous suspension>
+#3      BaseImageProvider._loadBufferAsync (package:venera/foundation/image_provider/base_image_provider.dart:70)
+<asynchronous suspension>
+#4      MultiFrameImageStreamCompleter._handleCodecReady (package:flutter/src/painting/image_stream.dart:1021)
+<asynchronous suspension>
+
+
+error Network 2026-08-21 09:44:03.013847 
+GET https://public.komiic.com/comics/b86bcfe0ebc30185a9fe26b305d524d0/cover.jpg
+DioException [unknown]: null
+Error: [RhttpConnectionException] Connection error. URL: https://public.komiic.com/comics/b86bcfe0ebc30185a9fe26b305d524d0/cover.jpg (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+null
+
+error Image Loading 2026-08-21 09:44:03.016741 
+DioException [unknown]: Connection reset by peer: The error is unrelated to app, please check your network.
+Error: [RhttpConnectionException] Connection error. URL: https://public.komiic.com/comics/b86bcfe0ebc30185a9fe26b305d524d0/cover.jpg (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+#0      DioMixin.fetch (package:dio/src/dio_mixin.dart:523)
+<asynchronous suspension>
+#1      ImageDownloader.loadThumbnail (package:venera/network/images.dart:59)
+<asynchronous suspension>
+#2      CachedImageProvider.load (package:venera/foundation/image_provider/cached_image.dart:50)
+<asynchronous suspension>
+#3      BaseImageProvider._loadBufferAsync (package:venera/foundation/image_provider/base_image_provider.dart:70)
+<asynchronous suspension>
+#4      MultiFrameImageStreamCompleter._handleCodecReady (package:flutter/src/painting/image_stream.dart:1021)
+<asynchronous suspension>
+
+
+error Unhandled Exception 2026-08-21 09:44:03.018193 
+DioException [unknown]: Connection reset by peer: The error is unrelated to app, please check your network.
+Error: [RhttpConnectionException] Connection error. URL: https://public.komiic.com/comics/b86bcfe0ebc30185a9fe26b305d524d0/cover.jpg (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+#0      DioMixin.fetch (package:dio/src/dio_mixin.dart:523)
+<asynchronous suspension>
+#1      ImageDownloader.loadThumbnail (package:venera/network/images.dart:59)
+<asynchronous suspension>
+#2      CachedImageProvider.load (package:venera/foundation/image_provider/cached_image.dart:50)
+<asynchronous suspension>
+#3      BaseImageProvider._loadBufferAsync (package:venera/foundation/image_provider/base_image_provider.dart:70)
+<asynchronous suspension>
+#4      MultiFrameImageStreamCompleter._handleCodecReady (package:flutter/src/painting/image_stream.dart:1021)
+<asynchronous suspension>
+
+
+error Network 2026-08-21 09:44:03.145491 
+GET https://public.komiic.com/comics/dbd0dee63fad0f43374347cf5bfe4863/cover.jpg
+DioException [unknown]: null
+Error: [RhttpConnectionException] Connection error. URL: https://public.komiic.com/comics/dbd0dee63fad0f43374347cf5bfe4863/cover.jpg (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+null
+
+error Image Loading 2026-08-21 09:44:03.147692 
+DioException [unknown]: Connection reset by peer: The error is unrelated to app, please check your network.
+Error: [RhttpConnectionException] Connection error. URL: https://public.komiic.com/comics/dbd0dee63fad0f43374347cf5bfe4863/cover.jpg (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+#0      DioMixin.fetch (package:dio/src/dio_mixin.dart:523)
+<asynchronous suspension>
+#1      ImageDownloader.loadThumbnail (package:venera/network/images.dart:59)
+<asynchronous suspension>
+#2      CachedImageProvider.load (package:venera/foundation/image_provider/cached_image.dart:50)
+<asynchronous suspension>
+#3      BaseImageProvider._loadBufferAsync (package:venera/foundation/image_provider/base_image_provider.dart:70)
+<asynchronous suspension>
+#4      MultiFrameImageStreamCompleter._handleCodecReady (package:flutter/src/painting/image_stream.dart:1021)
+<asynchronous suspension>
+
+
+error Unhandled Exception 2026-08-21 09:44:03.148996 
+DioException [unknown]: Connection reset by peer: The error is unrelated to app, please check your network.
+Error: [RhttpConnectionException] Connection error. URL: https://public.komiic.com/comics/dbd0dee63fad0f43374347cf5bfe4863/cover.jpg (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+#0      DioMixin.fetch (package:dio/src/dio_mixin.dart:523)
+<asynchronous suspension>
+#1      ImageDownloader.loadThumbnail (package:venera/network/images.dart:59)
+<asynchronous suspension>
+#2      CachedImageProvider.load (package:venera/foundation/image_provider/cached_image.dart:50)
+<asynchronous suspension>
+#3      BaseImageProvider._loadBufferAsync (package:venera/foundation/image_provider/base_image_provider.dart:70)
+<asynchronous suspension>
+#4      MultiFrameImageStreamCompleter._handleCodecReady (package:flutter/src/painting/image_stream.dart:1021)
+<asynchronous suspension>
+
+
+info Network 2026-08-21 09:44:03.320718 
+GET https://public.komiic.com/comics/3dcad2331aa1c93ce41f3eb37e596dd2/cover.jpg
+headers:
+{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
+data:
+null
+
+error Network 2026-08-21 09:44:03.399885 
+GET https://public.komiic.com/comics/3dcad2331aa1c93ce41f3eb37e596dd2/cover.jpg
+DioException [unknown]: null
+Error: [RhttpConnectionException] Connection error. URL: https://public.komiic.com/comics/3dcad2331aa1c93ce41f3eb37e596dd2/cover.jpg (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+null
+
+error Image Loading 2026-08-21 09:44:03.400132 
+DioException [unknown]: Connection reset by peer: The error is unrelated to app, please check your network.
+Error: [RhttpConnectionException] Connection error. URL: https://public.komiic.com/comics/3dcad2331aa1c93ce41f3eb37e596dd2/cover.jpg (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+#0      DioMixin.fetch (package:dio/src/dio_mixin.dart:523)
+<asynchronous suspension>
+#1      ImageDownloader.loadThumbnail (package:venera/network/images.dart:59)
+<asynchronous suspension>
+#2      CachedImageProvider.load (package:venera/foundation/image_provider/cached_image.dart:50)
+<asynchronous suspension>
+#3      BaseImageProvider._loadBufferAsync (package:venera/foundation/image_provider/base_image_provider.dart:70)
+<asynchronous suspension>
+#4      MultiFrameImageStreamCompleter._handleCodecReady (package:flutter/src/painting/image_stream.dart:1021)
+<asynchronous suspension>
+
+
+error Unhandled Exception 2026-08-21 09:44:03.400198 
+DioException [unknown]: Connection reset by peer: The error is unrelated to app, please check your network.
+Error: [RhttpConnectionException] Connection error. URL: https://public.komiic.com/comics/3dcad2331aa1c93ce41f3eb37e596dd2/cover.jpg (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+#0      DioMixin.fetch (package:dio/src/dio_mixin.dart:523)
+<asynchronous suspension>
+#1      ImageDownloader.loadThumbnail (package:venera/network/images.dart:59)
+<asynchronous suspension>
+#2      CachedImageProvider.load (package:venera/foundation/image_provider/cached_image.dart:50)
+<asynchronous suspension>
+#3      BaseImageProvider._loadBufferAsync (package:venera/foundation/image_provider/base_image_provider.dart:70)
+<asynchronous suspension>
+#4      MultiFrameImageStreamCompleter._handleCodecReady (package:flutter/src/painting/image_stream.dart:1021)
+<asynchronous suspension>
+
+
+info Network 2026-08-21 09:44:04.009967 
+GET https://public.komiic.com/comics/cd0d98741672527faace3157110df86b/cover.jpg
+headers:
+{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
+data:
+null
+
+error Network 2026-08-21 09:44:04.055026 
+GET https://public.komiic.com/comics/cd0d98741672527faace3157110df86b/cover.jpg
+DioException [unknown]: null
+Error: [RhttpConnectionException] Connection error. URL: https://public.komiic.com/comics/cd0d98741672527faace3157110df86b/cover.jpg (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+null
+
+error Image Loading 2026-08-21 09:44:04.055319 
+DioException [unknown]: Connection reset by peer: The error is unrelated to app, please check your network.
+Error: [RhttpConnectionException] Connection error. URL: https://public.komiic.com/comics/cd0d98741672527faace3157110df86b/cover.jpg (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+#0      DioMixin.fetch (package:dio/src/dio_mixin.dart:523)
+<asynchronous suspension>
+#1      ImageDownloader.loadThumbnail (package:venera/network/images.dart:59)
+<asynchronous suspension>
+#2      HistoryImageProvider.load (package:venera/foundation/image_provider/history_image_provider.dart:35)
+<asynchronous suspension>
+#3      BaseImageProvider._loadBufferAsync (package:venera/foundation/image_provider/base_image_provider.dart:70)
+<asynchronous suspension>
+#4      MultiFrameImageStreamCompleter._handleCodecReady (package:flutter/src/painting/image_stream.dart:1021)
+<asynchronous suspension>
+
+
+error Unhandled Exception 2026-08-21 09:44:04.055414 
+DioException [unknown]: Connection reset by peer: The error is unrelated to app, please check your network.
+Error: [RhttpConnectionException] Connection error. URL: https://public.komiic.com/comics/cd0d98741672527faace3157110df86b/cover.jpg (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+#0      DioMixin.fetch (package:dio/src/dio_mixin.dart:523)
+<asynchronous suspension>
+#1      ImageDownloader.loadThumbnail (package:venera/network/images.dart:59)
+<asynchronous suspension>
+#2      HistoryImageProvider.load (package:venera/foundation/image_provider/history_image_provider.dart:35)
+<asynchronous suspension>
+#3      BaseImageProvider._loadBufferAsync (package:venera/foundation/image_provider/base_image_provider.dart:70)
+<asynchronous suspension>
+#4      MultiFrameImageStreamCompleter._handleCodecReady (package:flutter/src/painting/image_stream.dart:1021)
+<asynchronous suspension>
+
+
+info Network 2026-08-21 09:44:04.756227 
+GET https://public.komiic.com/comics/cd0d98741672527faace3157110df86b/cover.jpg
+headers:
+{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
+data:
+null
+
+error Network 2026-08-21 09:44:04.807439 
+GET https://public.komiic.com/comics/cd0d98741672527faace3157110df86b/cover.jpg
+DioException [unknown]: null
+Error: [RhttpConnectionException] Connection error. URL: https://public.komiic.com/comics/cd0d98741672527faace3157110df86b/cover.jpg (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+null
+
+error Image Loading 2026-08-21 09:44:04.807812 
+DioException [unknown]: Connection reset by peer: The error is unrelated to app, please check your network.
+Error: [RhttpConnectionException] Connection error. URL: https://public.komiic.com/comics/cd0d98741672527faace3157110df86b/cover.jpg (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+#0      DioMixin.fetch (package:dio/src/dio_mixin.dart:523)
+<asynchronous suspension>
+#1      ImageDownloader.loadThumbnail (package:venera/network/images.dart:59)
+<asynchronous suspension>
+#2      CachedImageProvider.load (package:venera/foundation/image_provider/cached_image.dart:50)
+<asynchronous suspension>
+#3      BaseImageProvider._loadBufferAsync (package:venera/foundation/image_provider/base_image_provider.dart:70)
+<asynchronous suspension>
+#4      MultiFrameImageStreamCompleter._handleCodecReady (package:flutter/src/painting/image_stream.dart:1021)
+<asynchronous suspension>
+
+
+error Unhandled Exception 2026-08-21 09:44:04.807985 
+DioException [unknown]: Connection reset by peer: The error is unrelated to app, please check your network.
+Error: [RhttpConnectionException] Connection error. URL: https://public.komiic.com/comics/cd0d98741672527faace3157110df86b/cover.jpg (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+#0      DioMixin.fetch (package:dio/src/dio_mixin.dart:523)
+<asynchronous suspension>
+#1      ImageDownloader.loadThumbnail (package:venera/network/images.dart:59)
+<asynchronous suspension>
+#2      CachedImageProvider.load (package:venera/foundation/image_provider/cached_image.dart:50)
+<asynchronous suspension>
+#3      BaseImageProvider._loadBufferAsync (package:venera/foundation/image_provider/base_image_provider.dart:70)
+<asynchronous suspension>
+#4      MultiFrameImageStreamCompleter._handleCodecReady (package:flutter/src/painting/image_stream.dart:1021)
+<asynchronous suspension>
+
+
+info Network 2026-08-21 09:44:05.265215 
+GET https://public.komiic.com/comics/4c212aca870f55a6cacda83f939dfbf2/cover.jpg
+headers:
+{user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36}
+data:
+null
+
+error Network 2026-08-21 09:44:05.644545 
+GET https://public.komiic.com/comics/4c212aca870f55a6cacda83f939dfbf2/cover.jpg
+DioException [unknown]: null
+Error: [RhttpConnectionException] Connection error. URL: https://public.komiic.com/comics/4c212aca870f55a6cacda83f939dfbf2/cover.jpg (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+null
+
+error Image Loading 2026-08-21 09:44:05.645037 
+DioException [unknown]: Connection reset by peer: The error is unrelated to app, please check your network.
+Error: [RhttpConnectionException] Connection error. URL: https://public.komiic.com/comics/4c212aca870f55a6cacda83f939dfbf2/cover.jpg (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+#0      DioMixin.fetch (package:dio/src/dio_mixin.dart:523)
+<asynchronous suspension>
+#1      ImageDownloader.loadThumbnail (package:venera/network/images.dart:59)
+<asynchronous suspension>
+#2      CachedImageProvider.load (package:venera/foundation/image_provider/cached_image.dart:50)
+<asynchronous suspension>
+#3      BaseImageProvider._loadBufferAsync (package:venera/foundation/image_provider/base_image_provider.dart:70)
+<asynchronous suspension>
+#4      MultiFrameImageStreamCompleter._handleCodecReady (package:flutter/src/painting/image_stream.dart:1021)
+<asynchronous suspension>
+
+
+error Unhandled Exception 2026-08-21 09:44:05.645266 
+DioException [unknown]: Connection reset by peer: The error is unrelated to app, please check your network.
+Error: [RhttpConnectionException] Connection error. URL: https://public.komiic.com/comics/4c212aca870f55a6cacda83f939dfbf2/cover.jpg (hyper_util::client::legacy::Error(Connect, Custom { kind: Other, error: Os { code: 104, kind: ConnectionReset, message: "Connection reset by peer" } }))
+#0      DioMixin.fetch (package:dio/src/dio_mixin.dart:523)
+<asynchronous suspension>
+#1      ImageDownloader.loadThumbnail (package:venera/network/images.dart:59)
+<asynchronous suspension>
+#2      CachedImageProvider.load (package:venera/foundation/image_provider/cached_image.dart:50)
+<asynchronous suspension>
+#3      BaseImageProvider._loadBufferAsync (package:venera/foundation/image_provider/base_image_provider.dart:70)
+<asynchronous suspension>
+#4      MultiFrameImageStreamCompleter._handleCodecReady (package:flutter/src/painting/image_stream.dart:1021)
 <asynchronous suspension>
 
 
