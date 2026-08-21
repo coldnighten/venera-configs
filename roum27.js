@@ -11,7 +11,7 @@ class Roum27Source extends ComicSource {
         domains: {
             title: "自定义域名",
             type: "input",
-            default: "rouman28.xyz"
+            default: "roum28.xyz"
         },
         permanentDomain: {
             title: "永久域名",
