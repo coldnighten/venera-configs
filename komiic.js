@@ -121,7 +121,7 @@ class Komiic extends ComicSource {
         let operationName = query["operationName"]
         let json = await this.queryJson(query)
 
-        function parseComic(comic) {
+        let parseComic = (comic) => {
             let author = ''
             if (comic.authors.length > 0) {
                 author = comic.authors[0].name
@@ -319,7 +319,7 @@ class Komiic extends ComicSource {
         load: async (keyword, options, page) => {
             let json = await this.queryJson({ "operationName": "searchComicAndAuthorQuery", "variables": { "keyword": keyword }, "query": "query searchComicAndAuthorQuery($keyword: String!) {\n  searchComicsAndAuthors(keyword: $keyword) {\n    comics {\n      id\n      title\n      status\n      year\n      imageUrl\n      authors {\n        id\n        name\n        __typename\n      }\n      categories {\n        id\n        name\n        __typename\n      }\n      dateUpdated\n      monthViews\n      views\n      favoriteCount\n      lastBookUpdate\n      lastChapterUpdate\n      __typename\n    }\n    authors {\n      id\n      name\n      chName\n      enName\n      wikiLink\n      comicCount\n      views\n      __typename\n    }\n    __typename\n  }\n}" })
 
-            function parseComic(comic) {
+            let parseComic = (comic) => {
                 let author = ''
                 if (comic.authors.length > 0) {
                     author = comic.authors[0].name
