@@ -73,6 +73,11 @@ class Komiic extends ComicSource {
         return `https://${this.loadSetting("domains") || this.settings.domains.default}/`;
     }
 
+    get imageBaseUrl() {
+        const domain = this.loadSetting("domains") || this.settings.domains.default;
+        return `https://public.${domain}/`;
+    }
+
     get headers() {
         let token = this.loadData('token')
         let headers = {
@@ -152,7 +157,7 @@ class Komiic extends ComicSource {
                 id: comic.id,
                 title: comic.title,
                 subTitle: author,
-                cover: comic.imageUrl,
+                cover: comic.imageUrl.replace("https://public.komiic.com/", this.imageBaseUrl),
                 tags: tags,
                 description: description,
                 updateTime: formatedTime
@@ -349,7 +354,7 @@ class Komiic extends ComicSource {
                     id: comic.id,
                     title: comic.title,
                     subTitle: author,
-                    cover: comic.imageUrl,
+                    cover: comic.imageUrl.replace("https://public.komiic.com/", this.imageBaseUrl),
                     tags: tags,
                     description: description
                 }
