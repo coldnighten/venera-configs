@@ -4,13 +4,23 @@ class ShenQiManHua extends ComicSource {
 
   key = "shenqimanhua";
 
-  version = "1.1.0";
+  version = "1.1.1";
 
   minAppVersion = "1.6.0";
 
   url = "https://cdn.jsdelivr.net/gh/coldnighten/venera-configs@main/shenqimanhua.js";
 
-  baseUrl = "https://shenqimanhua.cc";
+  settings = {
+    domains: {
+      title: "自定义域名",
+      type: "input",
+      default: "shenqimanhua.net"
+    }
+  };
+
+  get baseUrl() {
+    return `https://${this.loadSetting("domains") || this.settings.domains.default}`;
+  }
 
   async getHtml(url) {
     let headers = {
@@ -418,7 +428,7 @@ class ShenQiManHua extends ComicSource {
     onImageLoad: (url, comicId, epId) => {
       return {
         headers: {
-          "Referer": "https://shenqimanhua.cc/",
+          "Referer": `${this.baseUrl}/`,
           "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
         }
       };
