@@ -136,6 +136,47 @@ function parseComicList(doc) {
 }
 
 /**
+ * Parse comic list from the ranking page (table layout, no cover images)
+ * Rank page renders comics in a <table>; each row links to /cn/comics/{id}
+ * but contains no <img> cover, so parseComicList (which requires an img)
+ * would return empty. Title comes from the link text, cover uses CDN fallback.
+ * @param {HtmlDocument} doc
+ * @returns {Comic[]}
+ */
+function parseRankList(doc) {
+    const links = doc.querySelectorAll("a[href*='/cn/comics/']");
+    const comics = [];
+    const seen = new Set();
+
+    links.forEach((a) => {
+        const href = a.attributes["href"] || "";
+        const match = /\/cn\/comics\/(\d+)/.exec(href);
+        if (!match) return;
+        const id = match[1];
+        if (seen.has(id)) return;
+
+        // Title from link text (rank page has no img alt)
+        const title = (a.text || "").trim() || id;
+        if (!title) return;
+
+        // Cover: rank page has no cover images, use CDN fallback
+        const cover = CDN_URL + "/comics/" + id + ".jpg";
+
+        seen.add(id);
+        comics.push(
+            new Comic({
+                id: id,
+                title: title,
+                cover: cover,
+                language: "zh-Hans",
+            })
+        );
+    });
+
+    return comics;
+}
+
+/**
  * Extract max page number from pagination links in raw HTML
  * @param {string} html
  * @returns {number}
@@ -177,7 +218,7 @@ class MyComic extends ComicSource {
 
     key = "mycomic";
 
-    version = "1.1.0";
+    version = "1.2.0";
 
     minAppVersion = "1.4.6";
 
@@ -276,6 +317,7 @@ class MyComic extends ComicSource {
                 const doc = new HtmlDocument(resp.body);
                 const comics = parseComicList(doc);
                 const maxPage = parseMaxPage(resp.body);
+                doc.dispose();
                 return { comics, maxPage };
             },
         },
@@ -290,6 +332,7 @@ class MyComic extends ComicSource {
                 const doc = new HtmlDocument(resp.body);
                 const comics = parseComicList(doc);
                 const maxPage = parseMaxPage(resp.body);
+                doc.dispose();
                 return { comics, maxPage };
             },
         },
@@ -304,6 +347,7 @@ class MyComic extends ComicSource {
                 const doc = new HtmlDocument(resp.body);
                 const comics = parseComicList(doc);
                 const maxPage = parseMaxPage(resp.body);
+                doc.dispose();
                 return { comics, maxPage };
             },
         },
@@ -436,24 +480,34 @@ class MyComic extends ComicSource {
 
         ranking: {
             options: [
-                "-views-历史排行",
-                "-week-週排行",
-                "-month-月排行",
+                "day-日排行",
+                "week-週排行",
+                "month-月排行",
+                "views-历史排行",
             ],
             load: async (option, page) => {
                 if (!page) page = 1;
-                const sort = option || "-views";
+                // Option values omit the leading "-" to avoid clashing with
+                // the "value-label" option delimiter. Re-add it here.
+                // "day" maps to no sort param (the site's default daily rank).
+                let sort = "";
+                if (option && option !== "day") {
+                    sort = "-" + option;
+                }
+                const query = sort ? "?sort=" + sort : "";
                 const url =
                     BASE_URL +
-                    "/rank?sort=" +
-                    sort +
-                    (page > 1 ? "&page=" + page : "");
+                    "/rank" +
+                    query +
+                    (page > 1 ? (query ? "&" : "?") + "page=" + page : "");
                 const resp = await fetchWithCFCheck(url);
                 if (resp.status !== 200) throw "HTTP " + resp.status;
 
                 const doc = new HtmlDocument(resp.body);
-                const comics = parseComicList(doc);
+                // Rank page uses a table layout without cover images
+                const comics = parseRankList(doc);
                 const maxPage = parseMaxPage(resp.body);
+                doc.dispose();
 
                 return { comics, maxPage };
             },
@@ -594,6 +648,8 @@ class MyComic extends ComicSource {
                 }
             }
 
+            doc.dispose();
+
             return new ComicDetails({
                 title: title,
                 cover: cover,
@@ -644,6 +700,8 @@ class MyComic extends ComicSource {
                     }
                 });
             }
+
+            doc.dispose();
 
             return { images: images };
         },
