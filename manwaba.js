@@ -8,7 +8,7 @@ class ManWaBa extends ComicSource {
   // unique id of the source
   key = "manwaba";
 
-  version = "1.0.3";
+  version = "1.0.4";
 
   minAppVersion = "1.4.0";
 
@@ -16,7 +16,7 @@ class ManWaBa extends ComicSource {
   url = "https://cdn.jsdelivr.net/gh/coldnighten/venera-configs@main/manwaba.js";
 
   //修改域名不能用问题
-  api = "https://mwuu.cc/api";
+  api = "https://manwaxu.cc/api";
 
   init() {
     /**
@@ -389,21 +389,13 @@ class ManWaBa extends ComicSource {
      */
     loadEp: async (comicId, epId) => {
       let imgApi = `${this.api}/comic/image/${epId}`;
-      let params = {
-        page: 1,
-        pageSize: 1,
-        imageSource: "https://tu.mhttu.cc",
-      };
-      let pageNum = await this.fetchJson(imgApi, {
-        params,
-      }).then((res) => res.data.pagination.total);
-      let imageRes = await this.fetchJson(imgApi, {
-        params: {
-          ...params,
-          page_size: pageNum,
-        },
-      }).then((res) => res.data.images);
-      let images = imageRes.map((item) => item.url);
+      // The image API returns all images of a chapter in one response;
+      // there is no `pagination` field inside `data`, so a single request
+      // is enough. Keep imageSource for compatibility with the old CDN.
+      let res = await this.fetchJson(imgApi, {
+        params: { imageSource: "https://tu.mhttu.cc" },
+      });
+      let images = (res.data.images || []).map((item) => item.url);
       return {
         images,
       };
