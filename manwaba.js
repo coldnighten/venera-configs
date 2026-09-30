@@ -3,37 +3,42 @@
  * 网站对 en_images 下的图片做了加密：响应体前16字节为IV，其余为AES-CBC密文。
  * 密钥取自网站 base.js 的 BaseUtil.AES_KEY（UTF-8编码前32字节作为raw key）。
  * 解密后为 WebP/JPEG 等明文图片。
+ *
+ * 注意：在 Venera JS 引擎中，不能对响应 buffer 做 `new Uint8Array(buf).slice()`，
+ * 因为 JS Uint8Array.slice() 返回的对象桥接到 Dart 时会变成 Map 而非 Uint8List。
+ * 应直接使用 ArrayBuffer.slice() 和 Convert 工具函数的返回值。
  */
 const IMAGE_AES_KEY = "0B6666A0-BB59-1381-B746-a0E4C9AC";
 
 function decryptImageBuffer(buffer) {
-  const data = new Uint8Array(buffer);
-  if (data.length < 16) return buffer;
-  // 明文图片直接返回（JPEG/PNG/WebP/GIF）
-  const b0 = data[0], b1 = data[1];
-  if ((b0 === 0xFF && b1 === 0xD8) ||
-      (b0 === 0x89 && b1 === 0x50) ||
-      (b0 === 0x52 && b1 === 0x49) ||
-      (b0 === 0x47 && b1 === 0x49)) {
+  // 读取前2字节判断是否已是明文图片（仅用于判断，不传给解密函数）
+  const head = new Uint8Array(buffer.slice(0, 2));
+  if (head.length < 2) return buffer;
+  const b0 = head[0], b1 = head[1];
+  if ((b0 === 0xFF && b1 === 0xD8) || // JPEG
+      (b0 === 0x89 && b1 === 0x50) || // PNG
+      (b0 === 0x52 && b1 === 0x49) || // WebP (RIFF)
+      (b0 === 0x47 && b1 === 0x49)) { // GIF
     return buffer;
   }
-  const iv = data.slice(0, 16);
-  const ciphertext = data.slice(16);
-  const key = new Uint8Array(Convert.encodeUtf8(IMAGE_AES_KEY)).slice(0, 32);
-  const decrypted = Convert.decryptAesCbc(ciphertext, key, iv);
+  // 使用 ArrayBuffer.slice 切出 IV 和密文，避免类型桥接问题
+  const iv = buffer.slice(0, 16);
+  const ciphertext = buffer.slice(16);
+  // Convert.encodeUtf8 返回原生 Uint8List，可直接传给 decryptAesCbc
+  const key = Convert.encodeUtf8(IMAGE_AES_KEY).slice(0, 32);
+  const decrypted = new Uint8Array(Convert.decryptAesCbc(ciphertext, key, iv));
   // 去除 PKCS7 填充
-  const result = new Uint8Array(decrypted);
-  const padLen = result[result.length - 1];
+  const padLen = decrypted[decrypted.length - 1];
   if (padLen > 0 && padLen <= 16) {
     let valid = true;
     for (let i = 1; i <= padLen; i++) {
-      if (result[result.length - i] !== padLen) { valid = false; break; }
+      if (decrypted[decrypted.length - i] !== padLen) { valid = false; break; }
     }
     if (valid) {
-      return result.slice(0, result.length - padLen).buffer;
+      return decrypted.slice(0, decrypted.length - padLen).buffer;
     }
   }
-  return decrypted;
+  return decrypted.buffer;
 }
 
 /** @type {import('./_venera_.js')} */
