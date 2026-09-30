@@ -3,7 +3,7 @@
 class LcmhxSource extends ComicSource {
     name = "乐成漫画"
     key = "lcmhx"
-    version = "1.3.0"
+    version = "1.0.1"
     minAppVersion = "1.6.0"
     url = "https://lcmhx.cc/"
 
