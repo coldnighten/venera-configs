@@ -264,6 +264,7 @@ class ManWaBa extends ComicSource {
         "逆袭": "/cate/counterattack",
         "爆笑": "/cate/hilarious",
         "少年": "/cate/youth",
+        "后宫": "/cate/harem",
         "系统": "/cate/system",
         "BL": "/cate/bl",
         "韩漫": "/cate/manhwa",
@@ -271,7 +272,8 @@ class ManWaBa extends ComicSource {
         "19r": "/cate/19plus",
         "台版": "/cate/taiwanver",
       };
-      let url = this.api + pathMap[param] || "/cate";
+      let path = pathMap[param] || "/cate";
+      let url = this.api + path;
       let payload = JSON.stringify({
         page: {
           page: page,
@@ -450,22 +452,31 @@ class ManWaBa extends ComicSource {
         images,
       };
     },
-  };
-
-  // 图片加载钩子：en_images 下的图片经过 AES-CBC 加密，需在响应阶段解密
-  onImageLoad = (url) => {
-    if (!url || !url.includes("en_images")) return {};
-    return {
-      headers: { "Referer": "https://manwaxu.cc/" },
-      onResponse: decryptImageBuffer,
-    };
-  };
-
-  onThumbnailLoad = (url) => {
-    if (!url || !url.includes("en_images")) return {};
-    return {
-      headers: { "Referer": "https://manwaxu.cc/" },
-      onResponse: decryptImageBuffer,
-    };
+    /**
+     * 图片加载钩子：en_images 下的图片经过 AES-CBC 加密，需在响应阶段解密
+     * @param url
+     * @param comicId
+     * @param epId
+     * @returns {{}}
+     */
+    onImageLoad: (url) => {
+      if (!url || !url.includes("en_images")) return {};
+      return {
+        headers: { "Referer": "https://manwaxu.cc/" },
+        onResponse: decryptImageBuffer,
+      };
+    },
+    /**
+     * 缩略图加载钩子：en_images 下的封面图同样加密
+     * @param url
+     * @returns {{}}
+     */
+    onThumbnailLoad: (url) => {
+      if (!url || !url.includes("en_images")) return {};
+      return {
+        headers: { "Referer": "https://manwaxu.cc/" },
+        onResponse: decryptImageBuffer,
+      };
+    },
   };
 }
