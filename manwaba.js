@@ -16,7 +16,19 @@ class ManWaBa extends ComicSource {
   url = "https://cdn.jsdelivr.net/gh/coldnighten/venera-configs@main/manwaba.js";
 
   //修改域名不能用问题
-  api = "https://manwaxu.cc/api";
+  settings = {
+    domains: {
+      title: "自定义域名",
+      type: "input",
+      default: "manwaxu.cc",
+    },
+  };
+
+  get api() {
+    // 用户可在源设置中自定义域名；为空时回退到默认域名。
+    // 仅填域名即可，无需 https:// 前缀和 /api 后缀。
+    return `https://${this.loadSetting("domains") || this.settings.domains.default}/api`;
+  }
 
   init() {
     /**
