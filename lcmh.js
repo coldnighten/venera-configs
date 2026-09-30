@@ -3,7 +3,7 @@
 class LcmhxSource extends ComicSource {
     name = "乐成漫画"
     key = "lcmhx"
-    version = "1.1.0"
+    version = "1.0.1"
     minAppVersion = "1.6.0"
     url = "https://lcmhx.cc/"
 
@@ -96,6 +96,40 @@ class LcmhxSource extends ComicSource {
         }
 
         return images
+    }
+
+    /**
+     * 为 qy0.ru 图片获取带 verify 签名的 URL
+     * 原始 URL 会返回 403, 必须调用 runtime.php 获取签名后的 URL
+     */
+    async fetchSignedImages(images) {
+        try {
+            // 从第一个图片 URL 提取 aid: /data/{book_id}/{chapter_id}/ -> aid = book_id + chapter_id
+            let firstImg = images[0]
+            let aidMatch = firstImg.match(/\/data\/(\d+)\/(\d+)\//)
+            if (!aidMatch) return images
+            let aid = aidMatch[1] + aidMatch[2]
+
+            let apiUrl = this.url + "qycollector/runtime.php?aid=" + encodeURIComponent(aid)
+            let res = await Network.get(apiUrl, { "Referer": this.url })
+            if (res.status !== 200) return images
+
+            let data = JSON.parse(res.body)
+            if (!data || data.code !== 1 || !data.images) return images
+
+            // 用签名 URL 替换原始 URL
+            let signedMap = data.images
+            let result = []
+            for (let img of images) {
+                // 去掉 query string 后查找
+                let key = img.split("?")[0]
+                let signed = signedMap[key] || signedMap[key.replace(/^http:\/\//i, "https://")]
+                result.push(signed || img)
+            }
+            return result
+        } catch (e) {
+            return images
+        }
     }
 
     /**
@@ -360,12 +394,22 @@ class LcmhxSource extends ComicSource {
 
             let images = this.extractImages(res.body)
 
+            // qy0.ru 图片需要通过 runtime.php 获取带 verify 签名的 URL
+            // 原始 URL 会返回 403, 必须使用签名后的 URL
+            if (images.length > 0 && images[0].includes("qy0.ru")) {
+                images = await this.fetchSignedImages(images)
+            }
+
             return {
                 images: images
             }
         },
 
         onImageLoad: (url, comicId, epId) => {
+            // qy0.ru 图片使用 no-referrer, 发送 Referer 会触发 403
+            if (url.includes("qy0.ru")) {
+                return { headers: {} }
+            }
             return {
                 headers: {
                     "Referer": "https://lcmhx.cc/"
