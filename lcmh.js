@@ -3,14 +3,12 @@
 class LcmhxSource extends ComicSource {
     name = "乐成漫画"
     key = "lcmhx"
-    version = "1.0.0"
+    version = "1.1.0"
     minAppVersion = "1.6.0"
     url = "https://lcmhx.cc/"
 
     /**
      * 从 HTML 中解析漫画卡片列表
-     * 支持两种封面属性: data-bg2 (首页/搜索) 和 data-src (分类页)
-     * 支持两种标题属性: title (首页/搜索) 和 alt (分类页)
      */
     parseComics(html, linkPrefix) {
         let document = new HtmlDocument(html)
@@ -66,6 +64,54 @@ class LcmhxSource extends ComicSource {
         })
     }
 
+    /**
+     * 从 HTML 中提取漫画图片 (支持多域名: comicimgs.com, qy0.ru 等)
+     */
+    extractImages(html) {
+        let images = []
+        let seen = new Set()
+
+        // 匹配所有常见图片域名的图片
+        let imgMatches = html.match(/https?:\/\/[^\s"'<>]*?(comicimgs\.com|qy0\.ru|chigua\.media)[^\s"'<>]*?\.(jpg|jpeg|png|webp)/g) || []
+        for (let imgUrl of imgMatches) {
+            if (seen.has(imgUrl)) continue
+            if (imgUrl.includes("cover")) continue
+            seen.add(imgUrl)
+            images.push(imgUrl)
+        }
+
+        // 兜底: runtime-image 类的图片 (单章漫画常用)
+        if (images.length === 0) {
+            let runtimeMatches = html.match(/<img[^>]*class="[^"]*runtime-image[^"]*"[^>]*>/g) || []
+            for (let tag of runtimeMatches) {
+                let srcMatch = tag.match(/src="([^"]+)"/)
+                if (srcMatch) {
+                    let src = srcMatch[1]
+                    if (!seen.has(src) && !src.includes("cover")) {
+                        seen.add(src)
+                        images.push(src)
+                    }
+                }
+            }
+        }
+
+        return images
+    }
+
+    /**
+     * 探测某章节是否存在 (通过检查页面是否有漫画图片)
+     */
+    async chapterHasImages(id, epId) {
+        try {
+            let url = this.url + "lcmh-" + id + "-" + epId + "/"
+            let res = await Network.get(url)
+            if (res.status !== 200) return false
+            return this.extractImages(res.body).length > 0
+        } catch (e) {
+            return false
+        }
+    }
+
     explore = [
         {
             title: "乐成漫画",
@@ -77,7 +123,6 @@ class LcmhxSource extends ComicSource {
                 }
 
                 let html = res.body
-                // 只解析 content-2 (漫画区), 跳过 content-1 (AI短剧)
                 let startIdx = html.indexOf('id="content-2"')
                 let sectionHtml = html
                 if (startIdx >= 0) {
@@ -136,7 +181,6 @@ class LcmhxSource extends ComicSource {
             let html = res.body
 
             if (!param) {
-                // 全部: 只取 content-2 漫画区
                 let startIdx = html.indexOf('id="content-2"')
                 if (startIdx >= 0) {
                     let endIdx = html.indexOf('id="content-', startIdx + 10)
@@ -189,18 +233,30 @@ class LcmhxSource extends ComicSource {
             let html = res.body
             let document = new HtmlDocument(html)
 
-            // 标题: 从 <title> 标签提取, 去掉 " - 乐成漫画" 后缀
+            // 标题
             let title = ""
             let titleMatch = html.match(/<title[^>]*>([\s\S]*?)<\/title>/)
             if (titleMatch) {
                 title = titleMatch[1].replace(/<[^>]+>/g, "").replace(/\s*-\s*乐成漫画\s*$/, "").trim()
             }
 
-            // 封面: 从第一张漫画图片提取 book ID, 构造 cover.jpg URL
+            // 封面: 优先用 og:image, 其次从图片 URL 推断
             let cover = ""
-            let bookIdMatch = html.match(/comicimgs\.com\/static\/upload\/book\/(\d+)\//)
-            if (bookIdMatch) {
-                cover = "https://www.comicimgs.com/static/upload/book/" + bookIdMatch[1] + "/cover.jpg"
+            let ogImageMatch = html.match(/property="og:image"[^>]*content="([^"]*)"/)
+            if (ogImageMatch) {
+                cover = ogImageMatch[1]
+            }
+            if (!cover) {
+                let bookIdMatch = html.match(/comicimgs\.com\/static\/upload\/book\/(\d+)\//)
+                if (bookIdMatch) {
+                    cover = "https://www.comicimgs.com/static/upload/book/" + bookIdMatch[1] + "/cover.jpg"
+                }
+            }
+            if (!cover) {
+                let firstImg = this.extractImages(html)
+                if (firstImg.length > 0) {
+                    cover = firstImg[0]
+                }
             }
 
             // 简介
@@ -210,7 +266,7 @@ class LcmhxSource extends ComicSource {
                 desc = descMatch[1]
             }
 
-            // 章节列表
+            // 章节列表: 从 HTML 解析 (通常只显示前5章)
             let chapters = new Map()
             let chapterLinks = document.querySelectorAll('a[href^="/lcmh-' + id + '-"]')
             let seen = new Set()
@@ -225,15 +281,58 @@ class LcmhxSource extends ComicSource {
                 seen.add(epId)
 
                 let epTitle = link.text.trim()
-                // 跳过翻页按钮 (<  >)
                 if (!epTitle || epTitle === "<" || epTitle === ">") continue
 
                 chapters.set(epId, epTitle)
             }
 
-            // 当前详情页即为第1话阅读页, 若第1话不在列表中则补充
-            if (!chapters.has("1") && chapters.size > 0) {
+            // 始终确保第1话存在 (详情页即为第1话阅读页)
+            if (!chapters.has("1")) {
                 chapters.set("1", "第1话")
+            }
+
+            // 探测补全章节列表 (HTML 只显示前5章, 需要探测后续章节)
+            let maxEp = 1
+            for (let k of chapters.keys()) {
+                let n = parseInt(k)
+                if (n > maxEp) maxEp = n
+            }
+
+            // 指数搜索找上界
+            let probe = maxEp + 1
+            let upper = 0
+            while (probe <= 2000) {
+                let has = await this.chapterHasImages(id, probe)
+                if (has) {
+                    upper = probe
+                    probe *= 2
+                } else {
+                    break
+                }
+            }
+
+            // 二分搜索确定精确章节数
+            if (upper > 0) {
+                let low = maxEp + 1
+                let high = upper
+                while (low <= high) {
+                    let mid = Math.floor((low + high) / 2)
+                    let has = await this.chapterHasImages(id, mid)
+                    if (has) {
+                        maxEp = mid
+                        low = mid + 1
+                    } else {
+                        high = mid - 1
+                    }
+                }
+            }
+
+            // 补全缺失的章节
+            for (let i = 1; i <= maxEp; i++) {
+                let key = String(i)
+                if (!chapters.has(key)) {
+                    chapters.set(key, "第" + i + "话")
+                }
             }
 
             // 按章节序号排序
@@ -259,32 +358,7 @@ class LcmhxSource extends ComicSource {
                 throw `Invalid status code: ${res.status}`
             }
 
-            let html = res.body
-            let images = []
-            let seen = new Set()
-
-            // 从 HTML 中正则提取 comicimgs.com 图片
-            let imgMatches = html.match(/https?:\/\/[^\s"'<>]*comicimgs\.com[^\s"'<>]*\.(jpg|png|webp)/g) || []
-            for (let imgUrl of imgMatches) {
-                if (seen.has(imgUrl)) continue
-                if (imgUrl.includes("cover")) continue
-                seen.add(imgUrl)
-                images.push(imgUrl)
-            }
-
-            // 兜底: 用 DOM 解析
-            if (images.length === 0) {
-                let document = new HtmlDocument(html)
-                let imgs = document.querySelectorAll("img[src*='comicimgs']")
-                for (let img of imgs) {
-                    let src = img.attributes["src"] || ""
-                    if (src && !seen.has(src) && !src.includes("cover")) {
-                        seen.add(src)
-                        images.push(src)
-                    }
-                }
-                document.dispose()
-            }
+            let images = this.extractImages(res.body)
 
             return {
                 images: images
