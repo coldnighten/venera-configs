@@ -51,7 +51,7 @@ class ManWaBa extends ComicSource {
   // unique id of the source
   key = "manwaba";
 
-  version = "1.0.4";
+  version = "1.1.0";
 
   minAppVersion = "1.4.0";
 
