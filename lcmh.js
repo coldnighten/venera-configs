@@ -3,7 +3,7 @@
 class LcmhxSource extends ComicSource {
     name = "乐成漫画"
     key = "lcmhx"
-    version = "1.1.0"
+    version = "1.2.0"
     minAppVersion = "1.6.0"
     url = "https://lcmhx.cc/"
 
@@ -366,6 +366,10 @@ class LcmhxSource extends ComicSource {
         },
 
         onImageLoad: (url, comicId, epId) => {
+            // qy0.ru 图片使用 no-referrer, 发送 Referer 会触发 403
+            if (url.includes("qy0.ru")) {
+                return { headers: {} }
+            }
             return {
                 headers: {
                     "Referer": "https://lcmhx.cc/"
