@@ -218,5 +218,11 @@
         "key": "mycomic",
         "version": "1.2.0",
         "description": "mycomic.com漫画源, 遇到Cloudflare验证请在源设置中登录"
+    },
+    {
+        "name": "乐成漫画",
+        "fileName": "lcmh.js",
+        "key": "lcmhx",
+        "version": "1.0.0"
     }
 ]
